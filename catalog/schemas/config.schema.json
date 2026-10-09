@@ -1,0 +1,52 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Design Sensei project configuration (.design-sensei.yaml)",
+  "description": "Optional per-project settings. Every key is optional; missing keys fall back to skills/design-sensei/config/defaults.yaml.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "design_variance": {
+      "description": "1 = conventional and safe, 10 = highly experimental art direction.",
+      "type": "integer", "minimum": 1, "maximum": 10
+    },
+    "motion_intensity": {
+      "description": "1 = essentially static, 10 = cinematic, motion-led.",
+      "type": "integer", "minimum": 1, "maximum": 10
+    },
+    "visual_density": {
+      "description": "1 = airy and sparse, 10 = dense and information-rich.",
+      "type": "integer", "minimum": 1, "maximum": 10
+    },
+    "preferred_frameworks": {
+      "description": "Frameworks and libraries to prefer. Empty means follow the project's existing stack.",
+      "type": "array", "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[a-z0-9][a-z0-9.+-]*$" }
+    },
+    "allowed_dependencies": {
+      "description": "none | existing | minimal | any, or an explicit allow-list of package names.",
+      "oneOf": [
+        { "enum": ["none", "existing", "minimal", "any"] },
+        { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } }
+      ]
+    },
+    "performance_budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "initial_js_kb": { "type": "integer", "minimum": 1 },
+        "lcp_ms": { "type": "integer", "minimum": 100 },
+        "cls": { "type": "number", "minimum": 0 },
+        "max_webgl_canvases": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "webgl_enabled": { "type": "boolean" },
+    "reduced_motion": {
+      "description": "respect = honor prefers-reduced-motion with a defined alternative; static_first = the default experience is static and motion is opt-in.",
+      "enum": ["respect", "static_first"]
+    },
+    "source_acquisition_mode": {
+      "description": "on_demand = sync a source the first time it is needed; full = expect the whole library to be present; offline = never touch the network.",
+      "enum": ["on_demand", "full", "offline"]
+    }
+  }
+}

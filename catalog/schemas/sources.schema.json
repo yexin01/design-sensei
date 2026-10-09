@@ -1,0 +1,100 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Design Sensei source registry (catalog/sources.yaml)",
+  "description": "Canonical registry of every upstream source. Fields that were not verified by inspection must say so explicitly (pending_verification / unknown).",
+  "type": "object",
+  "required": ["schema_version", "sources"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "const": 1 },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/definitions/source" }
+    }
+  },
+  "definitions": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "maxLength": 64
+    },
+    "tag": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9.+-]*$",
+      "maxLength": 48
+    },
+    "relative_path": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 300
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id", "name", "url", "type", "category", "acquisition_method",
+        "default_branch", "pinned_commit", "license", "license_status",
+        "redistribution_status", "attribution", "local_path", "frameworks",
+        "tags", "last_checked", "inspection_status", "notes"
+      ],
+      "properties": {
+        "id": { "$ref": "#/definitions/id" },
+        "name": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "url": { "type": "string", "format": "uri" },
+        "type": {
+          "description": "What kind of thing the URL is.",
+          "enum": ["git_repository", "website", "article", "documentation_site"]
+        },
+        "category": {
+          "enum": ["design_intelligence", "ui_components", "graphics_3d", "animation"]
+        },
+        "acquisition_method": {
+          "description": "git_shallow = depth-1 clone; git_sparse = depth-1 sparse clone limited to sparse_paths; reference_only = never downloaded, URL and notes only.",
+          "enum": ["git_shallow", "git_sparse", "reference_only"]
+        },
+        "sparse_paths": {
+          "description": "Directories to check out for git_sparse (cone mode; top-level files are always included).",
+          "type": "array",
+          "items": { "$ref": "#/definitions/relative_path" }
+        },
+        "default_branch": { "type": ["string", "null"] },
+        "pinned_commit": {
+          "description": "Exact upstream commit the catalog was verified against. null only for reference_only sources or before a first sync.",
+          "type": ["string", "null"],
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "license": {
+          "description": "SPDX identifier as detected at the pinned commit, or NOASSERTION / LicenseRef-* when custom, missing or unknown.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "license_status": {
+          "description": "verified = license text inspected and matches the SPDX id; custom_terms = non-standard license text, human review needed; proprietary_terms = terms restrict redistribution; not_found = no license or terms found; pending_verification = not inspected yet; unknown = inspected but undecidable.",
+          "enum": ["verified", "custom_terms", "proprietary_terms", "not_found", "pending_verification", "unknown"]
+        },
+        "redistribution_status": {
+          "description": "redistributable_with_notice = permissive license, keep notices; license_specific = restrictions need case-by-case handling; reference_only = link and describe only; unresolved = no rights granted; pending_verification = not decided yet.",
+          "enum": ["redistributable_with_notice", "license_specific", "reference_only", "unresolved", "pending_verification"]
+        },
+        "attribution": { "type": "string", "minLength": 1, "maxLength": 400 },
+        "local_path": { "$ref": "#/definitions/relative_path" },
+        "frameworks": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/definitions/tag" } },
+        "tags": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/definitions/tag" } },
+        "npm_packages": {
+          "description": "Package names the source itself publishes (verified from its package manifests).",
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "last_checked": { "type": ["string", "null"], "format": "date" },
+        "inspection_status": {
+          "description": "inspected_local = cloned and read at the pinned commit; inspected_remote = only remote metadata / HTTP checked; blocked = could not be inspected (reason in notes); pending = not inspected yet.",
+          "enum": ["inspected_local", "inspected_remote", "blocked", "pending"]
+        },
+        "notes": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

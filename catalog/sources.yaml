@@ -1,0 +1,441 @@
+# yaml-language-server: $schema=schemas/sources.schema.json
+#
+# Canonical registry of upstream sources (see docs/source-management.md).
+#
+#  * Every value below was either read from the upstream project at the pinned
+#    commit or is explicitly marked pending_verification / unknown.
+#  * This file only describes upstream material. Nothing listed here is copied
+#    into this repository: git sources are cloned on the user's machine into the
+#    local library (sources/ or ~/.design-sensei/sources/), reference_only sources
+#    are never downloaded.
+#  * Dates are quoted on purpose (the catalog YAML dialect rejects ambiguous
+#    plain scalars, see scripts/dslib/yamlite.py).
+#
+# Update a pin with:  design-sensei sources sync <id> --update --write-pins
+schema_version: 1
+sources:
+  # --- A. Design intelligence, skills and design references ---------------
+  - id: taste-skill
+    name: Taste Skill
+    url: https://github.com/Leonxlnx/taste-skill
+    type: git_repository
+    category: design_intelligence
+    acquisition_method: git_shallow
+    default_branch: main
+    pinned_commit: 18dfc928b135629e0eddfdd445a06400d04ed439
+    license: MIT
+    license_status: "verified"
+    redistribution_status: "redistributable_with_notice"
+    attribution: "Taste Skill by Leonxlnx (https://github.com/Leonxlnx/taste-skill)"
+    local_path: taste-skill
+    frameworks: []
+    tags: [agent-skill, art-direction, anti-slop, design-taste]
+    last_checked: "2026-10-09"
+    inspection_status: "inspected_local"
+    notes: >
+      Supplied as leonxlnx/taste-skill; GitHub canonicalizes the owner to Leonxlnx.
+      A collection of agent skills (skills/, a Claude plugin manifest and skill.sh)
+      that steer coding agents away from generic AI-looking interfaces. MIT covers
+      the text and code; sponsor logos in assets/sponsors belong to their owners.
+
+  - id: design-md
+    name: DESIGN.md format specification
+    url: https://github.com/google-labs-code/design.md
+    type: git_repository
+    category: design_intelligence
+    acquisition_method: git_shallow
+    default_branch: main
+    pinned_commit: 9bf8eae67128b6cc55ad9bf86665767deb4c11cd
+    license: Apache-2.0
+    license_status: "verified"
+    redistribution_status: "redistributable_with_notice"
+    attribution: "DESIGN.md specification by Google Labs (google-labs-code/design.md), Apache-2.0"
+    local_path: design-md
+    frameworks: [typescript, nodejs]
+    tags: [design-md, design-tokens, specification, agent-skill]
+    last_checked: "2026-10-09"
+    inspection_status: "inspected_local"
+    notes: >
+      A format specification (and tooling in packages/) for describing a visual
+      identity to coding agents in a persistent DESIGN.md file.
+
+  - id: awesome-opus-videos
+    name: Awesome Opus 5.5 videos
+    url: https://github.com/yihui-dev/awesome-opus5-5-videos
+    type: git_repository
+    category: design_intelligence
+    acquisition_method: git_shallow
+    default_branch: main
+    pinned_commit: 756290289742535eb0ac3817548f152e9759cc70
+    license: MIT
+    license_status: "verified"
+    redistribution_status: "redistributable_with_notice"
+    attribution: "awesome-opus5-5-videos by yihui-dev (https://github.com/yihui-dev/awesome-opus5-5-videos)"
+    local_path: awesome-opus-videos
+    frameworks: []
+    tags: [prompts, showcase, generated-websites, claude-opus]
+    last_checked: "2026-10-09"
+    inspection_status: "inspected_local"
+    notes: >
+      Curated list of viral videos made with Claude Opus 5.5 and the prompts behind
+      them (data/ and prompts/ directories). Videos themselves are third-party
+      works referenced by URL.
+
+  - id: refero-styles
+    name: Refero Styles
+    url: https://styles.refero.design/
+    type: website
+    category: design_intelligence
+    acquisition_method: reference_only
+    default_branch: null
+    pinned_commit: null
+    license: NOASSERTION
+    license_status: unknown
+    redistribution_status: reference_only
+    attribution: "Refero Styles (https://styles.refero.design/) - link only"
+    local_path: refero-styles
+    frameworks: []
+    tags: [design-md, style-library, website-styles, inspiration]
+    last_checked: "2026-10-09"
+    inspection_status: inspected_remote
+    notes: >
+      Library of real website styles with AI-readable DESIGN.md files (page
+      metadata read on 2026-10-09). The site's robots.txt disallows AI crawlers
+      (ClaudeBot, anthropic-ai, Claude-Web, GPTBot and others), so Design Sensei
+      does not fetch, scrape, snapshot or redistribute any of its content. Terms
+      of use were not reviewed. Open it in your own browser and respect its terms.
+
+  - id: uxplanet-50-design-styles
+    name: "50 Design Styles Every Designer Should Know (UX Planet)"
+    url: https://uxplanet.org/50-design-styles-every-designer-should-know-for-better-prompting-56c09d55db62
+    type: article
+    category: design_intelligence
+    acquisition_method: reference_only
+    default_branch: null
+    pinned_commit: null
+    license: NOASSERTION
+    license_status: unknown
+    redistribution_status: reference_only
+    attribution: "Article on UX Planet (Medium) - link only; copyright remains with its author and publisher"
+    local_path: uxplanet-50-design-styles
+    frameworks: []
+    tags: [design-styles, taxonomy, prompting, article]
+    last_checked: "2026-10-09"
+    inspection_status: blocked
+    notes: >
+      Inspection blocked on 2026-10-09: the URL answered HTTP 403 with a Cloudflare
+      challenge page to a non-browser client. Nothing from the article was copied.
+      The project's design-style taxonomy (knowledge/design-styles/) is original
+      writing and does not claim to reproduce the article.
+
+  # --- B. UI components, effects and visual implementations ---------------
+  - id: liquid-logo
+    name: Liquid Logo
+    url: https://github.com/collidingScopes/liquid-logo
+    type: git_repository
+    category: ui_components
+    acquisition_method: git_shallow
+    default_branch: main
+    pinned_commit: c733c38a043009b873cb9a6062c0defa9c70ee7d
+    license: MIT
+    license_status: "verified"
+    redistribution_status: "redistributable_with_notice"
+    attribution: "Liquid Logo by collidingScopes (https://github.com/collidingScopes/liquid-logo)"
+    local_path: liquid-logo
+    frameworks: [webgl, glsl]
+    tags: [liquid-metal, logo, shader, animation]
+    last_checked: "2026-10-09"
+    inspection_status: "inspected_local"
+    notes: >
+      Browser tool for animated logos with a liquid metal look (fragment-shader.glsl,
+      shaders.js, main.js at the repository root).
+
+  - id: skiper-ui
+    name: Skiper UI
+    url: https://github.com/nischayhq/skiper-ui
+    type: git_repository
+    category: ui_components
+    acquisition_method: git_shallow
+    default_branch: main
+    pinned_commit: f9dfd89bf03ff1276ae6d25457b4bf296112e1a5
+    license: NOASSERTION
+    license_status: "not_found"
+    redistribution_status: "unresolved"
+    attribution: "Skiper UI by nischayhq (https://github.com/nischayhq/skiper-ui)"
+    local_path: skiper-ui
+    frameworks: [react, nextjs, tailwind]
+    tags: [components, animated-ui]
+    last_checked: "2026-10-09"
+    inspection_status: "inspected_local"
+    notes: >
+      No license: no LICENSE file at the root and no license field in package.json
+      (checked at the pinned commit). The README states "This project is for
+      educational purposes and is a clone of the original Skiper UI design" and
+      credits the original site https://skiper-ui.com/ , so this repository is an
+      unofficial frontend clone whose design and component rights belong to someone
+      else. Treat it as all rights reserved: read it for ideas, never copy code or
+      assets, and look at the original project for its real terms.
+
+  - id: vengeance-ui
+    name: Vengeance UI
+    url: https://github.com/Ashutoshx7/VengeanceUI
+    type: git_repository
+    category: ui_components
+    acquisition_method: git_shallow
+    default_branch: main
+    pinned_commit: 87f5a77651ce4de28eec0566ec0f81967dcd69d5
+    license: MIT
+    license_status: "verified"
+    redistribution_status: "redistributable_with_notice"
+    attribution: "Vengeance UI by Ashutoshx7 (https://github.com/Ashutoshx7/VengeanceUI)"
+    local_path: vengeance-ui
+    frameworks: [react, nextjs, tailwind, typescript]
+    tags: [components, animated-ui, landing-page]
+    last_checked: "2026-10-09"
+    inspection_status: "inspected_local"
+    notes: >
+      Copy-and-paste animated components for landing pages (src/components, a
+      registry in public/r, packages/cli and packages/mcp). The MIT license covers
+      the code; photos, avatars, sponsor logos and template images under public/
+      may carry other rights, so do not reuse that media.
+
+  - id: fancy
+    name: Fancy Components
+    url: https://github.com/danielpetho/fancy
+    type: git_repository
+    category: ui_components
+    acquisition_method: git_shallow
+    default_branch: main
+    pinned_commit: f9f62c61207b2dd3210476dd98af3c9a5be24094
+    license: MIT
+    license_status: "verified"
+    redistribution_status: "redistributable_with_notice"
+    attribution: "Fancy Components by danielpetho (https://github.com/danielpetho/fancy)"
+    local_path: fancy
+    frameworks: [react, nextjs, tailwind, typescript]
+    tags: [components, animation, typography]
+    last_checked: "2026-10-09"
+    inspection_status: "inspected_local"
+    notes: >
+      React component collection (src/, public/); GitHub shows no repository
+      description.
+
+  - id: react-bits
+    name: React Bits
+    url: https://github.com/DavidHDev/react-bits
+    type: git_repository
+    category: ui_components
+    acquisition_method: git_sparse
+    sparse_paths: [src, scripts]
+    default_branch: main
+    pinned_commit: d86fccbd477786f94ca7eb891fbe0ec039d3cd3b
+    license: LicenseRef-MIT-Commons-Clause
+    license_status: custom_terms
+    redistribution_status: license_specific
+    attribution: "React Bits by David Haz (https://github.com/DavidHDev/react-bits), MIT + Commons Clause"
+    local_path: react-bits
+    frameworks: [react, typescript, tailwind, css]
+    tags: [components, animated-ui, backgrounds, text-animations]
+    last_checked: "2026-10-09"
+    inspection_status: "inspected_local"
+    notes: >
+      LICENSE.md is "MIT + Commons Clause License Condition v1.0": free to use in an
+      application, website or product, but not to sell, sublicense or redistribute
+      the components themselves, alone, in a bundle or as a ported version.
+      GitHub reports NOASSERTION. Never bundle or republish its components;
+      sparse checkout skips public/ (about 4,000 media and registry files).
+
+  - id: animmaster-lib
+    name: Animmaster Lib
+    url: https://animmasterlib.dev
+    type: website
+    category: ui_components
+    acquisition_method: reference_only
+    default_branch: null
+    pinned_commit: null
+    license: LicenseRef-Proprietary-Animmaster
+    license_status: proprietary_terms
+    redistribution_status: reference_only
+    attribution: "Animmaster Lib (https://animmasterlib.dev) - link only"
+    local_path: animmaster-lib
+    frameworks: []
+    tags: [components, scroll-animations, webgl, paid-library]
+    last_checked: "2026-10-09"
+    inspection_status: inspected_remote
+    notes: >
+      Commercial component library (landing page and terms page read on 2026-10-09;
+      robots.txt allows crawling). Its terms grant a purchaser a non-exclusive
+      license and prohibit reselling or redistributing the library or its source
+      files. Components are not freely available, so Design Sensei links to the
+      site and records only its public category list (scroll animations, mouse
+      effects, page transitions, sliders, hero animations, WebGL shaders, text
+      animations, 3D animations and more). No component code is used or copied.
+
+  - id: astryx
+    name: Astryx design system
+    url: https://github.com/facebook/astryx
+    type: git_repository
+    category: ui_components
+    acquisition_method: git_sparse
+    sparse_paths: [docs, packages/core, packages/themes, packages/charts, packages/lab, packages/richtext, internal/a11y-spec, apps/docsite/src]
+    default_branch: main
+    pinned_commit: 2531d8d238bc5ca11b5c2437970b396f439c096a
+    license: MIT
+    license_status: "verified"
+    redistribution_status: "redistributable_with_notice"
+    attribution: "Astryx by Meta Platforms, Inc. and affiliates (https://github.com/facebook/astryx)"
+    local_path: astryx
+    frameworks: [react, typescript]
+    tags: [design-system, accessibility, themes, agent-ready]
+    last_checked: "2026-10-09"
+    inspection_status: "inspected_local"
+    notes: >
+      An open source design system described by GitHub as fully customizable and
+      agent ready. The repository is roughly 1.2 GB with about 7,000 files, so only
+      the design-relevant directories are checked out (docs, core, themes, charts,
+      lab, richtext, the accessibility spec and the docs site source). packages/cli,
+      visual baselines, Storybook, test fixtures and the docs site media in
+      apps/docsite/public (about 230 MB) are skipped.
+
+  # --- C. Three-dimensional graphics, shaders and rendering ---------------
+  - id: react-three-fiber
+    name: React Three Fiber
+    url: https://github.com/pmndrs/react-three-fiber
+    type: git_repository
+    category: graphics_3d
+    acquisition_method: git_shallow
+    default_branch: master
+    pinned_commit: d604b18bbda025d9ca682efb322cc76b99350e52
+    license: MIT
+    license_status: "verified"
+    redistribution_status: "redistributable_with_notice"
+    attribution: "React Three Fiber by the Poimandres collective (https://github.com/pmndrs/react-three-fiber)"
+    local_path: react-three-fiber
+    frameworks: [react, three, typescript, webgl]
+    tags: [renderer, 3d, scene-graph, hooks]
+    last_checked: "2026-10-09"
+    inspection_status: "inspected_local"
+    notes: >
+      React renderer for Three.js (packages/fiber, docs/, example/). Default
+      branch is master, not main.
+
+  - id: liquid-glass-js
+    name: Liquid Glass JS
+    url: https://github.com/dashersw/liquid-glass-js
+    type: git_repository
+    category: graphics_3d
+    acquisition_method: git_shallow
+    default_branch: main
+    pinned_commit: 78cb6ccb0b9987bb60a88b14ccbd13a9e6e8ab2a
+    license: MIT
+    license_status: "verified"
+    redistribution_status: "redistributable_with_notice"
+    attribution: "Liquid Glass JS by dashersw (https://github.com/dashersw/liquid-glass-js)"
+    local_path: liquid-glass-js
+    frameworks: [javascript, css]
+    tags: [liquid-glass, glass-effect, button, container]
+    last_checked: "2026-10-09"
+    inspection_status: "inspected_local"
+    notes: >
+      Apple-inspired liquid glass effects library (container.js, button.js,
+      glass.css and a demo at the repository root).
+
+  - id: shadergradient
+    name: ShaderGradient
+    url: https://github.com/ruucm/shadergradient
+    type: git_repository
+    category: graphics_3d
+    acquisition_method: git_shallow
+    default_branch: main
+    pinned_commit: 68bdd740037a11c639f8b91fd775949c71d718d0
+    license: "MIT"
+    license_status: "unknown"
+    redistribution_status: "license_specific"
+    attribution: "ShaderGradient by ruucm (https://github.com/ruucm/shadergradient)"
+    local_path: shadergradient
+    frameworks: [react, three, glsl, typescript, vue]
+    tags: [gradient, shader, animated-background]
+    last_checked: "2026-10-09"
+    inspection_status: "inspected_local"
+    notes: >
+      Moving gradients for Framer, Figma and React (packages/shadergradient,
+      packages/shadergradient-vue, apps/examples). There is no LICENSE file in the
+      repository, but the README ends with "MIT (c) ruucm, stone-skipper" and the
+      package.json files of packages/shadergradient, shadergradient-vue, ui and the
+      config packages declare "MIT". MIT is therefore declared but its license text
+      and copyright notice are not shipped as a file, so the status stays unknown
+      until the maintainers add one; keep the README attribution when reusing
+      anything.
+
+  - id: img2threejs
+    name: img2threejs
+    url: https://github.com/img2threejs/img2threejs
+    type: git_repository
+    category: graphics_3d
+    acquisition_method: git_shallow
+    default_branch: main
+    pinned_commit: d508b596cb221f1509f6e50ab68fce275a5cfb44
+    license: Apache-2.0
+    license_status: "verified"
+    redistribution_status: "redistributable_with_notice"
+    attribution: "img2threejs contributors (https://github.com/img2threejs/img2threejs), Apache-2.0"
+    local_path: img2threejs
+    frameworks: [three, python, nodejs]
+    tags: [image-to-3d, procedural, agent-skill, three]
+    last_checked: "2026-10-09"
+    inspection_status: "inspected_local"
+    notes: >
+      Agent skill and Python tooling that rebuilds an object in a reference image
+      as a procedural, quality-gated, animation-ready Three.js model (SKILL.md,
+      forge/, grimoire/, integrations/).
+
+  # --- D. Animation, motion and scrolling ---------------------------------
+  - id: lenis
+    name: Lenis
+    url: https://github.com/darkroomengineering/lenis
+    type: git_repository
+    category: animation
+    acquisition_method: git_shallow
+    default_branch: main
+    pinned_commit: bc152f90d7c9b04ef372718350e2f616f3c706b2
+    license: MIT
+    license_status: "verified"
+    redistribution_status: "redistributable_with_notice"
+    attribution: "Lenis by darkroom.engineering (https://github.com/darkroomengineering/lenis)"
+    local_path: lenis
+    frameworks: [javascript, typescript, react]
+    tags: [smooth-scroll, scroll, gsap-integration]
+    last_checked: "2026-10-09"
+    inspection_status: "inspected_local"
+    notes: >
+      Smooth scroll library (packages/, playground/).
+
+  - id: gsap
+    name: GSAP (GreenSock Animation Platform)
+    url: https://github.com/greensock/gsap
+    type: git_repository
+    category: animation
+    acquisition_method: git_shallow
+    default_branch: master
+    pinned_commit: 13e2b790546426a1a2e0e9b409f3f8dc6d6611f2
+    license: LicenseRef-GSAP-Standard-No-Charge
+    license_status: custom_terms
+    redistribution_status: license_specific
+    attribution: "GSAP by GreenSock (https://gsap.com), Standard 'no charge' license"
+    local_path: gsap
+    frameworks: [javascript, typescript]
+    tags: [timeline, scrolltrigger, tweening, animation-engine]
+    last_checked: "2026-10-09"
+    inspection_status: "inspected_local"
+    notes: >
+      The GitHub repository is greensock/GSAP (canonical casing); the supplied
+      lowercase URL redirects to it. There is no LICENSE file in the repository:
+      package.json states "Standard 'no charge' license: https://gsap.com/standard-license"
+      and the README links the same page. That license is custom, not an OSI open
+      source license, so GitHub reports no license. The terms page was read on
+      2026-10-09: it grants a non-exclusive license to use GSAP on websites and
+      applications, prohibits use in visual no-code animation builders that
+      compete with Webflow, and states that Webflow owns the software and may amend
+      the terms. Use the published npm package, do not copy or bundle GSAP source
+      into other repositories, and read the current terms at
+      gsap.com/standard-license.

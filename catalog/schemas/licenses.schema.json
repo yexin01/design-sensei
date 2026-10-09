@@ -1,0 +1,78 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Design Sensei license policy and review ledger (catalog/licenses.yaml)",
+  "description": "policy maps SPDX identifiers to a handling class. reviews records what was actually found in each source's license material at a given commit. Heuristic detection is never legal advice.",
+  "type": "object",
+  "required": ["schema_version", "policy", "reviews"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "const": 1 },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["spdx", "unknown_handling"],
+      "properties": {
+        "spdx": {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/definitions/spdx_policy" }
+        },
+        "unknown_handling": {
+          "description": "How to treat licenses that are not in the spdx table.",
+          "type": "string",
+          "minLength": 10
+        }
+      }
+    },
+    "reviews": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/review" }
+    }
+  },
+  "definitions": {
+    "spdx_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["class", "requires"],
+      "properties": {
+        "class": { "enum": ["permissive", "weak_copyleft", "strong_copyleft", "public_domain", "restricted"] },
+        "requires": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "name": { "type": "string" }
+      }
+    },
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_id", "license_files", "spdx_detected", "detection", "copyright", "reviewed_commit", "review_status"],
+      "properties": {
+        "source_id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+        "license_files": {
+          "description": "License files found at the root of the source, with a SHA-256 of their content so changes are detectable.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["path", "sha256"],
+            "properties": {
+              "path": { "type": "string", "minLength": 1 },
+              "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+            }
+          }
+        },
+        "license_url": { "type": ["string", "null"], "format": "uri" },
+        "spdx_detected": { "type": "string", "minLength": 1 },
+        "detection": { "enum": ["heuristic", "manual", "not_applicable"] },
+        "copyright": { "type": "array", "items": { "type": "string", "minLength": 3 } },
+        "package_manifest_licenses": {
+          "description": "License fields declared by package manifests (package.json etc.) found while scanning.",
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "reviewed_commit": { "type": ["string", "null"], "pattern": "^[0-9a-f]{40}$" },
+        "review_status": { "enum": ["auto_checked", "human_reviewed", "needs_human_review", "not_applicable"] },
+        "attribution_required": { "type": "boolean" },
+        "restrictions": { "type": "array", "items": { "type": "string", "minLength": 3 } },
+        "notes": { "type": "string" }
+      }
+    }
+  }
+}

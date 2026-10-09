@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Design Sensei knowledge document front matter (knowledge/**/*.md)",
+  "description": "Every project-authored knowledge note starts with this YAML front matter so provenance stays machine-checkable.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["title", "kind", "summary", "source_ids", "pattern_ids", "updated"],
+  "properties": {
+    "title": { "type": "string", "minLength": 3, "maxLength": 120 },
+    "kind": {
+      "enum": ["design-style", "component-library", "shader", "animation", "website-reference", "recipe", "guide", "index"]
+    },
+    "summary": { "type": "string", "minLength": 20, "maxLength": 400 },
+    "source_ids": {
+      "description": "Sources this note draws on. Empty only for fully original guidance.",
+      "type": "array", "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" }
+    },
+    "pattern_ids": {
+      "type": "array", "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" }
+    },
+    "updated": { "type": "string", "format": "date" }
+  }
+}

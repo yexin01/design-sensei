@@ -1,0 +1,110 @@
+# Design Sensei .gitignore
+#
+# Rule of thumb: only files that belong in the public open-source repository are
+# tracked. Upstream source clones, local state, build output, secrets, editor
+# files and AI-assistant working directories are never committed.
+
+# ---------------------------------------------------------------------------
+# Local source library (upstream clones live here after `design-sensei setup`)
+# Upstream code keeps its own licenses and is never redistributed from this repo.
+# ---------------------------------------------------------------------------
+/sources/*
+!/sources/README.md
+
+# Local state (lock file, generated source index, caches)
+/.state/
+
+# Per-project config of a *consumer* project is not part of this repo
+/.design-sensei.yaml
+
+# ---------------------------------------------------------------------------
+# Python
+# ---------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# ---------------------------------------------------------------------------
+# Node / front-end tooling (examples, optional tooling)
+# ---------------------------------------------------------------------------
+node_modules/
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.npm/
+.next/
+.turbo/
+.vercel/
+.parcel-cache/
+/examples/**/dist/
+/examples/**/build/
+
+# ---------------------------------------------------------------------------
+# Secrets and credentials
+# ---------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa*
+id_ed25519*
+credentials*.json
+secrets.*
+.netrc
+.npmrc
+
+# ---------------------------------------------------------------------------
+# Operating system and editors
+# ---------------------------------------------------------------------------
+.DS_Store
+._*
+Thumbs.db
+Desktop.ini
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# ---------------------------------------------------------------------------
+# Logs, scratch and temporary files
+# ---------------------------------------------------------------------------
+*.log
+*.tmp
+*.bak
+/tmp/
+/.tmp/
+/scratch/
+/out/
+/screenshots/
+
+# ---------------------------------------------------------------------------
+# AI-assistant and agent tooling working directories (local only)
+# ---------------------------------------------------------------------------
+.claude/
+.remember/
+.claude-mem/
+.context/
+.gstack/
+.playwright-mcp/
+.superpowers/
+.cursor/
+.codex/
+.aider*
+.agents/
+CLAUDE.local.md
+*.local.md
+settings.local.json
