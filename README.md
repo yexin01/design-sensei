@@ -13,10 +13,11 @@ It exists to stop interfaces that look generated. The skill makes Claude **inspe
 ## Quick start
 
 ```bash
-git clone https://github.com/yexin01/design-sensei.git
-claude plugin marketplace add ./design-sensei
+claude plugin marketplace add yexin01/design-sensei
 claude plugin install design-sensei@design-sensei
 ```
+
+Inside Claude Code the same two steps are `/plugin marketplace add yexin01/design-sensei` and `/plugin install design-sensei@design-sensei`. Adding the marketplace only registers the catalog; the second command installs the plugin.
 
 Then open Claude Code in any project and ask for UI work ("give the pricing page a distinctive editorial look with a restrained scroll animation"). The skill loads automatically, or run `/design-sensei:design-sensei`.
 
