@@ -73,13 +73,14 @@ sources:
     attribution: "awesome-opus5-5-videos by yihui-dev (https://github.com/yihui-dev/awesome-opus5-5-videos)"
     local_path: awesome-opus-videos
     frameworks: []
-    tags: [prompts, showcase, generated-websites, claude-opus]
+    tags: [prompts, showcase, videos, claude-opus]
     last_checked: "2026-10-09"
     inspection_status: "inspected_local"
     notes: >
       Curated list of viral videos made with Claude Opus 5.5 and the prompts behind
-      them (data/ and prompts/ directories). Videos themselves are third-party
-      works referenced by URL.
+      them (data/ and prompts/ directories). The entries are mostly videos,
+      animations, 3D scenes and games; only about ten prompts concern web pages.
+      Videos themselves are third-party works referenced by URL.
 
   - id: refero-styles
     name: Refero Styles
@@ -196,8 +197,8 @@ sources:
     notes: >
       Copy-and-paste animated components for landing pages (src/components, a
       registry in public/r, packages/cli and packages/mcp). The MIT license covers
-      the code; photos, avatars, sponsor logos and template images under public/
-      may carry other rights, so do not reuse that media.
+      the code; photos, avatars, sponsor logos, template images, fonts, 3D models and
+      block kits under public/ may carry other rights, so do not reuse that media.
 
   - id: fancy
     name: Fancy Components
@@ -403,7 +404,7 @@ sources:
     redistribution_status: "redistributable_with_notice"
     attribution: "Lenis by darkroom.engineering (https://github.com/darkroomengineering/lenis)"
     local_path: lenis
-    frameworks: [javascript, typescript, react]
+    frameworks: [javascript, typescript, react, vue]
     tags: [smooth-scroll, scroll, gsap-integration]
     last_checked: "2026-10-09"
     inspection_status: "inspected_local"

@@ -1,0 +1,350 @@
+# yaml-language-server: $schema=../schemas/patterns.schema.json
+#
+# Shader and graphics patterns: liquid-logo, liquid-glass-js and ShaderGradient, plus
+# original guidance on WebGL backgrounds. Every source_paths entry was read at the
+# pinned commit. ShaderGradient has no LICENSE file (status unknown), so its patterns
+# describe and cite only and the recipes use its public API without copying code.
+schema_version: 1
+patterns:
+  - id: liquid-metal-logo
+    title: "Liquid metal animated logo"
+    category: interactive-logo
+    summary: "Animate a transparent-background logo as a flowing liquid-metal surface in a WebGL canvas, using the logo alpha as a mask and its edges to steer a plasma-style fragment shader, with an original recipe that adds fallback, reduced motion and cost caps."
+    provenance: mixed
+    tags: [liquid-metal, chrome, logo, animated-logo, webgl, glsl, fragment-shader, alpha-mask, hero]
+    source_ids: [liquid-logo]
+    frameworks: [javascript, webgl, glsl]
+    dependencies: []
+    implementation_status: recipe_available
+    use_cases: ["animated logo in a hero", "brand intro or logo reveal", "liquid chrome logo for a landing page"]
+    performance:
+      gpu_intensity: high
+      fallback_required: true
+      notes: "Upstream renders a drawing buffer of up to 1500 by 1500 px with a loop of up to 16 iterations per pixel, never reads devicePixelRatio and never pauses. The recipe uses a one-texture-read shader, caps the buffer, pauses offscreen and keeps the img as fallback; it still needs WebGL."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "Keep the logo as an img with alt text and mark the canvas aria-hidden. The recipe shows a fixed still frame under prefers-reduced-motion. Upstream has no reduced-motion handling, no text alternative and a global Space-key handler."
+    source_paths:
+      - liquid-logo:fragment-shader.glsl
+      - liquid-logo:vertex-shader.glsl
+      - liquid-logo:main.js
+      - liquid-logo:presets.js
+      - liquid-logo:gui-controls.js
+    knowledge_doc: knowledge/shaders/liquid-metal-logo.md
+    recipe: knowledge/implementation-recipes/liquid-metal-logo-integration.md
+    related: [image-background-removal-for-logos, logo-video-export, webgl-effect-fallback-and-reduced-motion, glsl-background-fundamentals]
+    notes: "Upstream is an MIT browser tool, not a library. The recipe uses a different, simpler original technique (blurred alpha height map, normals, fake environment reflection) and explains how to wire upstream's uniforms if its plasma look is wanted. The demo logos upstream are third-party marks."
+
+  - id: image-background-removal-for-logos
+    title: "Logo background removal for mask-based shaders"
+    category: workflow
+    summary: "Prepare a logo for alpha-mask shader effects by making a plain black or white background transparent with a corner-sampled flood fill in a 2D canvas, or by supplying a PNG or SVG that already has real transparency."
+    provenance: upstream
+    tags: [alpha-mask, background-removal, flood-fill, canvas-2d, logo, image-preparation]
+    source_ids: [liquid-logo]
+    frameworks: [javascript]
+    dependencies: []
+    implementation_status: reference_only
+    use_cases: ["clean a logo upload before a shader effect", "client-side image cleanup without a server"]
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: "CPU work on the main thread at the original image size, with an array used as a queue; very large images can block the page (not measured)."
+    accessibility:
+      motion: none
+      reduced_motion_alternative: false
+      notes: "Image preparation only; the logo should still be exposed as an img with alt text."
+    source_paths:
+      - liquid-logo:background-removal.js
+      - liquid-logo:main.js
+    knowledge_doc: knowledge/shaders/liquid-metal-logo.md
+    related: [liquid-metal-logo]
+    notes: "Only uniform near-black or near-white backgrounds found from the four corners are handled; enclosed holes such as the inside of an O are not reached by the fill. Prefer an asset exported with real alpha."
+
+  - id: logo-video-export
+    title: "Export a WebGL canvas as PNG or MP4"
+    category: workflow
+    summary: "Export an animated WebGL canvas as a transparent PNG still or an MP4: WebCodecs VideoEncoder with a vendored mp4-muxer on desktop browsers other than Firefox, MediaRecorder on iOS, Android and Firefox."
+    provenance: upstream
+    tags: [video-export, webcodecs, mp4, mediarecorder, canvas, png-export, muxer]
+    source_ids: [liquid-logo]
+    frameworks: [javascript, webgl]
+    dependencies: [mp4-muxer]
+    implementation_status: reference_only
+    use_cases: ["export a logo animation as video", "generate a poster still for a fallback image"]
+    performance:
+      gpu_intensity: low
+      fallback_required: true
+      notes: "Frames are captured by a 30 fps timer that redraws the scene and encodes it; WebCodecs support and codec strings vary by browser, and upstream itself suggests a screen recorder when export fails."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "The PNG export gives a still image that can serve as a poster or reduced-motion fallback; keep the animated asset optional and muted."
+    source_paths:
+      - liquid-logo:canvasVideoExport.js
+      - liquid-logo:index.html
+      - liquid-logo:mp4-muxer-main/package.json
+      - liquid-logo:mp4-muxer-main/LICENSE
+    knowledge_doc: knowledge/shaders/liquid-metal-logo.md
+    related: [liquid-metal-logo]
+    notes: "mp4-muxer 4.3.3 is vendored upstream under its own MIT notice. The MediaRecorder path passes a type option where the API names mimeType, so the container is probably chosen by the browser (not tested). Browser choice is by user-agent sniffing."
+
+  - id: liquid-glass-container
+    title: "WebGL liquid glass container"
+    category: liquid-glass
+    summary: "A glass panel drawn by a WebGL canvas that refracts, blurs and tints a one-time html2canvas snapshot of the page, with rounded-rectangle, circle and pill shapes, edge, rim and tint parameters and support for nested glass children."
+    provenance: upstream
+    tags: [liquid-glass, glassmorphism, refraction, webgl, html2canvas, signed-distance, container]
+    source_ids: [liquid-glass-js]
+    frameworks: [javascript, webgl, glsl, css]
+    dependencies: [html2canvas]
+    implementation_status: reference_only
+    use_cases: ["hero glass panel over static imagery", "glass control panel for a prototype", "design exploration of glass parameters"]
+    performance:
+      gpu_intensity: high
+      fallback_required: true
+      notes: "One WebGL context per instance and about 770 texture reads per fragment by my count of the loops; redraws on every scroll event with no throttle. The page snapshot is static, so changing content behind the glass is not reflected."
+    accessibility:
+      motion: subtle
+      reduced_motion_alternative: true
+      notes: "Elements are plain divs with no role, tabindex or keyboard support, and white text sits on an arbitrary refracted image. The plain-CSS fallback in the knowledge note and recipe is the accessible default."
+    source_paths:
+      - liquid-glass-js:container.js
+      - liquid-glass-js:glass.css
+      - liquid-glass-js:controls.js
+      - liquid-glass-js:demo.js
+      - liquid-glass-js:README.md
+    knowledge_doc: knowledge/shaders/liquid-glass.md
+    related: [liquid-glass-button, liquid-glass-css-fallback]
+    notes: "The README says WebGL 2.0 but the code requests WebGL 1. There is no npm package or destroy method at the pinned commit. The library does not re-capture the snapshot; the demo does so on resize. Use sparingly."
+
+  - id: liquid-glass-button
+    title: "WebGL liquid glass button"
+    category: button
+    summary: "A pill, circle or rounded glass button that extends the glass container with a text overlay and click handler, and optionally nested glass that samples its parent container's canvas every frame."
+    provenance: upstream
+    tags: [liquid-glass, glass-button, pill, webgl, nested-glass, button]
+    source_ids: [liquid-glass-js]
+    frameworks: [javascript, webgl, glsl, css]
+    dependencies: [html2canvas]
+    implementation_status: reference_only
+    use_cases: ["showcase glass button in a hero", "glass media controls over a static image"]
+    performance:
+      gpu_intensity: medium
+      fallback_required: true
+      notes: "Small areas keep the cost modest, but each button owns a WebGL context; nested buttons run a requestAnimationFrame loop that copies the parent canvas into a texture every frame and cannot be stopped."
+    accessibility:
+      motion: subtle
+      reduced_motion_alternative: true
+      notes: "The click handler sits on a div: not focusable, no role, no keyboard activation. Use a native button in your own markup (see the recipe) and treat the WebGL button as decoration."
+    source_paths:
+      - liquid-glass-js:button.js
+      - liquid-glass-js:container.js
+      - liquid-glass-js:glass.css
+      - liquid-glass-js:demo.js
+    knowledge_doc: knowledge/shaders/liquid-glass.md
+    related: [liquid-glass-container, liquid-glass-css-fallback]
+    notes: "The README example passing borderRadius to a Button has no effect because Button never reads that option; sizes derive from the size option and type."
+
+  - id: liquid-glass-css-fallback
+    title: "Frosted glass with plain CSS"
+    category: liquid-glass
+    summary: "Glass-style cards, nav pills and buttons in plain CSS: backdrop blur and saturation, a tint and dark scrim, a gradient lit rim, @supports and user-preference fallbacks, and measured text-contrast guidance, with an optional WebGL layer behind a capability check."
+    provenance: mixed
+    tags: [glassmorphism, backdrop-filter, css-only, fallback, progressive-enhancement, contrast, liquid-glass]
+    source_ids: [liquid-glass-js]
+    frameworks: [css]
+    dependencies: []
+    implementation_status: recipe_available
+    use_cases: ["navigation bar or toolbar over imagery", "cards and buttons with a glass look", "accessible fallback for WebGL glass"]
+    performance:
+      gpu_intensity: low
+      fallback_required: true
+      notes: "backdrop-filter cost grows with blurred area and radius; avoid stacking large blurred layers and test on a mid-range phone. A solid background is the fallback where the property is unsupported or reduced transparency or increased contrast is requested."
+    accessibility:
+      motion: subtle
+      reduced_motion_alternative: true
+      notes: "Translucency alone failed 4.5:1 for white text over a bright backdrop in my test (worst 2.1:1 without a scrim, 4.9:1 with a 0.5 scrim). The recipe adds a scrim, prefers-contrast, prefers-reduced-transparency and forced-colors overrides, and removes hover transitions under reduced motion."
+    source_paths:
+      - liquid-glass-js:glass.css
+      - liquid-glass-js:container.js
+      - liquid-glass-js:README.md
+    knowledge_doc: knowledge/shaders/liquid-glass.md
+    recipe: knowledge/implementation-recipes/liquid-glass-ui-with-css-fallback.md
+    related: [liquid-glass-container, liquid-glass-button]
+    notes: "CSS cannot refract the backdrop. The structure (tint gradient, edge and rim emphasis, shadow) follows the layering visible in the upstream shader and CSS, but the CSS is original. prefers-reduced-transparency has limited support."
+
+  - id: shader-gradient-background
+    title: "Animated shader gradient background"
+    category: gradient
+    summary: "An animated full-bleed gradient drawn by a small fragment shader behind page content, with a matching CSS gradient fallback, a reduced-motion still frame, offscreen pausing and pixel caps; the ShaderGradient package is the dependency route for a 3D-noise look."
+    provenance: mixed
+    tags: [gradient, animated-background, webgl, glsl, noise, hero-background, mesh-gradient]
+    source_ids: [shadergradient]
+    frameworks: [javascript, webgl, glsl]
+    dependencies: []
+    implementation_status: recipe_available
+    use_cases: ["hero background", "section backdrop", "ambient gradient behind text"]
+    performance:
+      gpu_intensity: medium
+      fallback_required: true
+      notes: "The original shader renders at half resolution by default, capped at 1.2 million pixels and 30 fps, which is cheap; the ShaderGradient route adds a 3D mesh with up to tens of thousands of vertices, physical lighting and an optional halftone pass."
+    accessibility:
+      motion: subtle
+      reduced_motion_alternative: true
+      notes: "The recipe freezes a fixed frame under prefers-reduced-motion and lists text-contrast checks across the whole animation (a light end colour dropped white-text contrast to 1.7:1 in my test)."
+    source_paths:
+      - shadergradient:packages/shadergradient/src/shaders/defaults/plane/vertex.glsl
+      - shadergradient:packages/shadergradient/src/shaders/defaults/plane/fragment.glsl
+      - shadergradient:packages/shadergradient/src/ShaderGradientCanvas.tsx
+      - shadergradient:README.md
+    knowledge_doc: knowledge/shaders/shadergradient.md
+    recipe: knowledge/implementation-recipes/animated-shader-gradient-background.md
+    related: [shader-gradient-react, glsl-background-fundamentals, webgl-effect-fallback-and-reduced-motion]
+    notes: "Route A of the recipe is original code, not derived from ShaderGradient's shaders; the upstream files are listed to show how the package computes its default look. ShaderGradient has no LICENSE file, so nothing of it is reproduced."
+
+  - id: shader-gradient-react
+    title: "ShaderGradient in React"
+    category: gradient
+    summary: "Render a moving 3D-noise gradient with the ShaderGradient React package: a ShaderGradientCanvas wrapping a ShaderGradient mesh (plane, sphere or waterPlane) driven by colour, noise, animation, lighting and camera props, built on react-three-fiber and three."
+    provenance: mixed
+    tags: [shadergradient, gradient, react, nextjs, three, r3f, animated-background, webgl]
+    source_ids: [shadergradient]
+    frameworks: [react, nextjs, three, r3f, typescript, webgl, glsl]
+    dependencies: ["@shadergradient/react", "@react-three/fiber", three, three-stdlib, camera-controls, react, react-dom]
+    implementation_status: recipe_available
+    use_cases: ["landing page hero background", "product page backdrop", "Next.js or Vite animated gradient"]
+    performance:
+      gpu_intensity: medium
+      fallback_required: true
+      notes: "The render loop never stops (animate off stops time, not frames); waterPlane has 37k vertices running noise each frame, loop mode runs four noise samples, and the default grain pass adds a full-screen halftone render. lazyLoad unmounts the canvas offscreen. No WebGL detection, context-loss or reduced-motion handling in the React package."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "Set animate off with a fixed uTime when prefers-reduced-motion matches (shown in the recipe), set pointerEvents to none so the camera controls do not capture wheel or touch, and mark the wrapper aria-hidden."
+    source_paths:
+      - shadergradient:packages/shadergradient/src/ShaderGradientCanvas.tsx
+      - shadergradient:packages/shadergradient/src/ShaderGradient/ShaderGradient.tsx
+      - shadergradient:packages/shadergradient/src/ShaderGradient/Mesh/Mesh.tsx
+      - shadergradient:packages/shadergradient/src/types.ts
+      - shadergradient:README.md
+      - shadergradient:apps/examples/example-vite-react/src/App.tsx
+    knowledge_doc: knowledge/shaders/shadergradient.md
+    recipe: knowledge/implementation-recipes/animated-shader-gradient-background.md
+    related: [shader-gradient-background, shader-gradient-vue, shader-gradient-url-config]
+    notes: "Package is ESM only, with peers React 18 or 19, three 0.150 or newer and fiber 8 or newer; Next.js 15 App Router needs React 19 with fiber 9 per the README matrix. Only six-digit hex and integer rgb() colours parse. The licence is declared MIT in the README but no LICENSE file exists."
+
+  - id: shader-gradient-vue
+    title: "ShaderGradient for Vue and Nuxt"
+    category: gradient
+    summary: "The Vue 3 renderer for ShaderGradient on TresJS: an SSR-safe canvas with a fallback slot, automatic reduced-motion freezing, context release offscreen, aria-hidden and pointer-events none by default, and single-context view sharing."
+    provenance: upstream
+    tags: [shadergradient, gradient, vue, nuxt, tresjs, three, ssr, reduced-motion]
+    source_ids: [shadergradient]
+    frameworks: [vue, nuxt, three, tresjs, typescript, webgl, glsl]
+    dependencies: ["@shadergradient/vue", vue, "@tresjs/core", three]
+    implementation_status: reference_only
+    use_cases: ["Nuxt landing page background", "Vue hero gradient with a server-rendered fallback"]
+    performance:
+      gpu_intensity: medium
+      fallback_required: true
+      notes: "Same mesh and shader cost as the React package. Lazy loading unmounts the scene offscreen and releases the WebGL context; ShaderGradientSource plus ShaderGradientView render once and copy frames to 2D canvases so many views share one context."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "The package freezes time and disables camera transitions under prefers-reduced-motion (verified in its canvas component), is aria-hidden by default and recommends a pause control for continuous backgrounds."
+    source_paths:
+      - shadergradient:packages/shadergradient-vue/README.md
+      - shadergradient:packages/shadergradient-vue/src/ShaderGradientCanvas.ts
+      - shadergradient:packages/shadergradient-vue/src/ShaderGradient.ts
+      - shadergradient:packages/shadergradient-vue/src/ShaderGradientSource.ts
+    knowledge_doc: knowledge/shaders/shadergradient.md
+    related: [shader-gradient-react, webgl-effect-fallback-and-reduced-motion]
+    notes: "At the pinned commit CONTRIBUTING-VUE.md and the examples README say the package is not published yet (starters use a local tarball), so verify it on npm before depending on it. Requires Vue 3.5, TresJS 5 and three 0.180 or newer per its README."
+
+  - id: shader-gradient-url-config
+    title: "ShaderGradient settings from a customizer URL"
+    category: workflow
+    summary: "Design a gradient visually on the vendor's customizer, then paste its URL into the component with control set to query and urlString; React replaces the prop set with the parsed query, so the URL must be complete, while Vue merges missing values with defaults."
+    provenance: upstream
+    tags: [shadergradient, configuration, query-string, customizer, design-handoff]
+    source_ids: [shadergradient]
+    frameworks: [react, vue, typescript]
+    dependencies: ["@shadergradient/react"]
+    implementation_status: reference_only
+    use_cases: ["hand a designed gradient to developers as a URL", "reuse a customizer look without retyping props"]
+    performance:
+      gpu_intensity: medium
+      fallback_required: true
+      notes: "Configuration only; rendering cost is that of the underlying ShaderGradient mesh."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "The URL can carry animate on; override it with off for reduced motion as described in the recipe. Query mode in React ignores other props."
+    source_paths:
+      - shadergradient:README.md
+      - shadergradient:packages/shadergradient/src/ShaderGradient/ShaderGradient.tsx
+      - shadergradient:packages/shadergradient/src/utils/index.ts
+      - shadergradient:packages/shadergradient-vue/src/ShaderGradient.ts
+    knowledge_doc: knowledge/shaders/shadergradient.md
+    related: [shader-gradient-react, shader-gradient-vue]
+    notes: "From reading the code (not run): the React component strips known customizer host prefixes, parses numbers and booleans with query-string and then uses only the parsed values, so a missing type or shader would fail at shader lookup. The Vue component ignores unknown keys, invalid enum values and non-finite numbers."
+
+  - id: glsl-background-fundamentals
+    title: "GLSL background fundamentals for UI"
+    category: background-shader
+    summary: "Original guide to fragment-shader UI backgrounds: one oversized triangle, uniforms for resolution, time and pointer, DPR and size caps, ResizeObserver handling, pausing, throttling and mobile budgets, with examples verified in three upstream projects."
+    provenance: mixed
+    tags: [glsl, webgl, fragment-shader, uniforms, dpr, resize, performance, background, fundamentals]
+    source_ids: [liquid-logo, liquid-glass-js, shadergradient]
+    frameworks: [javascript, webgl, glsl]
+    dependencies: []
+    implementation_status: recipe_available
+    use_cases: ["start a shader background without a library", "review a shader effect for cost and robustness"]
+    performance:
+      gpu_intensity: medium
+      fallback_required: true
+      notes: "Cost is pixels times per-pixel work times frame rate. The guide recommends a pixel cap, a 0.5 to 0.75 render scale and 30 fps for ambient effects, flagged as rules of thumb to verify on a mid-range phone."
+    accessibility:
+      motion: subtle
+      reduced_motion_alternative: true
+      notes: "Covers prefers-reduced-motion still frames, pause controls (WCAG 2.2.2), flash limits (WCAG 2.3.1), aria-hidden canvases and contrast checks against the worst frame."
+    source_paths:
+      - liquid-logo:main.js
+      - liquid-glass-js:container.js
+      - shadergradient:packages/shadergradient/src/consts.ts
+      - shadergradient:packages/shadergradient-vue/src/ShaderGradientCanvas.ts
+    knowledge_doc: knowledge/shaders/glsl-ui-fundamentals.md
+    recipe: knowledge/implementation-recipes/animated-shader-gradient-background.md
+    related: [webgl-effect-fallback-and-reduced-motion, shader-gradient-background, liquid-metal-logo]
+    notes: "Original guidance; the upstream files are cited only as verified examples of what each project does or omits."
+
+  - id: webgl-effect-fallback-and-reduced-motion
+    title: "WebGL effect fallback, reduced motion and teardown"
+    category: background-shader
+    summary: "Make any WebGL visual resilient: ask for a hardware context, keep an img or CSS fallback underneath, show a still frame for reduced motion, pause offscreen and in hidden tabs, recover from context loss and release the context on teardown."
+    provenance: mixed
+    tags: [webgl, fallback, reduced-motion, context-loss, intersection-observer, progressive-enhancement, accessibility]
+    source_ids: [liquid-logo, shadergradient]
+    frameworks: [javascript, webgl, react, vue]
+    dependencies: []
+    implementation_status: recipe_available
+    use_cases: ["harden a hero WebGL effect", "add reduced-motion support to a shader background"]
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: "Wrapper logic around an effect; it reduces cost by pausing offscreen, capping the buffer and releasing contexts."
+    accessibility:
+      motion: none
+      reduced_motion_alternative: true
+      notes: "Implements the prefers-reduced-motion still frame and a pause-friendly structure; the effect's canvas stays aria-hidden and meaning stays in DOM content."
+    source_paths:
+      - shadergradient:packages/shadergradient-vue/src/ShaderGradientCanvas.ts
+      - shadergradient:packages/shadergradient-vue/src/shared.ts
+      - shadergradient:packages/shadergradient/src/hooks/useInView.ts
+      - liquid-logo:main.js
+    knowledge_doc: knowledge/shaders/glsl-ui-fundamentals.md
+    recipe: knowledge/implementation-recipes/animated-shader-gradient-background.md
+    related: [glsl-background-fundamentals, liquid-metal-logo, shader-gradient-vue]
+    notes: "Upstream baseline: liquid-logo alerts when WebGL is missing and has no pause, reduced-motion or context-loss handling; ShaderGradient React has only lazy mounting; the Vue package adds reduced motion and explicit context release."

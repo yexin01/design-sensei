@@ -81,7 +81,7 @@ def check_layout(layout: Layout) -> List[Check]:
         out.append(Check(FAIL, "library", "%s is not writable" % probe, "set DESIGN_SENSEI_HOME to a writable directory"))
     else:
         free = sync_sources.free_mb(layout.home)
-        out.append(Check(OK if free > 2048 else WARN, "disk", "%d MB free near the library" % free, "a full library needs roughly 600 MB" if free <= 2048 else ""))
+        out.append(Check(OK if free > 2048 else WARN, "disk", "%d MB free near the library" % free, "a full library needs roughly 300 MB" if free <= 2048 else ""))
     return out
 
 

@@ -1,0 +1,389 @@
+# yaml-language-server: $schema=../schemas/patterns.schema.json
+#
+# 3D graphics patterns: React Three Fiber (react-three-fiber) and img2threejs.
+# Ids are prefixed r3f- and image-to-3d-. Performance values are conservative
+# estimates from reading the sources; nothing here was benchmarked.
+schema_version: 1
+patterns:
+  - id: r3f-canvas-setup
+    title: React Three Fiber Canvas and declarative scene setup
+    category: three-scene
+    summary: Mount a declarative three.js scene in a React page with the R3F Canvas, which creates the renderer, scene, camera and render loop and fits the size of its parent element.
+    provenance: upstream
+    tags: [react-three-fiber, r3f, three, webgl, canvas, 3d, scene-graph, jsx]
+    source_ids: [react-three-fiber]
+    frameworks: [react, nextjs, typescript, three, r3f, webgl]
+    dependencies: [three, "@react-three/fiber", react, react-dom]
+    implementation_status: recipe_available
+    use_cases: [marketing site, hero object, interactive 3D section]
+    performance:
+      gpu_intensity: medium
+      fallback_required: true
+      notes: "Renders every display frame by default (frameloop always). One Canvas owns one WebGL context, and browsers cap live contexts. Control cost with dpr, frameloop and scene size."
+    accessibility:
+      motion: none
+      reduced_motion_alternative: true
+      notes: "R3F has no built-in accessibility or reduced-motion handling. The recipe adds a reduced-motion switch, a static poster and aria attributes on the wrapper."
+    source_paths:
+      - react-three-fiber:docs/getting-started/your-first-scene.mdx
+      - react-three-fiber:docs/getting-started/installation.mdx
+      - react-three-fiber:docs/API/canvas.mdx
+      - react-three-fiber:packages/fiber/src/web/Canvas.tsx
+      - react-three-fiber:packages/fiber/src/core/configuration.ts
+    knowledge_doc: knowledge/components/react-three-fiber.md
+    recipe: knowledge/implementation-recipes/r3f-canvas-in-a-page-with-fallback.md
+    related: [r3f-lazy-canvas-webgl-fallback, r3f-on-demand-rendering, r3f-frame-loop-animation]
+    notes: "Canvas needs a parent with a real height. Version pairing at the pin: @react-three/fiber 9.x with React 19 (peer range >=19 <19.4) and three >=0.156."
+
+  - id: r3f-lazy-canvas-webgl-fallback
+    title: Lazy-mounted R3F canvas with WebGL detection and static fallback
+    category: three-scene
+    summary: Fetch the three.js and R3F chunk only when the section nears the viewport and WebGL works, idle rendering off-screen, and show a static poster when WebGL is missing, the renderer throws or the context is lost.
+    provenance: mixed
+    tags: [lazy-loading, webgl-detection, fallback, error-boundary, intersection-observer, poster, reduced-motion, r3f, 3d]
+    source_ids: [react-three-fiber]
+    frameworks: [react, nextjs, typescript, r3f, three, webgl]
+    dependencies: [three, "@react-three/fiber", react]
+    implementation_status: recipe_available
+    use_cases: [marketing site, hero object, progressive enhancement]
+    performance:
+      gpu_intensity: medium
+      fallback_required: true
+      notes: "The 3D chunk is not downloaded until needed and rendering idles with frameloop demand when off-screen or under reduced motion. When active, cost is that of the scene itself."
+    accessibility:
+      motion: subtle
+      reduced_motion_alternative: true
+      notes: "Honours prefers-reduced-motion by rendering a static frame. The poster needs real alt text; the wrapper carries role img and a label."
+    source_paths:
+      - react-three-fiber:docs/API/canvas.mdx
+      - react-three-fiber:packages/fiber/src/web/Canvas.tsx
+      - react-three-fiber:packages/fiber/src/core/root.tsx
+      - react-three-fiber:packages/fiber/src/core/renderer.ts
+      - react-three-fiber:packages/fiber/tests/canvas.test.tsx
+    knowledge_doc: knowledge/components/react-three-fiber.md
+    recipe: knowledge/implementation-recipes/r3f-canvas-in-a-page-with-fallback.md
+    related: [r3f-canvas-setup, r3f-on-demand-rendering]
+    notes: "The Canvas fallback prop is rendered inside the canvas element and is not a WebGL detector; the recipe uses an error boundary, a context probe and a webglcontextlost listener. Those browser parts are original and not covered by the R3F docs."
+
+  - id: r3f-frame-loop-animation
+    title: Animate with useFrame and refs instead of React state
+    category: animation
+    summary: Drive continuous animation by mutating three.js objects inside useFrame with clamped frame deltas instead of calling setState, so animation runs outside React's render cycle.
+    provenance: upstream
+    tags: [useframe, animation, delta-time, refs, transient-updates, r3f, 3d, performance]
+    source_ids: [react-three-fiber]
+    frameworks: [react, typescript, r3f, three]
+    dependencies: [three, "@react-three/fiber", react]
+    implementation_status: recipe_available
+    use_cases: [rotating product, ambient motion, interactive 3D]
+    performance:
+      gpu_intensity: medium
+      fallback_required: true
+      notes: "Callbacks run on every rendered frame, so keep them free of allocations. The loop is cheap; cost scales with the scene."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "The animation note and the product recipe gate motion on prefers-reduced-motion and offer a pause control."
+    source_paths:
+      - react-three-fiber:docs/advanced/pitfalls.mdx
+      - react-three-fiber:docs/tutorials/basic-animations.mdx
+      - react-three-fiber:docs/API/hooks.mdx
+      - react-three-fiber:packages/fiber/src/core/loop.ts
+      - react-three-fiber:packages/fiber/src/core/hooks.tsx
+    knowledge_doc: knowledge/animations/r3f-animation-and-performance.md
+    recipe: knowledge/implementation-recipes/r3f-product-showcase-scene.md
+    related: [r3f-on-demand-rendering, r3f-product-showcase-scene]
+    notes: "The raw clock delta is passed through, so clamp it after long idle periods. Changing frameloop resets clock.elapsedTime."
+
+  - id: r3f-on-demand-rendering
+    title: On-demand rendering with frameloop demand and invalidate
+    category: three-scene
+    summary: Render only when something changes by setting frameloop to demand and calling invalidate after mutations made outside React, so idle 3D scenes stop using the GPU, battery and fans.
+    provenance: upstream
+    tags: [frameloop, demand, invalidate, on-demand-rendering, battery, idle, r3f, performance, 3d]
+    source_ids: [react-three-fiber]
+    frameworks: [react, nextjs, typescript, r3f, three]
+    dependencies: [three, "@react-three/fiber", react]
+    implementation_status: recipe_available
+    use_cases: [static product view, scroll section with occasional motion, battery-friendly 3D]
+    performance:
+      gpu_intensity: medium
+      fallback_required: true
+      notes: "Idle scenes render nothing, but every rendered frame costs as much as the scene. The pattern lowers cost, it does not remove the need for a GPU."
+    accessibility:
+      motion: none
+      reduced_motion_alternative: true
+      notes: "A scene that renders only on interaction is a natural reduced-motion state; the recipe switches frameloop when the user prefers reduced motion."
+    source_paths:
+      - react-three-fiber:docs/advanced/scaling-performance.mdx
+      - react-three-fiber:docs/API/additional-exports.mdx
+      - react-three-fiber:packages/fiber/src/core/loop.ts
+      - react-three-fiber:packages/fiber/src/core/store.ts
+    knowledge_doc: knowledge/animations/r3f-animation-and-performance.md
+    recipe: knowledge/implementation-recipes/r3f-canvas-in-a-page-with-fallback.md
+    related: [r3f-frame-loop-animation, r3f-lazy-canvas-webgl-fallback]
+    notes: "invalidate only sets a flag. Controls and other code that mutate the scene outside React must call it."
+
+  - id: r3f-adaptive-resolution-performance
+    title: Adaptive resolution with dpr range and performance regression
+    category: three-scene
+    summary: Bound pixel cost with the Canvas dpr range, optionally disable antialiasing, and use performance.regress to lower resolution while the camera moves and restore it afterwards.
+    provenance: upstream
+    tags: [dpr, pixel-ratio, performance, regress, adaptive-quality, antialias, r3f, 3d]
+    source_ids: [react-three-fiber]
+    frameworks: [react, typescript, r3f, three]
+    dependencies: [three, "@react-three/fiber", react]
+    implementation_status: reference_only
+    use_cases: [mobile friendly 3D, heavy post-processing, high-density displays]
+    performance:
+      gpu_intensity: medium
+      fallback_required: true
+      notes: "Reduces fill cost on dense screens. The docs give no measured savings and the figures in this catalog were not benchmarked."
+    accessibility:
+      motion: none
+      reduced_motion_alternative: false
+      notes: "Not a motion pattern; quality changes should be gradual to avoid visible flicker."
+    source_paths:
+      - react-three-fiber:docs/advanced/scaling-performance.mdx
+      - react-three-fiber:docs/API/canvas.mdx
+      - react-three-fiber:packages/fiber/src/core/store.ts
+      - react-three-fiber:packages/fiber/src/core/configuration.ts
+      - react-three-fiber:packages/fiber/tests/dpr.test.tsx
+    knowledge_doc: knowledge/animations/r3f-animation-and-performance.md
+    related: [r3f-on-demand-rendering, r3f-instancing-and-resource-reuse]
+    notes: "In 9.8.1 a runtime setDpr is reset by the next Canvas re-render (the prop wins), although canvas.mdx says otherwise; hold the ratio in React state and pass it as the dpr prop. performance.regress does nothing unless your code reads performance.current."
+
+  - id: r3f-instancing-and-resource-reuse
+    title: Instancing, shared resources and explicit disposal in R3F
+    category: three-scene
+    summary: Cut draw calls and memory by instancing repeated meshes, sharing geometries and materials, caching loads with useLoader, and controlling disposal with dispose null and manual disposal of primitives.
+    provenance: upstream
+    tags: [instancing, instancedmesh, draw-calls, dispose, memory, geometry-reuse, r3f, performance, 3d]
+    source_ids: [react-three-fiber]
+    frameworks: [react, typescript, r3f, three]
+    dependencies: [three, "@react-three/fiber", react]
+    implementation_status: reference_only
+    use_cases: [particle fields, repeated objects, long-lived pages with route changes]
+    performance:
+      gpu_intensity: medium
+      fallback_required: true
+      notes: "Docs guidance: each mesh is a draw call; stay well under 1000 and preferably a few hundred. Instancing renders many copies in one call."
+    accessibility:
+      motion: none
+      reduced_motion_alternative: false
+      notes: "Not a motion pattern."
+    source_paths:
+      - react-three-fiber:docs/advanced/scaling-performance.mdx
+      - react-three-fiber:docs/advanced/pitfalls.mdx
+      - react-three-fiber:docs/API/objects.mdx
+      - react-three-fiber:packages/fiber/src/core/reconciler.tsx
+      - react-three-fiber:packages/eslint-plugin/docs/rules/no-new-in-loop.md
+    knowledge_doc: knowledge/animations/r3f-animation-and-performance.md
+    related: [r3f-gltf-loading-suspense, r3f-adaptive-resolution-performance]
+    notes: "R3F disposes unmounted declarative objects at idle priority, never disposes primitive objects, and honours dispose null for a whole subtree."
+
+  - id: r3f-gltf-loading-suspense
+    title: Load GLTF models with useLoader, Suspense and primitive
+    category: three-scene
+    summary: Load glTF or GLB models with useLoader and GLTFLoader inside Suspense, mount the scene with a primitive, configure Draco through loader extensions, and let load errors reach an error boundary.
+    provenance: upstream
+    tags: [gltf, glb, useloader, suspense, primitive, draco, model-loading, r3f, 3d]
+    source_ids: [react-three-fiber]
+    frameworks: [react, nextjs, typescript, r3f, three]
+    dependencies: [three, "@react-three/fiber", react]
+    implementation_status: recipe_available
+    use_cases: [product model, hero 3D asset, model viewer]
+    performance:
+      gpu_intensity: medium
+      fallback_required: true
+      notes: "Model and texture sizes dominate load time and memory; the docs set no budget. Loaded assets are cached by URL and are not disposed when the component unmounts."
+    accessibility:
+      motion: none
+      reduced_motion_alternative: false
+      notes: "Provide a text description of what the model shows."
+    source_paths:
+      - react-three-fiber:docs/tutorials/loading-models.mdx
+      - react-three-fiber:docs/API/hooks.mdx
+      - react-three-fiber:packages/fiber/src/core/hooks.tsx
+      - react-three-fiber:example/src/demos/Gltf.tsx
+      - react-three-fiber:example/src/demos/SuspenseAndErrors.tsx
+    knowledge_doc: knowledge/components/react-three-fiber.md
+    recipe: knowledge/implementation-recipes/r3f-product-showcase-scene.md
+    related: [r3f-product-showcase-scene, r3f-instancing-and-resource-reuse]
+    notes: "The docs also use drei helpers (useGLTF, gltfjsx output, useProgress); drei is a separate package and was not reviewed."
+
+  - id: r3f-pointer-events-interaction
+    title: Pointer events and interaction on R3F objects
+    category: three-scene
+    summary: Attach click, hover, wheel and pointer handlers directly to meshes while R3F handles raycasting, propagation, stopPropagation and pointer capture, with onPointerMissed for background clicks.
+    provenance: upstream
+    tags: [pointer-events, raycasting, hover, click, stoppropagation, pointer-capture, interaction, r3f, 3d]
+    source_ids: [react-three-fiber]
+    frameworks: [react, typescript, r3f, three]
+    dependencies: [three, "@react-three/fiber", react]
+    implementation_status: reference_only
+    use_cases: [clickable 3D objects, hover highlights, product hotspots]
+    performance:
+      gpu_intensity: medium
+      fallback_required: true
+      notes: "Raycasting runs on pointer movement and covers only objects that declare handlers. Avoid setState in fast pointer handlers."
+    accessibility:
+      motion: none
+      reduced_motion_alternative: false
+      notes: "Pointer-only by default. Offer keyboard-reachable DOM controls for important actions."
+    source_paths:
+      - react-three-fiber:docs/API/events.mdx
+      - react-three-fiber:docs/tutorials/events-and-interaction.mdx
+      - react-three-fiber:packages/fiber/src/core/events.ts
+      - react-three-fiber:packages/fiber/src/web/events.ts
+      - react-three-fiber:example/src/demos/StopPropagation.tsx
+    knowledge_doc: knowledge/components/react-three-fiber.md
+    related: [r3f-frame-loop-animation, r3f-on-demand-rendering]
+    notes: "Objects are transparent to pointer events by default; call stopPropagation in a pointer handler to block objects behind. Raycasting only runs on user input unless you call events.update."
+
+  - id: r3f-product-showcase-scene
+    title: Rotating product viewer scene in R3F
+    category: product-showcase
+    summary: A draggable, slowly rotating product viewer with a GLTF model fitted to the view, studio lighting from a room environment, on-demand rendering, a pause control and a reduced-motion state.
+    provenance: mixed
+    tags: [product-viewer, product-showcase, turntable, orbit-controls, gltf, environment-lighting, r3f, 3d, ecommerce]
+    source_ids: [react-three-fiber]
+    frameworks: [react, nextjs, typescript, r3f, three, webgl]
+    dependencies: [three, "@react-three/fiber", react]
+    implementation_status: recipe_available
+    use_cases: [e-commerce product page, product launch, hero object]
+    performance:
+      gpu_intensity: medium
+      fallback_required: true
+      notes: "Standard materials plus an image-based environment; cost follows the model. The recipe caps dpr at 1.5 and renders on demand when not spinning. Not benchmarked."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "Rotation is off under prefers-reduced-motion, a pause button is provided, and the canvas has a label. Describe the product in text as well."
+    source_paths:
+      - react-three-fiber:docs/tutorials/loading-models.mdx
+      - react-three-fiber:docs/advanced/scaling-performance.mdx
+      - react-three-fiber:docs/tutorials/v9-migration-guide.mdx
+      - react-three-fiber:example/src/demos/Gltf.tsx
+      - react-three-fiber:example/src/demos/Activity.tsx
+    knowledge_doc: knowledge/components/react-three-fiber.md
+    recipe: knowledge/implementation-recipes/r3f-product-showcase-scene.md
+    related: [r3f-gltf-loading-suspense, r3f-frame-loop-animation, r3f-lazy-canvas-webgl-fallback]
+    notes: "Built from R3F and three.js add-ons only. drei offers controls and environments too, but its API was not reviewed for this catalog."
+
+  - id: r3f-test-renderer-unit-tests
+    title: Unit-test R3F scenes with the test renderer
+    category: workflow
+    summary: Test scene graphs, props, pointer events and useFrame logic in Node without WebGL using @react-three/test-renderer, with create, fireEvent, advanceFrames and toGraph.
+    provenance: upstream
+    tags: [testing, test-renderer, jest, unit-tests, scene-graph, r3f]
+    source_ids: [react-three-fiber]
+    frameworks: [react, typescript, r3f, three]
+    dependencies: ["@react-three/test-renderer", "@react-three/fiber", three]
+    implementation_status: reference_only
+    use_cases: [component tests for 3D scenes, regression tests for interaction logic]
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: "No WebGLRenderer is created by default and the frame loop is manual (frameloop never); it checks structure and logic, not pixels."
+    accessibility:
+      motion: none
+      reduced_motion_alternative: false
+      notes: "Not a visual pattern."
+    source_paths:
+      - react-three-fiber:docs/API/testing.mdx
+      - react-three-fiber:packages/test-renderer/README.md
+      - react-three-fiber:packages/test-renderer/markdown/rttr.md
+      - react-three-fiber:packages/test-renderer/src/index.tsx
+    knowledge_doc: knowledge/components/react-three-fiber.md
+    related: [r3f-pointer-events-interaction, r3f-frame-loop-animation]
+    notes: "The package README calls it an experimental renderer. Peer ranges at the pin: react ^19, @react-three/fiber >=9, three >=0.156."
+
+  - id: image-to-3d-img2threejs-pipeline
+    title: Reference image to procedural Three.js model with img2threejs
+    category: image-to-3d
+    summary: A gated agent workflow that rebuilds the object in one reference image as a code-only Three.js factory through intake, spec, locked build passes and render review, with a resumable checklist and bounded corrections.
+    provenance: upstream
+    tags: [image-to-3d, img2threejs, procedural-modeling, threejs, agent-skill, reconstruction, quality-gates, product-3d]
+    source_ids: [img2threejs]
+    frameworks: [three, typescript, python, nodejs, react, r3f]
+    dependencies: [three, img2threejs, "python>=3.10"]
+    implementation_status: recipe_available
+    use_cases: [product 3D from a photo, hero prop, stylized object reconstruction]
+    performance:
+      gpu_intensity: medium
+      fallback_required: true
+      notes: "Output cost follows the spec's triangle budget (up to 6000 low, up to 60000 standard, otherwise hero) with physical materials and generated canvas textures; not benchmarked. The process is token heavy, with documented estimates of 80k to 180k tokens per object."
+    accessibility:
+      motion: subtle
+      reduced_motion_alternative: true
+      notes: "The model is static unless you animate it. The recipe keeps idle animation off under prefers-reduced-motion and keeps a static poster for failures."
+    source_paths:
+      - img2threejs:SKILL.md
+      - img2threejs:README.md
+      - img2threejs:docs/ARCHITECTURE.md
+      - img2threejs:docs/standard-prompts/build.md
+      - img2threejs:forge/_shared/workflow_state.py
+      - img2threejs:forge/stage3_build/generate_threejs_factory.py
+    knowledge_doc: knowledge/components/img2threejs.md
+    recipe: knowledge/implementation-recipes/image-to-3d-with-img2threejs.md
+    related: [image-to-3d-review-gates-and-correction-loop, r3f-product-showcase-scene, r3f-canvas-setup]
+    notes: "Best for hard-surface objects; one image cannot show hidden sides. Apache-2.0: keep the licence text, mark changes, keep notices. Docs say the emitter takes (spec, options) but the generator code emits create<Name>Model(options)."
+
+  - id: image-to-3d-review-gates-and-correction-loop
+    title: Render-versus-reference review gates for generated 3D
+    category: image-to-3d
+    summary: Deterministic diagnostics, multi-angle checks and one side-by-side sheet judged by agent vision decide each build pass, with exactly one action per review and hard ceilings on correction loops.
+    provenance: upstream
+    tags: [review-gates, quality-gates, visual-review, self-correction, comparison-sheet, divine-eye, image-to-3d, qa]
+    source_ids: [img2threejs]
+    frameworks: [python, three, nodejs]
+    dependencies: ["python>=3.10"]
+    implementation_status: reference_only
+    use_cases: [verify a generated 3D model against its reference, bounded agent self-correction]
+    performance:
+      gpu_intensity: low
+      fallback_required: false
+      notes: "Runs offline in stdlib Python plus browser screenshots; no cost on the shipped page. Each review cycle is estimated at 5k to 12k model tokens."
+    accessibility:
+      motion: none
+      reduced_motion_alternative: false
+      notes: "Process pattern, not a visual one."
+    source_paths:
+      - img2threejs:grimoire/review/gates_reference.md
+      - img2threejs:grimoire/review/self_correction.md
+      - img2threejs:forge/stage4_review/diagnose_render.py
+      - img2threejs:forge/stage4_review/make_comparison_sheet.py
+      - img2threejs:forge/stage4_review/append_review.py
+    knowledge_doc: knowledge/components/img2threejs.md
+    related: [image-to-3d-img2threejs-pipeline]
+    notes: "Silhouette IoU and SSIM against a photograph mostly measure framing and lighting; judge each pass with agent vision and a three-quarter render. Defaults: acceptance score 0.7, 3 corrections per pass, 6 in total."
+
+  - id: image-to-3d-procedural-rig-animation-gates
+    title: Procedural rig and animation gates for generated characters
+    category: image-to-3d
+    summary: A skeleton derived from the component tree, geodesic skin weights and gates G1 to G10 that prove clips actually drive the mesh, where an unmeasured gate reports unevaluated instead of passing.
+    provenance: upstream
+    tags: [rigging, skinning, skeleton, animation-clips, skinned-mesh, animation-gates, character, image-to-3d]
+    source_ids: [img2threejs]
+    frameworks: [three, python, typescript]
+    dependencies: [three, "python>=3.10"]
+    implementation_status: reference_only
+    use_cases: [animated stylized character, rigged hero mascot]
+    performance:
+      gpu_intensity: medium
+      fallback_required: true
+      notes: "Skinned meshes and an animation mixer add per-frame CPU and GPU work; not measured in the sources."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "Catalog guidance: do not play clips under prefers-reduced-motion and show the rest pose instead."
+    source_paths:
+      - img2threejs:grimoire/readiness/animation_contract.md
+      - img2threejs:grimoire/readiness/procedural_rigging_contract.md
+      - img2threejs:forge/stage5_rig/rig_gates.py
+      - img2threejs:forge/stage5_rig/validate_rig_payload.py
+      - img2threejs:forge/stage5_rig/emit_animation_runtime.py
+    knowledge_doc: knowledge/components/img2threejs.md
+    related: [image-to-3d-img2threejs-pipeline]
+    notes: "Character oriented and stylized. The animated-character checklist and its gates come from the separately installed plugin-character; stage5_rig is the in-repo library. Not shipped: IK, pose-sweep gating, clothing."

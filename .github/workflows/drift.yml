@@ -1,0 +1,29 @@
+name: Upstream drift check
+
+# Downloads every upstream source at its pinned commit and verifies every file
+# citation and license. Catches upstreams that were rewritten or deleted.
+on:
+  schedule:
+    - cron: "17 4 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  drift:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Download all sources at their pinned commits
+        run: ./bin/design-sensei setup --full
+      - name: Every cited file exists at the pinned commit
+        run: ./bin/design-sensei catalog validate --strict --require-sources
+      - name: Licenses still match the catalog and the recorded review
+        run: ./bin/design-sensei licenses check
+      - name: Report upstreams that moved past their pin
+        run: ./bin/design-sensei sources status --check-upstream

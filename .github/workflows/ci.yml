@@ -1,0 +1,59 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: tests (${{ matrix.os }}, Python ${{ matrix.python }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        python: ["3.9", "3.10", "3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Unit, integration and design-evaluation tests (no network)
+        run: python -m unittest discover -s tests -t . -v
+      - name: Cross-check the YAML parser against PyYAML
+        run: |
+          python -m pip install pyyaml
+          python -m unittest tests.unit.test_yamlite -v
+
+  catalog:
+    name: catalog and generated files
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate catalog structure and references (sources not downloaded)
+        run: ./bin/design-sensei catalog validate --strict
+      - name: Pattern index is up to date
+        run: ./bin/design-sensei index build --check
+      - name: Attribution report is up to date
+        run: ./bin/design-sensei licenses report --check
+      - name: Plugin and marketplace manifests are valid JSON with required fields
+        run: |
+          python - <<'PY'
+          import json
+          plugin = json.load(open(".claude-plugin/plugin.json"))
+          market = json.load(open(".claude-plugin/marketplace.json"))
+          assert plugin["name"] == "design-sensei" and plugin["version"], plugin
+          assert [p["name"] for p in market["plugins"]] == ["design-sensei"], market
+          print("manifests ok:", plugin["name"], plugin["version"])
+          PY
+      - name: Launchers are executable
+        run: test -x bin/design-sensei && test -x skills/design-sensei/scripts/design-sensei
+      - name: Doctor on a clean checkout
+        run: ./bin/design-sensei doctor

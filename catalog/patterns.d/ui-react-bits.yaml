@@ -1,0 +1,459 @@
+# Patterns derived from React Bits (MIT + Commons Clause). Descriptions and paths only, no upstream code.
+schema_version: 1
+patterns:
+  - id: react-bits-ogl-shader-backgrounds
+    title: "React Bits OGL shader backgrounds"
+    category: background-shader
+    summary: "Full-bleed fragment-shader backdrops on the small OGL WebGL library (Aurora, DarkVeil, Galaxy, LiquidChrome and about 30 more backgrounds), installed as copy-in React components."
+    provenance: upstream
+    tags: [webgl, shader, ogl, background, hero, fragment-shader]
+    source_ids: [react-bits]
+    frameworks: [react, nextjs, typescript, javascript, tailwind, css, webgl, glsl]
+    dependencies: [ogl]
+    implementation_status: recipe_available
+    use_cases: [hero background, landing page atmosphere, dark marketing site, section backdrop]
+    performance:
+      gpu_intensity: medium
+      fallback_required: true
+      notes: "34 of 59 backgrounds use OGL. Older single-file shaders (Aurora, DarkVeil) run a frame loop forever with no offscreen, hidden-tab or reduced-motion handling; 26 of 53 GPU backgrounds have no visibility gating at all. Renderer creation has no user-facing failure path. Wrap in the GpuSlot from the budget recipe."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "Decorative, so wrap in aria-hidden. Only 10 of 53 GPU backgrounds read prefers-reduced-motion; the budget recipe renders a static layer instead."
+    source_paths:
+      - react-bits:src/ts-tailwind/Backgrounds/Aurora/Aurora.tsx
+      - react-bits:src/ts-tailwind/Backgrounds/DarkVeil/DarkVeil.tsx
+      - react-bits:src/ts-tailwind/Backgrounds/Galaxy/Galaxy.tsx
+      - react-bits:src/ts-tailwind/Backgrounds/LiquidChrome/LiquidChrome.tsx
+    knowledge_doc: knowledge/components/react-bits-catalog.md
+    recipe: knowledge/implementation-recipes/react-bits-heavy-background-budget.md
+    related: [react-bits-self-pausing-shader-backgrounds, react-bits-three-r3f-backgrounds, react-bits-webgpu-backgrounds, react-bits-canvas-grid-backgrounds]
+    notes: "Licence: MIT plus Commons Clause. Use inside your own app only, never redistribute (see knowledge/implementation-recipes/react-bits-license-safe-usage.md)."
+
+  - id: react-bits-self-pausing-shader-backgrounds
+    title: "React Bits self-pausing shader backgrounds"
+    category: background-shader
+    summary: "Newer React Bits shader backgrounds that carry their own safeguards: pause offscreen and in hidden tabs, freeze under reduced motion, and expose paused, fps or pixel-ratio props (Plasma, PatternWaves, MicroSlats, GhostFibers, Threads, Iridescence)."
+    provenance: upstream
+    tags: [webgl, shader, background, performance, pause, reduced-motion]
+    source_ids: [react-bits]
+    frameworks: [react, nextjs, typescript, javascript, tailwind, css, webgl, glsl]
+    dependencies: [ogl]
+    implementation_status: recipe_available
+    use_cases: [always-visible hero, interactive pointer backdrop, landing page atmosphere]
+    performance:
+      gpu_intensity: medium
+      fallback_required: true
+      notes: "Plasma exposes render-scale, max-DPR, target-fps and iteration props and handles context loss; PatternWaves, MicroSlats and GhostFibers add a paused prop. Threads and Iridescence use raw WebGL2 (no ogl). WebGL init failure is still silent, so keep a static fallback."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "Plasma paints one static frame under reduced motion; PatternWaves, MicroSlats, GhostFibers, Threads and Iridescence also check the preference. Budget recipe adds a static layer for the rest."
+    source_paths:
+      - react-bits:src/ts-tailwind/Backgrounds/Plasma/Plasma.tsx
+      - react-bits:src/ts-tailwind/Backgrounds/PatternWaves/PatternWaves.tsx
+      - react-bits:src/ts-tailwind/Backgrounds/MicroSlats/MicroSlats.tsx
+      - react-bits:src/ts-tailwind/Backgrounds/GhostFibers/GhostFibers.tsx
+    knowledge_doc: knowledge/components/react-bits-catalog.md
+    recipe: knowledge/implementation-recipes/react-bits-heavy-background-budget.md
+    related: [react-bits-ogl-shader-backgrounds, react-bits-webgpu-backgrounds]
+    notes: "Licence: MIT plus Commons Clause. Use inside your own app only, never redistribute (see knowledge/implementation-recipes/react-bits-license-safe-usage.md)."
+
+  - id: react-bits-three-r3f-backgrounds
+    title: "React Bits three.js and R3F backgrounds"
+    category: three-scene
+    summary: "Backgrounds built on three.js or React Three Fiber (Beams, Silk, Dither, Hyperspeed, LiquidEther, Ballpit, GridScan, PixelBlast): heavier scenes with bloom, post-processing or simulation, installed as copy-in components."
+    provenance: upstream
+    tags: [three, r3f, webgl, background, postprocessing, 3d]
+    source_ids: [react-bits]
+    frameworks: [react, nextjs, typescript, javascript, tailwind, css, webgl, three, r3f]
+    dependencies: [three, "@react-three/fiber", "@react-three/drei", "@react-three/postprocessing", postprocessing]
+    implementation_status: recipe_available
+    use_cases: [one-off hero spectacle, 3D atmosphere, product landing page]
+    performance:
+      gpu_intensity: high
+      fallback_required: true
+      notes: "Beams and Silk force an always-on R3F frame loop at DPR 1 to 2 with no pause. Of ten three.js backgrounds only five observe visibility. GridScan downloads face-detection weights from a CDN even with the webcam off. PixelBlast declares an offscreen-pause prop that nothing updates. Per-component package subsets differ, read each import list."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "Only one of the ten three.js backgrounds (Hyperspeed) reads prefers-reduced-motion and the three R3F ones none; use the budget recipe static layer. Hyperspeed warps while the pointer is held."
+    source_paths:
+      - react-bits:src/ts-tailwind/Backgrounds/Beams/Beams.tsx
+      - react-bits:src/ts-tailwind/Backgrounds/Silk/Silk.tsx
+      - react-bits:src/ts-tailwind/Backgrounds/Dither/Dither.tsx
+      - react-bits:src/ts-tailwind/Backgrounds/Hyperspeed/Hyperspeed.tsx
+    knowledge_doc: knowledge/components/react-bits-catalog.md
+    recipe: knowledge/implementation-recipes/react-bits-heavy-background-budget.md
+    related: [react-bits-ogl-shader-backgrounds, react-bits-webgpu-backgrounds]
+    notes: "Licence: MIT plus Commons Clause. Use inside your own app only, never redistribute (see knowledge/implementation-recipes/react-bits-license-safe-usage.md)."
+
+  - id: react-bits-webgpu-backgrounds
+    title: "React Bits WebGPU backgrounds"
+    category: background-shader
+    summary: "AeroShards and ShapeWaves, the two React Bits backgrounds written for WebGPU through the vgpu package, with paused and onError props, observer gating and runtime quality adaptation."
+    provenance: upstream
+    tags: [webgpu, vgpu, background, shader, post-processing]
+    source_ids: [react-bits]
+    frameworks: [react, nextjs, typescript, javascript, tailwind, css]
+    dependencies: [vgpu]
+    implementation_status: recipe_available
+    use_cases: [hero sculpture, premium landing page, text cutout backdrop]
+    performance:
+      gpu_intensity: high
+      fallback_required: true
+      notes: "Needs navigator.gpu, whose availability still varies by browser and device. AeroShards picks a low, medium or high tier from device memory, core count and canvas width, lowers it when frames run long and caps pixel ratio by a pixel budget. Both report failure through onError."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "Both freeze under prefers-reduced-motion and stop pointer ripples; AeroShards root is aria-hidden and pointer-events none. The budget recipe supplies the static layer for unsupported browsers."
+    source_paths:
+      - react-bits:src/ts-tailwind/Backgrounds/AeroShards/AeroShards.tsx
+      - react-bits:src/ts-tailwind/Backgrounds/ShapeWaves/ShapeWaves.tsx
+      - react-bits:package.json
+    knowledge_doc: knowledge/components/react-bits-catalog.md
+    recipe: knowledge/implementation-recipes/react-bits-heavy-background-budget.md
+    related: [react-bits-self-pausing-shader-backgrounds, react-bits-three-r3f-backgrounds]
+    notes: "Licence: MIT plus Commons Clause. Use inside your own app only, never redistribute (see knowledge/implementation-recipes/react-bits-license-safe-usage.md)."
+
+  - id: react-bits-canvas-grid-backgrounds
+    title: "React Bits canvas and DOM grid backgrounds"
+    category: animation
+    summary: "Backgrounds without a shader: DotGrid (canvas with GSAP inertia), LetterGlitch (canvas) and GridMotion (DOM tile wall), cheaper than WebGL options for texture and pointer reaction."
+    provenance: upstream
+    tags: [canvas, background, grid, interactive, dots]
+    source_ids: [react-bits]
+    frameworks: [react, nextjs, typescript, javascript, tailwind, css, gsap]
+    dependencies: [gsap]
+    implementation_status: recipe_available
+    use_cases: [subtle texture backdrop, tech or hacker aesthetic, image or text wall]
+    performance:
+      gpu_intensity: low
+      fallback_required: false
+      notes: "CPU canvas 2D or DOM, no WebGL needed. DotGrid and LetterGlitch loop forever with no offscreen pause; GridMotion pauses offscreen and honours reduced motion. Only DotGrid needs gsap (InertiaPlugin)."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "GridMotion checks prefers-reduced-motion; for DotGrid and LetterGlitch use the budget recipe static layer."
+    source_paths:
+      - react-bits:src/ts-tailwind/Backgrounds/DotGrid/DotGrid.tsx
+      - react-bits:src/ts-tailwind/Backgrounds/LetterGlitch/LetterGlitch.tsx
+      - react-bits:src/ts-tailwind/Backgrounds/GridMotion/GridMotion.tsx
+    knowledge_doc: knowledge/components/react-bits-catalog.md
+    recipe: knowledge/implementation-recipes/react-bits-heavy-background-budget.md
+    related: [react-bits-ogl-shader-backgrounds]
+    notes: "Licence: MIT plus Commons Clause. Use inside your own app only, never redistribute (see knowledge/implementation-recipes/react-bits-license-safe-usage.md)."
+
+  - id: react-bits-gsap-text-reveals
+    title: "React Bits GSAP text reveals"
+    category: typography
+    summary: "Scroll-triggered text reveals built on GSAP ScrollTrigger and SplitText (SplitText, ScrollReveal, ScrollFloat, Shuffle): staggered characters, words or lines entering once as the block scrolls into view."
+    provenance: upstream
+    tags: [text, gsap, scroll, reveal, split-text]
+    source_ids: [react-bits]
+    frameworks: [react, nextjs, typescript, javascript, tailwind, css, gsap]
+    dependencies: [gsap, "@gsap/react"]
+    implementation_status: recipe_available
+    use_cases: [hero headline, section title, editorial landing page]
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: "DOM only. SplitText waits for web fonts, takes text as a plain string and plays once. GSAP has its own licence terms and plugins are registered at module scope."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "Only Shuffle checks reduced motion. The install recipe MotionGate renders the plain heading instead. Test with a screen reader because label handling of split spans was not verified."
+    source_paths:
+      - react-bits:src/ts-tailwind/TextAnimations/SplitText/SplitText.tsx
+      - react-bits:src/ts-tailwind/TextAnimations/ScrollReveal/ScrollReveal.tsx
+      - react-bits:src/ts-tailwind/TextAnimations/ScrollFloat/ScrollFloat.tsx
+      - react-bits:src/ts-tailwind/TextAnimations/Shuffle/Shuffle.tsx
+    knowledge_doc: knowledge/components/react-bits-catalog.md
+    recipe: knowledge/implementation-recipes/react-bits-choose-variant-and-install.md
+    related: [react-bits-lightweight-text-effects, react-bits-scroll-driven-components]
+    notes: "Licence: MIT plus Commons Clause. Use inside your own app only, never redistribute (see knowledge/implementation-recipes/react-bits-license-safe-usage.md)."
+
+  - id: react-bits-lightweight-text-effects
+    title: "React Bits lightweight text effects"
+    category: typography
+    summary: "Text effects that avoid GSAP: BlurText and DecryptedText on motion, ShinyText and GradientText with no packages at all, plus CountUp, RotatingText and similar small pieces."
+    provenance: upstream
+    tags: [text, motion, gradient, shine, blur, decrypt]
+    source_ids: [react-bits]
+    frameworks: [react, nextjs, typescript, javascript, tailwind, css, motion]
+    dependencies: [motion]
+    implementation_status: recipe_available
+    use_cases: [gradient headline, shimmer label, stat counter, hacker-style reveal]
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: "ShinyText and GradientText import nothing beyond React; BlurText and DecryptedText need motion. TextPressure fetches a Google font by default and GlitchText needs Tailwind config keyframes in its Tailwind variant."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "ShinyText and GradientText check reduced motion; BlurText and DecryptedText do not (DecryptedText adds screen-reader text). Gate with MotionGate from the install recipe. Glitch-style effects flicker, so review them against flashing guidance."
+    source_paths:
+      - react-bits:src/ts-tailwind/TextAnimations/BlurText/BlurText.tsx
+      - react-bits:src/ts-tailwind/TextAnimations/DecryptedText/DecryptedText.tsx
+      - react-bits:src/ts-tailwind/TextAnimations/ShinyText/ShinyText.tsx
+      - react-bits:src/ts-tailwind/TextAnimations/GradientText/GradientText.tsx
+    knowledge_doc: knowledge/components/react-bits-catalog.md
+    recipe: knowledge/implementation-recipes/react-bits-choose-variant-and-install.md
+    related: [react-bits-gsap-text-reveals]
+    notes: "Licence: MIT plus Commons Clause. Use inside your own app only, never redistribute (see knowledge/implementation-recipes/react-bits-license-safe-usage.md)."
+
+  - id: react-bits-target-cursor
+    title: "React Bits target and crosshair cursors"
+    category: cursor
+    summary: "Custom cursors that lock onto interactive elements: TargetCursor (four corners snapping to a selector, GSAP) and Crosshair (canvas crosshair with live coordinates that measures hovered links and buttons)."
+    provenance: upstream
+    tags: [cursor, gsap, pointer, interaction, hover]
+    source_ids: [react-bits]
+    frameworks: [react, nextjs, typescript, javascript, tailwind, css, gsap]
+    dependencies: [gsap]
+    implementation_status: recipe_available
+    use_cases: [portfolio site, creative agency site, interactive link targeting]
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: "TargetCursor hides the native cursor on the whole page by default (hideDefaultCursor) and does nothing on touch or small screens by sniffing. Crosshair hides it only when asked and honours reduced motion."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "Gate with MotionGate requireFinePointer from the install recipe and keep the native cursor as the fallback. Keyboard users get no equivalent focus indicator from these cursors."
+    source_paths:
+      - react-bits:src/ts-tailwind/Animations/TargetCursor/TargetCursor.tsx
+      - react-bits:src/ts-tailwind/Animations/Crosshair/Crosshair.tsx
+    knowledge_doc: knowledge/components/react-bits-catalog.md
+    recipe: knowledge/implementation-recipes/react-bits-choose-variant-and-install.md
+    related: [react-bits-webgl-cursor-trails]
+    notes: "Licence: MIT plus Commons Clause. Use inside your own app only, never redistribute (see knowledge/implementation-recipes/react-bits-license-safe-usage.md)."
+
+  - id: react-bits-webgl-cursor-trails
+    title: "React Bits WebGL cursor trails"
+    category: cursor
+    summary: "GPU cursor effects that follow the pointer: GlowCursor (OGL light trail), SplashCursor (fluid simulation), GhostCursor (three.js ghost with bloom) and BlobCursor (liquid-metal blob)."
+    provenance: upstream
+    tags: [cursor, webgl, fluid, trail, pointer, three, ogl]
+    source_ids: [react-bits]
+    frameworks: [react, nextjs, typescript, javascript, tailwind, css, webgl, three]
+    dependencies: [ogl, three]
+    implementation_status: recipe_available
+    use_cases: [playful brand site, creative portfolio, hero interaction]
+    performance:
+      gpu_intensity: high
+      fallback_required: true
+      notes: "SplashCursor is a fixed full-screen overlay with window listeners and a frame loop that are never cleaned up and re-runs on prop change, so mount it once at the root. GlowCursor and GhostCursor attach to their container; BlobCursor uses window pointer events."
+    accessibility:
+      motion: intense
+      reduced_motion_alternative: true
+      notes: "Only BlobCursor reads prefers-reduced-motion. Skip these entirely for reduced motion or touch using the budget recipe gate with requireFinePointer."
+    source_paths:
+      - react-bits:src/ts-tailwind/Animations/GlowCursor/GlowCursor.tsx
+      - react-bits:src/ts-tailwind/Animations/SplashCursor/SplashCursor.tsx
+      - react-bits:src/ts-tailwind/Animations/GhostCursor/GhostCursor.tsx
+      - react-bits:src/ts-tailwind/Animations/BlobCursor/BlobCursor.tsx
+    knowledge_doc: knowledge/components/react-bits-catalog.md
+    recipe: knowledge/implementation-recipes/react-bits-heavy-background-budget.md
+    related: [react-bits-target-cursor]
+    notes: "Licence: MIT plus Commons Clause. Use inside your own app only, never redistribute (see knowledge/implementation-recipes/react-bits-license-safe-usage.md)."
+
+  - id: react-bits-scroll-driven-components
+    title: "React Bits scroll-driven reveals and stacks"
+    category: scroll
+    summary: "Scroll-triggered wrappers and layouts: AnimatedContent and FadeContent (GSAP ScrollTrigger entrances), ScrollExpand (media frame growing to full bleed) and ScrollStack (overlapping cards on Lenis)."
+    provenance: upstream
+    tags: [scroll, gsap, lenis, reveal, scrolltrigger]
+    source_ids: [react-bits]
+    frameworks: [react, nextjs, typescript, javascript, tailwind, css, gsap, lenis]
+    dependencies: [gsap, lenis]
+    implementation_status: recipe_available
+    use_cases: [section entrances, scroll storytelling, card stack section]
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: "AnimatedContent hides children until its effect runs and restarts if callback props change identity, so keep it off the LCP element. Both wrappers look for a hard-coded container id before using window. ScrollStack creates its own Lenis instance and clashes with a site-wide one."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "None of the four checks reduced motion except ScrollExpand; wrap with MotionGate from the install recipe or skip the animation."
+    source_paths:
+      - react-bits:src/ts-tailwind/Animations/AnimatedContent/AnimatedContent.tsx
+      - react-bits:src/ts-tailwind/Animations/FadeContent/FadeContent.tsx
+      - react-bits:src/ts-tailwind/Animations/ScrollExpand/ScrollExpand.tsx
+      - react-bits:src/ts-tailwind/Components/ScrollStack/ScrollStack.tsx
+    knowledge_doc: knowledge/components/react-bits-catalog.md
+    recipe: knowledge/implementation-recipes/react-bits-choose-variant-and-install.md
+    related: [react-bits-gsap-text-reveals]
+    notes: "Licence: MIT plus Commons Clause. Use inside your own app only, never redistribute (see knowledge/implementation-recipes/react-bits-license-safe-usage.md)."
+
+  - id: react-bits-bento-and-card-grids
+    title: "React Bits bento and card grids"
+    category: card-grid
+    summary: "Grid layouts with motion: MagicBento (bento tiles with spotlight, border glow, particles and tilt), ChromaGrid (greyscale tiles regaining colour under the pointer) and Masonry (animated masonry reflow), all on GSAP."
+    provenance: upstream
+    tags: [grid, bento, cards, gsap, masonry, hover]
+    source_ids: [react-bits]
+    frameworks: [react, nextjs, typescript, javascript, tailwind, css, gsap]
+    dependencies: [gsap]
+    implementation_status: recipe_available
+    use_cases: [feature grid, portfolio gallery, dashboard-style landing section]
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: "MagicBento keeps its tile content in a constant inside the file, so you edit the source; ChromaGrid and Masonry take an items prop. MagicBento has a disableAnimations prop and a mobile breakpoint. Demo data uses remote placeholder images."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "None of the three has ARIA attributes or a reduced-motion check; pass disableAnimations or use MotionGate from the install recipe and add semantics yourself."
+    source_paths:
+      - react-bits:src/ts-tailwind/Components/MagicBento/MagicBento.tsx
+      - react-bits:src/ts-tailwind/Components/ChromaGrid/ChromaGrid.tsx
+      - react-bits:src/ts-tailwind/Components/Masonry/Masonry.tsx
+    knowledge_doc: knowledge/components/react-bits-catalog.md
+    recipe: knowledge/implementation-recipes/react-bits-choose-variant-and-install.md
+    related: [react-bits-pointer-lit-cards]
+    notes: "Licence: MIT plus Commons Clause. Use inside your own app only, never redistribute (see knowledge/implementation-recipes/react-bits-license-safe-usage.md)."
+
+  - id: react-bits-pointer-lit-cards
+    title: "React Bits pointer-lit cards"
+    category: card-grid
+    summary: "Single-card hover effects driven by the pointer: SpotlightCard (follow spotlight), TiltedCard (3D tilt on motion), BorderGlow (mesh-gradient edge glow) and GlareHover (moving glare on any element)."
+    provenance: upstream
+    tags: [cards, hover, spotlight, tilt, glow, pointer]
+    source_ids: [react-bits]
+    frameworks: [react, nextjs, typescript, javascript, tailwind, css, motion]
+    dependencies: [motion]
+    implementation_status: recipe_available
+    use_cases: [pricing cards, feature cards, portfolio tiles]
+    performance:
+      gpu_intensity: low
+      fallback_required: false
+      notes: "DOM and CSS; only TiltedCard imports a package (motion). Pointer listeners do nothing useful on touch devices."
+    accessibility:
+      motion: subtle
+      reduced_motion_alternative: true
+      notes: "SpotlightCard checks reduced motion; the others do not. Effects are decorative hover cues, so content must stay readable without them; MotionGate in the install recipe covers the rest."
+    source_paths:
+      - react-bits:src/ts-tailwind/Components/SpotlightCard/SpotlightCard.tsx
+      - react-bits:src/ts-tailwind/Components/TiltedCard/TiltedCard.tsx
+      - react-bits:src/ts-tailwind/Components/BorderGlow/BorderGlow.tsx
+      - react-bits:src/ts-tailwind/Animations/GlareHover/GlareHover.tsx
+    knowledge_doc: knowledge/components/react-bits-catalog.md
+    recipe: knowledge/implementation-recipes/react-bits-choose-variant-and-install.md
+    related: [react-bits-bento-and-card-grids]
+    notes: "Licence: MIT plus Commons Clause. Use inside your own app only, never redistribute (see knowledge/implementation-recipes/react-bits-license-safe-usage.md)."
+
+  - id: react-bits-animated-navigation-menus
+    title: "React Bits animated navigation menus"
+    category: navigation
+    summary: "Animated menus and bars: PillNav (sliding pill highlight), StaggeredMenu (layered slide-in panel), CardNav (expandable card panels) and FlowingMenu (liquid hover highlight), mostly on GSAP."
+    provenance: upstream
+    tags: [navigation, menu, gsap, header, overlay]
+    source_ids: [react-bits]
+    frameworks: [react, nextjs, typescript, javascript, tailwind, css, gsap]
+    dependencies: [gsap, react-router-dom, react-icons]
+    implementation_status: recipe_available
+    use_cases: [site header, full-screen menu, portfolio navigation]
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: "PillNav imports Link from react-router-dom for internal hrefs and needs a Router or an edit in Next.js. CardNav imports react-icons. StaggeredMenu defaults to the upstream repo logo path, and its JS plus Tailwind copy has a corrupted CSS declaration."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "PillNav, StaggeredMenu and CardNav set some ARIA; FlowingMenu has none in the Tailwind copies. None checks reduced motion. Test keyboard focus and escape handling yourself and use MotionGate from the install recipe."
+    source_paths:
+      - react-bits:src/ts-tailwind/Components/PillNav/PillNav.tsx
+      - react-bits:src/ts-tailwind/Components/StaggeredMenu/StaggeredMenu.tsx
+      - react-bits:src/ts-tailwind/Components/CardNav/CardNav.tsx
+      - react-bits:src/ts-tailwind/Components/FlowingMenu/FlowingMenu.tsx
+    knowledge_doc: knowledge/components/react-bits-catalog.md
+    recipe: knowledge/implementation-recipes/react-bits-choose-variant-and-install.md
+    related: [react-bits-micro-spring-controls]
+    notes: "Licence: MIT plus Commons Clause. Use inside your own app only, never redistribute (see knowledge/implementation-recipes/react-bits-license-safe-usage.md)."
+
+  - id: react-bits-3d-image-galleries
+    title: "React Bits 3D image galleries"
+    category: product-showcase
+    summary: "Image showcases with depth: CircularGallery (OGL orbit), DomeGallery (draggable hemisphere in CSS 3D), InfiniteMenu (draggable sphere on raw WebGL2) and FlexCarousel (OGL image row)."
+    provenance: upstream
+    tags: [gallery, 3d, webgl, carousel, images, drag]
+    source_ids: [react-bits]
+    frameworks: [react, nextjs, typescript, javascript, tailwind, css, webgl]
+    dependencies: [ogl, "@use-gesture/react"]
+    implementation_status: recipe_available
+    use_cases: [portfolio showcase, product gallery, image-led landing page]
+    performance:
+      gpu_intensity: medium
+      fallback_required: true
+      notes: "Defaults point at remote placeholder images (picsum, Unsplash), so supply your own sized assets. CircularGallery and InfiniteMenu need WebGL; DomeGallery is DOM only and relies on @use-gesture/react."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "InfiniteMenu has keyboard handling after its rebuild; CircularGallery and DomeGallery expose one ARIA attribute each and do not check reduced motion. Provide a plain image grid as the fallback using the budget recipe."
+    source_paths:
+      - react-bits:src/ts-tailwind/Components/CircularGallery/CircularGallery.tsx
+      - react-bits:src/ts-tailwind/Components/DomeGallery/DomeGallery.tsx
+      - react-bits:src/ts-tailwind/Components/InfiniteMenu/InfiniteMenu.tsx
+    knowledge_doc: knowledge/components/react-bits-catalog.md
+    recipe: knowledge/implementation-recipes/react-bits-heavy-background-budget.md
+    related: [react-bits-glass-surfaces]
+    notes: "Licence: MIT plus Commons Clause. Use inside your own app only, never redistribute (see knowledge/implementation-recipes/react-bits-license-safe-usage.md)."
+
+  - id: react-bits-glass-surfaces
+    title: "React Bits glass surfaces"
+    category: liquid-glass
+    summary: "Glass looks: GlassSurface (SVG displacement filters with feature detection and fallbacks), SpecularButton (OGL shader rim light) and FluidGlass (R3F lens, bar or cube over a 3D scene)."
+    provenance: upstream
+    tags: [glass, refraction, webgl, svg-filter, button, r3f]
+    source_ids: [react-bits]
+    frameworks: [react, nextjs, typescript, javascript, tailwind, css, webgl, three, r3f]
+    dependencies: [ogl, three, "@react-three/fiber", "@react-three/drei", maath]
+    implementation_status: recipe_available
+    use_cases: [glass navigation bar, hero lens effect, premium button]
+    performance:
+      gpu_intensity: medium
+      fallback_required: true
+      notes: "GlassSurface has no WebGL but detects SVG backdrop-filter support and falls back to plain blur; backdrop filters can still be costly on large areas. FluidGlass expects GLB models at root-absolute /assets/3d/ paths the registry folder install would not include."
+    accessibility:
+      motion: subtle
+      reduced_motion_alternative: true
+      notes: "None checks reduced motion. Use the budget recipe static layer for the GPU members and keep text contrast checks on glass backgrounds."
+    source_paths:
+      - react-bits:src/ts-tailwind/Components/GlassSurface/GlassSurface.tsx
+      - react-bits:src/ts-tailwind/Components/SpecularButton/SpecularButton.tsx
+      - react-bits:src/ts-tailwind/Components/FluidGlass/FluidGlass.tsx
+    knowledge_doc: knowledge/components/react-bits-catalog.md
+    recipe: knowledge/implementation-recipes/react-bits-heavy-background-budget.md
+    related: [react-bits-3d-image-galleries]
+    notes: "Licence: MIT plus Commons Clause. Use inside your own app only, never redistribute (see knowledge/implementation-recipes/react-bits-license-safe-usage.md)."
+
+  - id: react-bits-micro-spring-controls
+    title: "React Bits micro-interaction controls"
+    category: button
+    summary: "Form-level micro-interactions added in September 2026: SquishSwitch, HoldButton, SlideCommit and CodeSlots, built on motion springs with ARIA, keyboard and reduced-motion handling."
+    provenance: upstream
+    tags: [micro-interaction, form, button, spring, motion, a11y]
+    source_ids: [react-bits]
+    frameworks: [react, nextjs, typescript, javascript, tailwind, css, motion]
+    dependencies: [motion, "@hugeicons/react", "@hugeicons/core-free-icons"]
+    implementation_status: recipe_available
+    use_cases: [confirm-destructive actions, OTP input, settings toggles, async action buttons]
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: "DOM only. HoldButton imports nothing; SlideCommit and CodeSlots add the hugeicons packages. Part of the 34-component Micro category, all added 2026-09-18 to 2026-09-22."
+    accessibility:
+      motion: subtle
+      reduced_motion_alternative: true
+      notes: "All 34 Micro components set ARIA and include reduced-motion handling (JS, CSS media query or motion-reduce classes); 26 handle keyboard events. Still test with a screen reader."
+    source_paths:
+      - react-bits:src/ts-tailwind/Micro/SquishSwitch/SquishSwitch.tsx
+      - react-bits:src/ts-tailwind/Micro/HoldButton/HoldButton.tsx
+      - react-bits:src/ts-tailwind/Micro/SlideCommit/SlideCommit.tsx
+      - react-bits:src/ts-tailwind/Micro/CodeSlots/CodeSlots.tsx
+    knowledge_doc: knowledge/components/react-bits-catalog.md
+    recipe: knowledge/implementation-recipes/react-bits-choose-variant-and-install.md
+    related: [react-bits-animated-navigation-menus]
+    notes: "Licence: MIT plus Commons Clause. Use inside your own app only, never redistribute (see knowledge/implementation-recipes/react-bits-license-safe-usage.md)."

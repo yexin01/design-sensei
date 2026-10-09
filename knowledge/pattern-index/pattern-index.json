@@ -1,0 +1,5705 @@
+{
+ "patterns": [
+  {
+   "category": "workflow",
+   "dependencies": [],
+   "frameworks": [
+    "typescript",
+    "react"
+   ],
+   "gpu_intensity": "none",
+   "id": "astryx-accessibility-spec-contracts",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/components/astryx-accessibility-spec.md",
+   "license_status": "verified",
+   "motion": "none",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "astryx"
+   ],
+   "source_paths": [
+    "astryx:internal/a11y-spec/README.md",
+    "astryx:internal/a11y-spec/src/contract.ts",
+    "astryx:internal/a11y-spec/src/checklist.ts",
+    "astryx:internal/a11y-spec/src/patterns/button.ts"
+   ],
+   "summary": "Each ARIA pattern becomes data: sourced expectations (WCAG 2.2, APG) with evidence layers, 29 completeness dimensions, exact known-failure records and jsdom and Chromium lanes, a method for testing components without a score; the package itself is internal.",
+   "tags": [
+    "accessibility",
+    "wcag",
+    "aria",
+    "testing",
+    "contracts",
+    "playwright",
+    "evidence-layers"
+   ],
+   "title": "Accessibility as sourced contracts (Astryx a11y-spec method)"
+  },
+  {
+   "category": "workflow",
+   "dependencies": [
+    "@astryxdesign/cli"
+   ],
+   "frameworks": [
+    "javascript",
+    "typescript",
+    "react"
+   ],
+   "gpu_intensity": "none",
+   "id": "astryx-agent-ready-workflow",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/components/astryx.md",
+   "license_status": "verified",
+   "motion": "none",
+   "recipe": "knowledge/implementation-recipes/astryx-agent-conventions.md",
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": false,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "astryx"
+   ],
+   "source_paths": [
+    "astryx:AGENTS.md",
+    "astryx:packages/core/scripts/agent-doc-state.mjs",
+    "astryx:apps/docsite/src/app/mcp/route.ts",
+    "astryx:apps/docsite/src/app/llms.txt/route.ts"
+   ],
+   "summary": "Make an AI coding agent build with a design system by reading its docs: a canonical AGENTS.md, per-component .doc.mjs files with do and do-not lists, a non-interactive CLI, llms.txt and an MCP route, paired with project rules and a small checker script.",
+   "tags": [
+    "agents",
+    "agents-md",
+    "claude-md",
+    "cli",
+    "mcp",
+    "llms-txt",
+    "documentation",
+    "design-system"
+   ],
+   "title": "Agent-ready design system workflow (AGENTS.md, doc files, CLI, MCP)"
+  },
+  {
+   "category": "navigation",
+   "dependencies": [
+    "@astryxdesign/core"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "typescript"
+   ],
+   "gpu_intensity": "none",
+   "id": "astryx-app-shell-navigation",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/components/astryx.md",
+   "license_status": "verified",
+   "motion": "subtle",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": false,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "astryx"
+   ],
+   "source_paths": [
+    "astryx:packages/core/src/AppShell/AppShell.doc.mjs",
+    "astryx:packages/core/src/SideNav/SideNav.doc.mjs",
+    "astryx:packages/core/src/TabList/TabList.tsx",
+    "astryx:docs/families/navigation-destinations.md"
+   ],
+   "summary": "AppShell frames an application with a skip link, banner and main landmarks, a TopNav, and a SideNav that moves into a MobileNav drawer below a theme breakpoint, with Breadcrumbs and TabList for in-page navigation and one shared URL-safety rule for every destination.",
+   "tags": [
+    "app-shell",
+    "sidebar",
+    "top-nav",
+    "mobile-nav",
+    "breadcrumbs",
+    "tabs",
+    "skip-link",
+    "landmarks"
+   ],
+   "title": "Astryx app shell with side, top and mobile navigation"
+  },
+  {
+   "category": "button",
+   "dependencies": [
+    "@astryxdesign/core"
+   ],
+   "frameworks": [
+    "react",
+    "typescript",
+    "css"
+   ],
+   "gpu_intensity": "none",
+   "id": "astryx-button-family",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/components/astryx-accessibility-spec.md",
+   "license_status": "verified",
+   "motion": "subtle",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "astryx"
+   ],
+   "source_paths": [
+    "astryx:docs/families/buttons.md",
+    "astryx:packages/core/src/Button/Button.doc.mjs",
+    "astryx:packages/core/src/Button/Button.tsx",
+    "astryx:packages/core/src/ToggleButton/ToggleButton.doc.mjs"
+   ],
+   "summary": "Button, IconButton, ToggleButton, ButtonGroup and ToggleButtonGroup share one surface contract: required accessible label, sm, md and lg sizes, four variants, loading and async click actions, optional elevation and link mode through href.",
+   "tags": [
+    "button",
+    "icon-button",
+    "toggle-button",
+    "button-group",
+    "loading-state",
+    "async-action",
+    "elevation"
+   ],
+   "title": "Astryx button family (Button, IconButton, ToggleButton, ButtonGroup)"
+  },
+  {
+   "category": "card-grid",
+   "dependencies": [
+    "@astryxdesign/core"
+   ],
+   "frameworks": [
+    "react",
+    "typescript",
+    "css"
+   ],
+   "gpu_intensity": "none",
+   "id": "astryx-card-and-grid-collections",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/components/astryx.md",
+   "license_status": "verified",
+   "motion": "subtle",
+   "recipe": "knowledge/implementation-recipes/astryx-charts-dashboard-section.md",
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": false,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "astryx"
+   ],
+   "source_paths": [
+    "astryx:packages/core/src/Card/Card.doc.mjs",
+    "astryx:packages/core/src/ClickableCard/ClickableCard.doc.mjs",
+    "astryx:packages/core/src/SelectableCard/SelectableCard.doc.mjs",
+    "astryx:packages/core/src/Grid/Grid.doc.mjs"
+   ],
+   "summary": "Card for discrete items, ClickableCard for navigation targets and SelectableCard for pick-one or pick-many options, laid out with Grid intrinsic columns; the docs advise against cards as default grouping, nested cards and identical icon-heading-text grids.",
+   "tags": [
+    "card",
+    "grid",
+    "collection",
+    "clickable-card",
+    "selectable-card",
+    "auto-fill",
+    "kpi"
+   ],
+   "title": "Astryx cards in responsive grids"
+  },
+  {
+   "category": "data-visualization",
+   "dependencies": [
+    "@astryxdesign/charts",
+    "@astryxdesign/core",
+    "@stylexjs/stylex"
+   ],
+   "frameworks": [
+    "react",
+    "typescript",
+    "stylex"
+   ],
+   "gpu_intensity": "low",
+   "id": "astryx-charts-config-model",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/components/astryx.md",
+   "license_status": "verified",
+   "motion": "subtle",
+   "recipe": "knowledge/implementation-recipes/astryx-charts-dashboard-section.md",
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "astryx"
+   ],
+   "source_paths": [
+    "astryx:packages/charts/src/Chart.tsx",
+    "astryx:packages/charts/src/Chart.doc.mjs",
+    "astryx:packages/charts/src/getChartColors.ts",
+    "astryx:packages/charts/README.md"
+   ],
+   "summary": "A canary-only React chart library on d3 where marks (bar, line, area, dot, band, candlestick, error bar, reference line) are config objects drawn against one shared scale, with theme-aware colours, axes, grid, legend, tooltip, a named image role and a hidden data table.",
+   "tags": [
+    "charts",
+    "d3",
+    "svg",
+    "data-visualization",
+    "canary",
+    "accessible-charts",
+    "theme-aware"
+   ],
+   "title": "Astryx charts (config-model SVG charts on d3, canary)"
+  },
+  {
+   "category": "design-system",
+   "dependencies": [
+    "@astryxdesign/core",
+    "@astryxdesign/theme-neutral",
+    "@stylexjs/stylex",
+    "react",
+    "react-dom"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "vite",
+    "typescript",
+    "tailwind",
+    "stylex",
+    "css"
+   ],
+   "gpu_intensity": "none",
+   "id": "astryx-design-system-react",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/components/astryx.md",
+   "license_status": "verified",
+   "motion": "subtle",
+   "recipe": "knowledge/implementation-recipes/astryx-theme-tokens-in-existing-app.md",
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "astryx"
+   ],
+   "source_paths": [
+    "astryx:README.md",
+    "astryx:packages/core/README.md",
+    "astryx:packages/core/package.json",
+    "astryx:docs/architecture/component-style-authoring.md"
+   ],
+   "summary": "A React 19 component library with semantic tokens, themes, dark mode and an agent-oriented CLI, delivered as typed components plus one prebuilt layered stylesheet so no build plugin is needed; suited to application UI that wants a coherent, themeable kit.",
+   "tags": [
+    "design-system",
+    "component-library",
+    "react",
+    "stylex",
+    "themeable",
+    "dark-mode",
+    "css-layers"
+   ],
+   "title": "Astryx design system (React 19, StyleX, prebuilt CSS)"
+  },
+  {
+   "category": "data-visualization",
+   "dependencies": [
+    "@astryxdesign/core",
+    "@astryxdesign/lab"
+   ],
+   "frameworks": [
+    "react",
+    "typescript"
+   ],
+   "gpu_intensity": "none",
+   "id": "astryx-kpi-stat-row",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/components/astryx.md",
+   "license_status": "verified",
+   "motion": "none",
+   "recipe": "knowledge/implementation-recipes/astryx-charts-dashboard-section.md",
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": false,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "astryx"
+   ],
+   "source_paths": [
+    "astryx:packages/lab/src/Stat/Stat.doc.mjs",
+    "astryx:packages/lab/src/Stat/Stat.tsx",
+    "astryx:packages/core/src/Grid/Grid.doc.mjs",
+    "astryx:packages/core/src/Text/Text.doc.mjs"
+   ],
+   "summary": "A row of metric tiles built from Grid and Card, or the experimental lab Stat, showing a metric name, tabular-number value, sentiment-aware delta and an optional sparkline slot; Stat does not format numbers and ships only under the canary tag.",
+   "tags": [
+    "kpi",
+    "stat",
+    "metric",
+    "dashboard",
+    "delta",
+    "tabular-numbers",
+    "sparkline"
+   ],
+   "title": "Astryx KPI tile row (Grid and Card, or lab Stat)"
+  },
+  {
+   "category": "responsive-layout",
+   "dependencies": [
+    "@astryxdesign/core"
+   ],
+   "frameworks": [
+    "react",
+    "typescript",
+    "css"
+   ],
+   "gpu_intensity": "none",
+   "id": "astryx-responsive-layout-primitives",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/components/astryx.md",
+   "license_status": "verified",
+   "motion": "none",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": false,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "astryx"
+   ],
+   "source_paths": [
+    "astryx:docs/families/layout-primitives.md",
+    "astryx:docs/families/layout-regions.md",
+    "astryx:packages/core/src/Grid/Grid.doc.mjs",
+    "astryx:packages/core/src/theme/themeAdaptations.ts"
+   ],
+   "summary": "Stack, HStack, VStack, Grid and Center arrange content with one numeric spacing scale; Grid gives intrinsic responsive columns, Layout a five-slot page topology, Section a page region, and theme width points sm to 2xl drive adaptive rules and the AppShell breakpoint.",
+   "tags": [
+    "layout",
+    "stack",
+    "grid",
+    "spacing-scale",
+    "responsive",
+    "slots",
+    "container-padding",
+    "logical-properties"
+   ],
+   "title": "Astryx layout primitives and regions (Stack, Grid, Layout, Section)"
+  },
+  {
+   "category": "design-style",
+   "dependencies": [
+    "@astryxdesign/core",
+    "@astryxdesign/theme-neutral",
+    "@astryxdesign/theme-butter",
+    "@astryxdesign/theme-chocolate",
+    "@astryxdesign/theme-gothic",
+    "@astryxdesign/theme-matcha",
+    "@astryxdesign/theme-stone",
+    "@astryxdesign/theme-y2k"
+   ],
+   "frameworks": [
+    "react",
+    "typescript",
+    "css"
+   ],
+   "gpu_intensity": "none",
+   "id": "astryx-theme-presets",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/components/astryx-themes-and-tokens.md",
+   "license_status": "verified",
+   "motion": "subtle",
+   "recipe": "knowledge/implementation-recipes/astryx-theme-tokens-in-existing-app.md",
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "astryx"
+   ],
+   "source_paths": [
+    "astryx:packages/themes/neutral/src/neutralTheme.ts",
+    "astryx:packages/themes/gothic/src/gothicTheme.ts",
+    "astryx:packages/themes/y2k/src/y2kTheme.ts",
+    "astryx:packages/themes/butter/src/butterTheme.ts"
+   ],
+   "summary": "Seven theme packages restyle the same components through tokens and a few component overrides: grayscale, warm and earthy palettes, a dark-only gothic look and a square-cornered pop look, each with its own font pairing, radius, spacing density and motion tempo.",
+   "tags": [
+    "theme",
+    "palette",
+    "font-pairing",
+    "display-type",
+    "dark-only",
+    "sharp-corners",
+    "density"
+   ],
+   "title": "Astryx shipped themes (neutral, butter, chocolate, gothic, matcha, stone, y2k)"
+  },
+  {
+   "category": "design-system",
+   "dependencies": [
+    "@astryxdesign/core",
+    "@stylexjs/stylex"
+   ],
+   "frameworks": [
+    "react",
+    "typescript",
+    "css",
+    "stylex",
+    "tailwind"
+   ],
+   "gpu_intensity": "none",
+   "id": "astryx-theme-token-system",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/components/astryx-themes-and-tokens.md",
+   "license_status": "verified",
+   "motion": "subtle",
+   "recipe": "knowledge/implementation-recipes/astryx-theme-tokens-in-existing-app.md",
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "astryx"
+   ],
+   "source_paths": [
+    "astryx:packages/core/src/theme/tokens.stylex.ts",
+    "astryx:packages/core/src/theme/defineTheme.ts",
+    "astryx:packages/core/src/theme/Theme.tsx",
+    "astryx:docs/architecture/theme-tokens.md"
+   ],
+   "summary": "A vocabulary of 188 core tokens (colour with light-dark(), spacing, size, radius, shadow, motion, type, focus ring) plus defineTheme and a Theme provider that compile to scoped, layered CSS, with theme extension, per-component overrides, mode-aware surfaces and ordered adaptations.",
+   "tags": [
+    "design-tokens",
+    "theming",
+    "dark-mode",
+    "css-custom-properties",
+    "light-dark",
+    "define-theme",
+    "css-layers"
+   ],
+   "title": "Astryx semantic tokens, defineTheme and Theme provider"
+  },
+  {
+   "category": "typography",
+   "dependencies": [
+    "@astryxdesign/core"
+   ],
+   "frameworks": [
+    "react",
+    "typescript",
+    "css"
+   ],
+   "gpu_intensity": "none",
+   "id": "astryx-typography-scale",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/components/astryx-themes-and-tokens.md",
+   "license_status": "verified",
+   "motion": "none",
+   "recipe": "knowledge/implementation-recipes/astryx-theme-tokens-in-existing-app.md",
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": false,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "astryx"
+   ],
+   "source_paths": [
+    "astryx:packages/core/src/theme/expandTypeScale.ts",
+    "astryx:packages/core/src/Text/Text.doc.mjs",
+    "astryx:docs/design/mobile-typography.md",
+    "astryx:packages/themes/gothic/src/gothicTheme.ts"
+   ],
+   "summary": "A base size and ratio expand into 12 raw sizes and semantic roles (heading 1-6, body, large, label, supporting, code, display 1-3) with 4px-snapped leading; themes pair body, heading and display faces, and a 16px mobile base applies under coarse pointers.",
+   "tags": [
+    "type-scale",
+    "typography-tokens",
+    "font-pairing",
+    "display-type",
+    "semantic-text",
+    "mobile-typography"
+   ],
+   "title": "Astryx geometric type scale and semantic text roles"
+  },
+  {
+   "category": "workflow",
+   "dependencies": [],
+   "frameworks": [],
+   "gpu_intensity": "none",
+   "id": "awesome-opus-videos-prompt-mining",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/design-intelligence/awesome-opus-videos.md",
+   "license_status": "verified",
+   "motion": "none",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": false,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "awesome-opus-videos"
+   ],
+   "source_paths": [
+    "awesome-opus-videos:data/videos.json",
+    "awesome-opus-videos:README.md",
+    "awesome-opus-videos:prompts/twoclipping-402193.md",
+    "awesome-opus-videos:prompts/brainextends-606193.md",
+    "awesome-opus-videos:prompts/alexwtlf-981005.md"
+   ],
+   "summary": "Filter a corpus of 513 creator-shared prompts to complete, long, distinct entries, classify the typography, colour, motion, camera and light language, and rewrite useful terms as an original glossary with attribution.",
+   "tags": [
+    "prompt-library",
+    "vocabulary",
+    "art-direction",
+    "motion-design",
+    "attribution"
+   ],
+   "title": "Mine a prompt library for art-direction vocabulary"
+  },
+  {
+   "category": "workflow",
+   "dependencies": [
+    "@google/design.md"
+   ],
+   "frameworks": [
+    "tailwind",
+    "css",
+    "nodejs"
+   ],
+   "gpu_intensity": "none",
+   "id": "design-md-lint-and-export",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/design-intelligence/design-md-format.md",
+   "license_status": "verified",
+   "motion": "none",
+   "recipe": "knowledge/implementation-recipes/write-a-design-md.md",
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": false,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "design-md"
+   ],
+   "source_paths": [
+    "design-md:packages/cli/package.json",
+    "design-md:packages/cli/src/commands/lint.ts",
+    "design-md:packages/cli/src/commands/export.ts",
+    "design-md:packages/cli/src/linter/linter/rules/index.ts",
+    "design-md:packages/cli/src/linter/tailwind/v4/handler.ts",
+    "design-md:packages/cli/src/linter/dtcg/handler.ts"
+   ],
+   "summary": "Validate a DESIGN.md with the official CLI (reference checks, WCAG contrast, section order) and export its tokens to Tailwind v3 JSON, a Tailwind v4 CSS theme, CSS variables or W3C design-token JSON.",
+   "tags": [
+    "design-md",
+    "lint",
+    "design-tokens",
+    "tailwind",
+    "css-variables",
+    "dtcg"
+   ],
+   "title": "Lint a DESIGN.md and export its tokens"
+  },
+  {
+   "category": "design-system",
+   "dependencies": [],
+   "frameworks": [
+    "tailwind",
+    "css"
+   ],
+   "gpu_intensity": "none",
+   "id": "design-md-spec",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/design-intelligence/design-md-format.md",
+   "license_status": "verified",
+   "motion": "none",
+   "recipe": "knowledge/implementation-recipes/write-a-design-md.md",
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": false,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "design-md"
+   ],
+   "source_paths": [
+    "design-md:docs/spec.md",
+    "design-md:README.md",
+    "design-md:PHILOSOPHY.md",
+    "design-md:packages/cli/src/linter/spec-config.yaml",
+    "design-md:examples/atmospheric-glass/DESIGN.md",
+    "design-md:examples/paws-and-paths/DESIGN.md"
+   ],
+   "summary": "A plain-text design system for coding agents that pairs YAML design tokens (colors, typography, rounded, spacing, components) with eight ordered prose sections, so agents get exact values and the intent behind them.",
+   "tags": [
+    "design-md",
+    "design-tokens",
+    "front-matter",
+    "specification",
+    "agent-context"
+   ],
+   "title": "DESIGN.md design-system file"
+  },
+  {
+   "category": "gradient",
+   "dependencies": [
+    "clsx",
+    "tailwind-merge"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "tailwind",
+    "typescript",
+    "css"
+   ],
+   "gpu_intensity": "medium",
+   "id": "fancy-animated-gradient-svg",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/components/fancy.md",
+   "license_status": "verified",
+   "motion": "moderate",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "fancy"
+   ],
+   "source_paths": [
+    "fancy:src/fancy/components/background/animated-gradient-with-svg.tsx",
+    "fancy:src/fancy/components/background/animated-gradient-with-svg.json",
+    "fancy:src/hooks/use-debounced-dimensions.ts",
+    "fancy:src/content/docs/components/background/animated-gradient-svg.mdx"
+   ],
+   "summary": "A full-bleed background of coloured SVG circles at random positions and sizes, blurred with Tailwind utilities and drifting along CSS keyframes defined in a Tailwind v4 theme block. Colours, speed and blur level are props.",
+   "tags": [
+    "gradient",
+    "blur",
+    "svg",
+    "background",
+    "css-keyframes",
+    "hero"
+   ],
+   "title": "Animated blurred SVG gradient background (Fancy)"
+  },
+  {
+   "category": "product-showcase",
+   "dependencies": [
+    "motion",
+    "clsx",
+    "tailwind-merge"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "tailwind",
+    "typescript",
+    "motion"
+   ],
+   "gpu_intensity": "low",
+   "id": "fancy-box-carousel",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/components/fancy.md",
+   "license_status": "verified",
+   "motion": "moderate",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "fancy"
+   ],
+   "source_paths": [
+    "fancy:src/fancy/components/carousel/box-carousel.tsx",
+    "fancy:src/content/docs/components/carousel/box-carousel.mdx",
+    "fancy:src/fancy/examples/carousel/box-carousel-demo.tsx"
+   ],
+   "summary": "A four-face rotating cube carousel of images or videos with drag, arrow-key navigation, ref methods, optional autoplay and transitions that drop to zero duration when the user prefers reduced motion.",
+   "tags": [
+    "carousel",
+    "cube",
+    "css-3d",
+    "drag",
+    "keyboard",
+    "reduced-motion"
+   ],
+   "title": "3D box carousel (Fancy)"
+  },
+  {
+   "category": "cursor",
+   "dependencies": [
+    "motion"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "tailwind",
+    "typescript",
+    "motion"
+   ],
+   "gpu_intensity": "low",
+   "id": "fancy-cursor-proximity-text",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/components/fancy.md",
+   "license_status": "verified",
+   "motion": "moderate",
+   "recipe": "knowledge/implementation-recipes/fancy-cursor-proximity-text.md",
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "fancy"
+   ],
+   "source_paths": [
+    "fancy:src/fancy/components/text/text-cursor-proximity.tsx",
+    "fancy:src/fancy/components/text/variable-font-cursor-proximity.tsx",
+    "fancy:src/fancy/components/text/variable-font-and-cursor.tsx",
+    "fancy:src/hooks/use-mouse-position-ref.ts"
+   ],
+   "summary": "Letters respond to pointer distance. One version interpolates any CSS properties between two values with linear, exponential or gaussian falloff, one animates variable-font axes, and one maps pointer x and y to two axes of the whole text.",
+   "tags": [
+    "cursor",
+    "proximity",
+    "per-letter",
+    "variable-font",
+    "pointer"
+   ],
+   "title": "Cursor proximity text effects (Fancy)"
+  },
+  {
+   "category": "cursor",
+   "dependencies": [
+    "motion",
+    "clsx",
+    "tailwind-merge"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "tailwind",
+    "typescript",
+    "motion"
+   ],
+   "gpu_intensity": "low",
+   "id": "fancy-image-trail",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/components/fancy.md",
+   "license_status": "verified",
+   "motion": "intense",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "fancy"
+   ],
+   "source_paths": [
+    "fancy:src/fancy/components/image/image-trail.tsx",
+    "fancy:src/content/docs/components/image/image-trail.mdx",
+    "fancy:src/fancy/examples/image/image-trail-demo.tsx"
+   ],
+   "summary": "A pool of child elements (images, video, SVG or any markup) shown one after another along the pointer path once it has travelled a threshold distance, animated with configurable keyframes and z-index order. Written by Khoa Phan inside the Fancy repository.",
+   "tags": [
+    "image-trail",
+    "cursor",
+    "pointer",
+    "pooled-elements",
+    "gallery"
+   ],
+   "title": "Image trail following the cursor (Fancy)"
+  },
+  {
+   "category": "typography",
+   "dependencies": [
+    "motion"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "tailwind",
+    "typescript",
+    "motion"
+   ],
+   "gpu_intensity": "low",
+   "id": "fancy-letter-swap-text",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/components/fancy.md",
+   "license_status": "verified",
+   "motion": "moderate",
+   "recipe": "knowledge/implementation-recipes/fancy-letter-swap-text.md",
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "fancy"
+   ],
+   "source_paths": [
+    "fancy:src/fancy/components/text/letter-swap-forward-anim.tsx",
+    "fancy:src/fancy/components/text/letter-swap-pingpong-anim.tsx",
+    "fancy:src/fancy/components/text/random-letter-swap-forward-anim.tsx",
+    "fancy:src/fancy/components/text/letter-3d-swap.tsx"
+   ],
+   "summary": "Hover or focus effect where each letter of a short label rolls out of an overflow-hidden box while an identical copy rolls in, staggered. Fancy ships 2D forward, ping-pong, random-order and 3D box-roll variants.",
+   "tags": [
+    "text-effect",
+    "hover",
+    "stagger",
+    "letter-swap",
+    "microinteraction",
+    "css-3d"
+   ],
+   "title": "Letter swap and roll text effects (Fancy)"
+  },
+  {
+   "category": "animation",
+   "dependencies": [
+    "matter-js",
+    "@types/matter-js",
+    "motion"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "tailwind",
+    "typescript",
+    "motion",
+    "matter-js"
+   ],
+   "gpu_intensity": "low",
+   "id": "fancy-matter-gravity",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/components/fancy.md",
+   "license_status": "verified",
+   "motion": "intense",
+   "recipe": "knowledge/implementation-recipes/fancy-matter-gravity-pile.md",
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "fancy"
+   ],
+   "source_paths": [
+    "fancy:src/fancy/components/physics/gravity.tsx",
+    "fancy:src/fancy/components/physics/cursor-attractor-and-gravity.tsx",
+    "fancy:src/utils/svg-path-to-vertices.ts",
+    "fancy:src/utils/calculate-position.ts"
+   ],
+   "summary": "Wrapper components turn DOM children into Matter.js bodies (rectangle, circle or SVG path), sync their transforms every frame and make them draggable. A variant replaces gravity with an attractor point and a cursor force that pulls or pushes.",
+   "tags": [
+    "physics",
+    "matter-js",
+    "gravity",
+    "drag",
+    "attractor",
+    "dom-bodies"
+   ],
+   "title": "Matter.js gravity and attractor wrappers for DOM elements (Fancy)"
+  },
+  {
+   "category": "cursor",
+   "dependencies": [
+    "motion",
+    "uuid",
+    "clsx",
+    "tailwind-merge"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "tailwind",
+    "typescript",
+    "motion"
+   ],
+   "gpu_intensity": "low",
+   "id": "fancy-pixel-trail",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/components/fancy.md",
+   "license_status": "verified",
+   "motion": "moderate",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "fancy"
+   ],
+   "source_paths": [
+    "fancy:src/fancy/components/background/pixel-trail.tsx",
+    "fancy:src/hooks/use-dimensions.ts",
+    "fancy:src/content/docs/components/background/pixel-trail.mdx"
+   ],
+   "summary": "An absolutely positioned grid of div cells that each flash and fade when the pointer passes over them, giving a pixelated trail across a section background. Cell size, fade duration and delay are props, and a class prop styles each cell, which has no default colour.",
+   "tags": [
+    "pixel-trail",
+    "grid",
+    "cursor",
+    "fade",
+    "background"
+   ],
+   "title": "Pixel grid trail under the cursor (Fancy)"
+  },
+  {
+   "category": "typography",
+   "dependencies": [
+    "motion",
+    "clsx",
+    "tailwind-merge"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "tailwind",
+    "typescript",
+    "motion"
+   ],
+   "gpu_intensity": "none",
+   "id": "fancy-scramble-text",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/components/fancy.md",
+   "license_status": "verified",
+   "motion": "moderate",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "fancy"
+   ],
+   "source_paths": [
+    "fancy:src/fancy/components/text/scramble-hover.tsx",
+    "fancy:src/fancy/components/text/scramble-in.tsx",
+    "fancy:src/content/docs/components/text/scramble-hover.mdx"
+   ],
+   "summary": "Replaces letters with random characters that resolve into the real text, on hover (random or sequential reveal from start, end or centre) or once on mount. The scrambling itself is driven by intervals and React state.",
+   "tags": [
+    "scramble",
+    "text-effect",
+    "hover",
+    "glitch",
+    "monospace"
+   ],
+   "title": "Scramble text on hover or on entry (Fancy)"
+  },
+  {
+   "category": "animation",
+   "dependencies": [
+    "motion",
+    "clsx",
+    "tailwind-merge"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "tailwind",
+    "typescript",
+    "motion"
+   ],
+   "gpu_intensity": "low",
+   "id": "fancy-simple-marquee",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/components/fancy.md",
+   "license_status": "verified",
+   "motion": "moderate",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "fancy"
+   ],
+   "source_paths": [
+    "fancy:src/fancy/components/blocks/simple-marquee.tsx",
+    "fancy:src/fancy/components/blocks/marquee-along-svg-path.tsx",
+    "fancy:src/content/docs/components/blocks/simple-marquee.mdx",
+    "fancy:src/content/docs/components/blocks/marquee-along-svg-path.mdx"
+   ],
+   "summary": "A marquee that moves repeated children with a per-frame loop: four directions, slow-down on hover, speed that follows scroll velocity, inertial drag and easing. A sibling component makes items follow an SVG path through CSS offset-path.",
+   "tags": [
+    "marquee",
+    "ticker",
+    "scroll-velocity",
+    "drag",
+    "offset-path"
+   ],
+   "title": "Frame-driven marquee with scroll and drag response (Fancy)"
+  },
+  {
+   "category": "scroll",
+   "dependencies": [
+    "motion"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "tailwind",
+    "typescript",
+    "motion"
+   ],
+   "gpu_intensity": "low",
+   "id": "fancy-stacking-cards",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/components/fancy.md",
+   "license_status": "verified",
+   "motion": "subtle",
+   "recipe": "knowledge/implementation-recipes/fancy-stacking-cards-scroll.md",
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "fancy"
+   ],
+   "source_paths": [
+    "fancy:src/fancy/components/blocks/stacking-cards.tsx",
+    "fancy:src/fancy/examples/blocks/stacking-cards-demo.tsx",
+    "fancy:src/content/docs/components/blocks/stacking-cards.mdx"
+   ],
+   "summary": "Cards use position sticky with growing top offsets while a shared scroll-progress value scales earlier cards down as later cards arrive, built from useScroll, useTransform and React context. Written by Khoa Phan inside the Fancy repository.",
+   "tags": [
+    "stacking-cards",
+    "sticky",
+    "scroll-progress",
+    "scale",
+    "case-studies"
+   ],
+   "title": "Sticky stacking cards on scroll (Fancy)"
+  },
+  {
+   "category": "animation",
+   "dependencies": [],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "tailwind",
+    "typescript",
+    "svg",
+    "css"
+   ],
+   "gpu_intensity": "unknown",
+   "id": "fancy-svg-filters",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/components/fancy.md",
+   "license_status": "verified",
+   "motion": "none",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": false,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "fancy"
+   ],
+   "source_paths": [
+    "fancy:src/fancy/components/filter/gooey-svg-filter.tsx",
+    "fancy:src/fancy/components/filter/pixelate-svg-filter.tsx",
+    "fancy:src/content/docs/components/filter/gooey-svg-filter.mdx",
+    "fancy:src/content/docs/components/filter/pixelate-svg-filter.mdx"
+   ],
+   "summary": "Two hidden SVG filter components applied through CSS filter url references: a gooey filter (Gaussian blur, colour matrix, composite) that merges nearby shapes, and a pixelate filter built from convolution, tile and morphology primitives.",
+   "tags": [
+    "svg-filter",
+    "gooey",
+    "pixelate",
+    "blur",
+    "filter-effect"
+   ],
+   "title": "Gooey and pixelate SVG filters (Fancy)"
+  },
+  {
+   "category": "typography",
+   "dependencies": [
+    "motion",
+    "clsx",
+    "tailwind-merge"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "tailwind",
+    "typescript",
+    "motion"
+   ],
+   "gpu_intensity": "low",
+   "id": "fancy-text-highlighter",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/components/fancy.md",
+   "license_status": "verified",
+   "motion": "subtle",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "fancy"
+   ],
+   "source_paths": [
+    "fancy:src/fancy/components/text/text-highlighter.tsx",
+    "fancy:src/content/docs/components/text/text-highlighter.mdx",
+    "fancy:src/fancy/examples/text/text-highlighter-scroll-demo.tsx"
+   ],
+   "summary": "Marker-style highlight drawn behind inline text by animating the background-size of a gradient, in four directions, triggered by hover, in-view, a ref call or automatically. A cloned box decoration keeps wrapped lines correct.",
+   "tags": [
+    "highlight",
+    "marker",
+    "background-size",
+    "in-view",
+    "inline-text"
+   ],
+   "title": "Animated text highlighter (Fancy)"
+  },
+  {
+   "category": "typography",
+   "dependencies": [
+    "motion",
+    "clsx",
+    "tailwind-merge"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "tailwind",
+    "typescript",
+    "motion"
+   ],
+   "gpu_intensity": "low",
+   "id": "fancy-text-rotate",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/components/fancy.md",
+   "license_status": "verified",
+   "motion": "moderate",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "fancy"
+   ],
+   "source_paths": [
+    "fancy:src/fancy/components/text/text-rotate.tsx",
+    "fancy:src/content/docs/components/text/text-rotate.mdx",
+    "fancy:src/fancy/examples/text/text-rotate-demo.tsx"
+   ],
+   "summary": "Cycles through a list of strings, animating the outgoing text out and the incoming text in per character, word or line with AnimatePresence. Supports automatic rotation and ref-driven next, previous and jumpTo.",
+   "tags": [
+    "text-rotate",
+    "rotating-words",
+    "animate-presence",
+    "stagger",
+    "headline"
+   ],
+   "title": "Rotating text with AnimatePresence (Fancy)"
+  },
+  {
+   "category": "typography",
+   "dependencies": [
+    "motion",
+    "lodash",
+    "clsx",
+    "tailwind-merge"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "tailwind",
+    "typescript",
+    "motion"
+   ],
+   "gpu_intensity": "low",
+   "id": "fancy-variable-font-text",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/components/fancy.md",
+   "license_status": "verified",
+   "motion": "moderate",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "fancy"
+   ],
+   "source_paths": [
+    "fancy:src/fancy/components/text/variable-font-hover-by-letter.tsx",
+    "fancy:src/fancy/components/text/variable-font-hover-by-random-letter.tsx",
+    "fancy:src/fancy/components/text/breathing-text.tsx",
+    "fancy:src/content/docs/components/text/variable-font-hover-by-letter.mdx"
+   ],
+   "summary": "Animates font-variation-settings per letter on hover, in sequence or random order, or continuously with Breathing Text, using stagger and spring or tween transitions. Requires a variable font that has the named axes.",
+   "tags": [
+    "variable-font",
+    "font-variation-settings",
+    "weight",
+    "hover",
+    "breathing"
+   ],
+   "title": "Variable-font weight and slant animation (Fancy)"
+  },
+  {
+   "category": "typography",
+   "dependencies": [
+    "motion",
+    "clsx",
+    "tailwind-merge"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "tailwind",
+    "typescript",
+    "motion"
+   ],
+   "gpu_intensity": "low",
+   "id": "fancy-vertical-cut-reveal",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/components/fancy.md",
+   "license_status": "verified",
+   "motion": "moderate",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "fancy"
+   ],
+   "source_paths": [
+    "fancy:src/fancy/components/text/vertical-cut-reveal.tsx",
+    "fancy:src/content/docs/components/text/vertical-cut-reveal.mdx",
+    "fancy:src/fancy/examples/text/vertical-cut-reveal-scroll-demo.tsx"
+   ],
+   "summary": "Text split into words, characters or lines that slide up from beneath an overflow-hidden mask, with a stagger origin of first, last, centre, random or a chosen index, and ref methods to start and reset the reveal.",
+   "tags": [
+    "text-reveal",
+    "mask",
+    "stagger",
+    "split-text",
+    "headline"
+   ],
+   "title": "Vertical cut text reveal (Fancy)"
+  },
+  {
+   "category": "background-shader",
+   "dependencies": [],
+   "frameworks": [
+    "javascript",
+    "webgl",
+    "glsl"
+   ],
+   "gpu_intensity": "medium",
+   "id": "glsl-background-fundamentals",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/shaders/glsl-ui-fundamentals.md",
+   "license_status": "unknown",
+   "motion": "subtle",
+   "recipe": "knowledge/implementation-recipes/animated-shader-gradient-background.md",
+   "redistribution_status": "license_specific",
+   "reduced_motion_alternative": true,
+   "reuse": "license_review_required",
+   "source_ids": [
+    "liquid-logo",
+    "liquid-glass-js",
+    "shadergradient"
+   ],
+   "source_paths": [
+    "liquid-logo:main.js",
+    "liquid-glass-js:container.js",
+    "shadergradient:packages/shadergradient/src/consts.ts",
+    "shadergradient:packages/shadergradient-vue/src/ShaderGradientCanvas.ts"
+   ],
+   "summary": "Original guide to fragment-shader UI backgrounds: one oversized triangle, uniforms for resolution, time and pointer, DPR and size caps, ResizeObserver handling, pausing, throttling and mobile budgets, with examples verified in three upstream projects.",
+   "tags": [
+    "glsl",
+    "webgl",
+    "fragment-shader",
+    "uniforms",
+    "dpr",
+    "resize",
+    "performance",
+    "background",
+    "fundamentals"
+   ],
+   "title": "GLSL background fundamentals for UI"
+  },
+  {
+   "category": "animation",
+   "dependencies": [
+    "gsap"
+   ],
+   "frameworks": [
+    "javascript",
+    "typescript",
+    "gsap"
+   ],
+   "gpu_intensity": "low",
+   "id": "gsap-flip-layout-transition",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/animations/gsap.md",
+   "license_status": "custom_terms",
+   "motion": "moderate",
+   "recipe": null,
+   "redistribution_status": "license_specific",
+   "reduced_motion_alternative": true,
+   "reuse": "license_review_required",
+   "source_ids": [
+    "gsap"
+   ],
+   "source_paths": [
+    "gsap:types/flip.d.ts",
+    "gsap:src/Flip.js",
+    "gsap:esm/Flip.js"
+   ],
+   "summary": "Animate layout changes such as reordering, filtering or expanding cards by recording state with Flip.getState, changing the DOM, then animating from the old layout with Flip.from.",
+   "tags": [
+    "flip",
+    "layout-animation",
+    "reorder",
+    "filtering",
+    "shared-element"
+   ],
+   "title": "Flip layout transitions"
+  },
+  {
+   "category": "animation",
+   "dependencies": [
+    "gsap"
+   ],
+   "frameworks": [
+    "javascript",
+    "typescript",
+    "react",
+    "gsap"
+   ],
+   "gpu_intensity": "none",
+   "id": "gsap-match-media-reduced-motion",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/animations/gsap.md",
+   "license_status": "custom_terms",
+   "motion": "subtle",
+   "recipe": "knowledge/implementation-recipes/gsap-pinned-section-sequence.md",
+   "redistribution_status": "license_specific",
+   "reduced_motion_alternative": true,
+   "reuse": "license_review_required",
+   "source_ids": [
+    "gsap"
+   ],
+   "source_paths": [
+    "gsap:types/gsap-core.d.ts",
+    "gsap:src/gsap-core.js",
+    "gsap:types/scroll-trigger.d.ts"
+   ],
+   "summary": "Branch GSAP animation on media queries such as prefers-reduced-motion and viewport size with gsap.matchMedia, so each branch is reverted and rebuilt automatically when its query changes.",
+   "tags": [
+    "matchmedia",
+    "reduced-motion",
+    "responsive",
+    "cleanup",
+    "context"
+   ],
+   "title": "gsap.matchMedia for responsive and reduced-motion branches"
+  },
+  {
+   "category": "scroll",
+   "dependencies": [
+    "gsap"
+   ],
+   "frameworks": [
+    "javascript",
+    "typescript",
+    "react",
+    "gsap"
+   ],
+   "gpu_intensity": "low",
+   "id": "gsap-scrolltrigger-pin-scrub",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/animations/scroll-storytelling.md",
+   "license_status": "custom_terms",
+   "motion": "intense",
+   "recipe": "knowledge/implementation-recipes/gsap-pinned-section-sequence.md",
+   "redistribution_status": "license_specific",
+   "reduced_motion_alternative": true,
+   "reuse": "license_review_required",
+   "source_ids": [
+    "gsap"
+   ],
+   "source_paths": [
+    "gsap:types/scroll-trigger.d.ts",
+    "gsap:src/ScrollTrigger.js",
+    "gsap:types/timeline.d.ts"
+   ],
+   "summary": "A section that pins in the viewport while a scrubbed timeline cross-fades several beats, with a stacked fallback for narrow, touch and reduced-motion visitors.",
+   "tags": [
+    "scrolltrigger",
+    "pin",
+    "scrub",
+    "scrollytelling",
+    "timeline"
+   ],
+   "title": "ScrollTrigger pinned and scrubbed sequence"
+  },
+  {
+   "category": "typography",
+   "dependencies": [
+    "gsap"
+   ],
+   "frameworks": [
+    "javascript",
+    "typescript",
+    "gsap"
+   ],
+   "gpu_intensity": "none",
+   "id": "gsap-split-text-reveal",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/animations/gsap.md",
+   "license_status": "custom_terms",
+   "motion": "moderate",
+   "recipe": "knowledge/implementation-recipes/gsap-text-reveal-and-stagger.md",
+   "redistribution_status": "license_specific",
+   "reduced_motion_alternative": true,
+   "reuse": "license_review_required",
+   "source_ids": [
+    "gsap"
+   ],
+   "source_paths": [
+    "gsap:types/split-text.d.ts",
+    "gsap:src/SplitText.ts",
+    "gsap:esm/SplitText.js"
+   ],
+   "summary": "Split a headline into masked lines with SplitText, animate them upward with a stagger, and let autoSplit re-split on resize and font load without restarting the animation.",
+   "tags": [
+    "split-text",
+    "mask",
+    "lines",
+    "headline",
+    "text-reveal"
+   ],
+   "title": "SplitText masked line reveal"
+  },
+  {
+   "category": "animation",
+   "dependencies": [
+    "gsap"
+   ],
+   "frameworks": [
+    "javascript",
+    "typescript",
+    "react",
+    "gsap"
+   ],
+   "gpu_intensity": "none",
+   "id": "gsap-stagger-reveal",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/animations/gsap.md",
+   "license_status": "custom_terms",
+   "motion": "moderate",
+   "recipe": "knowledge/implementation-recipes/gsap-text-reveal-and-stagger.md",
+   "redistribution_status": "license_specific",
+   "reduced_motion_alternative": true,
+   "reuse": "license_review_required",
+   "source_ids": [
+    "gsap"
+   ],
+   "source_paths": [
+    "gsap:types/scroll-trigger.d.ts",
+    "gsap:types/gsap-utils.d.ts",
+    "gsap:types/gsap-core.d.ts"
+   ],
+   "summary": "Reveal rows of cards or list items in short staggered groups as they enter the viewport, using ScrollTrigger.batch with a capped stagger and a no-motion fallback.",
+   "tags": [
+    "stagger",
+    "batch",
+    "reveal-on-scroll",
+    "cards",
+    "scrolltrigger"
+   ],
+   "title": "Staggered scroll reveal with ScrollTrigger.batch"
+  },
+  {
+   "category": "animation",
+   "dependencies": [
+    "gsap"
+   ],
+   "frameworks": [
+    "javascript",
+    "typescript",
+    "gsap"
+   ],
+   "gpu_intensity": "none",
+   "id": "gsap-timeline-choreography",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/animations/gsap.md",
+   "license_status": "custom_terms",
+   "motion": "moderate",
+   "recipe": "knowledge/implementation-recipes/gsap-text-reveal-and-stagger.md",
+   "redistribution_status": "license_specific",
+   "reduced_motion_alternative": true,
+   "reuse": "license_review_required",
+   "source_ids": [
+    "gsap"
+   ],
+   "source_paths": [
+    "gsap:types/timeline.d.ts",
+    "gsap:types/gsap-core.d.ts",
+    "gsap:types/tween.d.ts",
+    "gsap:src/gsap-core.js"
+   ],
+   "summary": "Sequence an intro with a GSAP timeline using shared defaults, labels and relative position strings, so steps overlap deliberately instead of chaining end to end.",
+   "tags": [
+    "timeline",
+    "labels",
+    "sequencing",
+    "position-parameter",
+    "easing"
+   ],
+   "title": "GSAP timeline choreography"
+  },
+  {
+   "category": "workflow",
+   "dependencies": [],
+   "frameworks": [
+    "javascript"
+   ],
+   "gpu_intensity": "none",
+   "id": "image-background-removal-for-logos",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/shaders/liquid-metal-logo.md",
+   "license_status": "verified",
+   "motion": "none",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": false,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "liquid-logo"
+   ],
+   "source_paths": [
+    "liquid-logo:background-removal.js",
+    "liquid-logo:main.js"
+   ],
+   "summary": "Prepare a logo for alpha-mask shader effects by making a plain black or white background transparent with a corner-sampled flood fill in a 2D canvas, or by supplying a PNG or SVG that already has real transparency.",
+   "tags": [
+    "alpha-mask",
+    "background-removal",
+    "flood-fill",
+    "canvas-2d",
+    "logo",
+    "image-preparation"
+   ],
+   "title": "Logo background removal for mask-based shaders"
+  },
+  {
+   "category": "image-to-3d",
+   "dependencies": [
+    "three",
+    "img2threejs",
+    "python>=3.10"
+   ],
+   "frameworks": [
+    "three",
+    "typescript",
+    "python",
+    "nodejs",
+    "react",
+    "r3f"
+   ],
+   "gpu_intensity": "medium",
+   "id": "image-to-3d-img2threejs-pipeline",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/components/img2threejs.md",
+   "license_status": "verified",
+   "motion": "subtle",
+   "recipe": "knowledge/implementation-recipes/image-to-3d-with-img2threejs.md",
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "img2threejs"
+   ],
+   "source_paths": [
+    "img2threejs:SKILL.md",
+    "img2threejs:README.md",
+    "img2threejs:docs/ARCHITECTURE.md",
+    "img2threejs:docs/standard-prompts/build.md",
+    "img2threejs:forge/_shared/workflow_state.py",
+    "img2threejs:forge/stage3_build/generate_threejs_factory.py"
+   ],
+   "summary": "A gated agent workflow that rebuilds the object in one reference image as a code-only Three.js factory through intake, spec, locked build passes and render review, with a resumable checklist and bounded corrections.",
+   "tags": [
+    "image-to-3d",
+    "img2threejs",
+    "procedural-modeling",
+    "threejs",
+    "agent-skill",
+    "reconstruction",
+    "quality-gates",
+    "product-3d"
+   ],
+   "title": "Reference image to procedural Three.js model with img2threejs"
+  },
+  {
+   "category": "image-to-3d",
+   "dependencies": [
+    "three",
+    "python>=3.10"
+   ],
+   "frameworks": [
+    "three",
+    "python",
+    "typescript"
+   ],
+   "gpu_intensity": "medium",
+   "id": "image-to-3d-procedural-rig-animation-gates",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/components/img2threejs.md",
+   "license_status": "verified",
+   "motion": "moderate",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "img2threejs"
+   ],
+   "source_paths": [
+    "img2threejs:grimoire/readiness/animation_contract.md",
+    "img2threejs:grimoire/readiness/procedural_rigging_contract.md",
+    "img2threejs:forge/stage5_rig/rig_gates.py",
+    "img2threejs:forge/stage5_rig/validate_rig_payload.py",
+    "img2threejs:forge/stage5_rig/emit_animation_runtime.py"
+   ],
+   "summary": "A skeleton derived from the component tree, geodesic skin weights and gates G1 to G10 that prove clips actually drive the mesh, where an unmeasured gate reports unevaluated instead of passing.",
+   "tags": [
+    "rigging",
+    "skinning",
+    "skeleton",
+    "animation-clips",
+    "skinned-mesh",
+    "animation-gates",
+    "character",
+    "image-to-3d"
+   ],
+   "title": "Procedural rig and animation gates for generated characters"
+  },
+  {
+   "category": "image-to-3d",
+   "dependencies": [
+    "python>=3.10"
+   ],
+   "frameworks": [
+    "python",
+    "three",
+    "nodejs"
+   ],
+   "gpu_intensity": "low",
+   "id": "image-to-3d-review-gates-and-correction-loop",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/components/img2threejs.md",
+   "license_status": "verified",
+   "motion": "none",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": false,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "img2threejs"
+   ],
+   "source_paths": [
+    "img2threejs:grimoire/review/gates_reference.md",
+    "img2threejs:grimoire/review/self_correction.md",
+    "img2threejs:forge/stage4_review/diagnose_render.py",
+    "img2threejs:forge/stage4_review/make_comparison_sheet.py",
+    "img2threejs:forge/stage4_review/append_review.py"
+   ],
+   "summary": "Deterministic diagnostics, multi-angle checks and one side-by-side sheet judged by agent vision decide each build pass, with exactly one action per review and hard ceilings on correction loops.",
+   "tags": [
+    "review-gates",
+    "quality-gates",
+    "visual-review",
+    "self-correction",
+    "comparison-sheet",
+    "divine-eye",
+    "image-to-3d",
+    "qa"
+   ],
+   "title": "Render-versus-reference review gates for generated 3D"
+  },
+  {
+   "category": "scroll",
+   "dependencies": [
+    "lenis",
+    "gsap"
+   ],
+   "frameworks": [
+    "javascript",
+    "typescript",
+    "react",
+    "vue",
+    "gsap",
+    "lenis"
+   ],
+   "gpu_intensity": "low",
+   "id": "lenis-gsap-scrolltrigger-sync",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/animations/scroll-storytelling.md",
+   "license_status": "custom_terms",
+   "motion": "moderate",
+   "recipe": "knowledge/implementation-recipes/lenis-gsap-scrolltrigger-sync.md",
+   "redistribution_status": "license_specific",
+   "reduced_motion_alternative": true,
+   "reuse": "license_review_required",
+   "source_ids": [
+    "lenis",
+    "gsap"
+   ],
+   "source_paths": [
+    "lenis:README.md",
+    "lenis:packages/react/README.md",
+    "lenis:playground/nuxt/app.vue",
+    "gsap:types/scroll-trigger.d.ts",
+    "gsap:types/gsap-core.d.ts"
+   ],
+   "summary": "One shared clock and one scroll position: GSAP's ticker drives Lenis, Lenis scroll events call ScrollTrigger.update, and lag smoothing is disabled so scrubbed and pinned animation stays glued to the page.",
+   "tags": [
+    "scrolltrigger",
+    "gsap-ticker",
+    "sync",
+    "scrub",
+    "pin"
+   ],
+   "title": "Lenis and GSAP ScrollTrigger sync"
+  },
+  {
+   "category": "scroll",
+   "dependencies": [
+    "lenis"
+   ],
+   "frameworks": [
+    "javascript",
+    "react",
+    "lenis"
+   ],
+   "gpu_intensity": "none",
+   "id": "lenis-nested-scroll-and-modals",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/animations/lenis.md",
+   "license_status": "verified",
+   "motion": "none",
+   "recipe": "knowledge/implementation-recipes/lenis-smooth-scroll-setup.md",
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": false,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "lenis"
+   ],
+   "source_paths": [
+    "lenis:packages/core/src/lenis.ts",
+    "lenis:packages/core/lenis.css",
+    "lenis:README.md",
+    "lenis:playground/core/test.ts"
+   ],
+   "summary": "Stop and start Lenis for modals and route changes, and keep nested scrollable areas native with data-lenis-prevent attributes, the prevent option or allowNestedScroll.",
+   "tags": [
+    "modal",
+    "scroll-lock",
+    "nested-scroll",
+    "data-attributes",
+    "overflow"
+   ],
+   "title": "Modal scroll lock and nested scrollers in Lenis"
+  },
+  {
+   "category": "scroll",
+   "dependencies": [
+    "lenis",
+    "react"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "typescript",
+    "lenis"
+   ],
+   "gpu_intensity": "none",
+   "id": "lenis-react-provider",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/animations/lenis.md",
+   "license_status": "verified",
+   "motion": "subtle",
+   "recipe": "knowledge/implementation-recipes/lenis-smooth-scroll-setup.md",
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "lenis"
+   ],
+   "source_paths": [
+    "lenis:packages/react/src/provider.tsx",
+    "lenis:packages/react/src/use-lenis.ts",
+    "lenis:packages/react/src/types.ts",
+    "lenis:packages/react/README.md"
+   ],
+   "summary": "ReactLenis component plus the useLenis hook from lenis/react, in root, asChild or wrapper mode, with the instance shared through context and a module-level store.",
+   "tags": [
+    "react",
+    "nextjs",
+    "hooks",
+    "context",
+    "smooth-scroll"
+   ],
+   "title": "Lenis React provider and hooks"
+  },
+  {
+   "category": "scroll",
+   "dependencies": [
+    "lenis"
+   ],
+   "frameworks": [
+    "javascript",
+    "typescript",
+    "lenis"
+   ],
+   "gpu_intensity": "none",
+   "id": "lenis-scroll-snap",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/animations/lenis.md",
+   "license_status": "verified",
+   "motion": "moderate",
+   "recipe": "knowledge/implementation-recipes/lenis-smooth-scroll-setup.md",
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "lenis"
+   ],
+   "source_paths": [
+    "lenis:packages/snap/src/snap.ts",
+    "lenis:packages/snap/src/element.ts",
+    "lenis:packages/snap/src/types.ts",
+    "lenis:packages/snap/README.md"
+   ],
+   "summary": "Proximity, mandatory or lock-style snapping to pixel offsets or element edges on top of Lenis, driven by virtual-scroll events because Lenis does not support CSS scroll-snap.",
+   "tags": [
+    "scroll-snap",
+    "sections",
+    "slideshow",
+    "snapping"
+   ],
+   "title": "Section snapping with lenis/snap"
+  },
+  {
+   "category": "scroll",
+   "dependencies": [
+    "lenis",
+    "vue"
+   ],
+   "frameworks": [
+    "vue",
+    "nuxt",
+    "typescript",
+    "lenis"
+   ],
+   "gpu_intensity": "none",
+   "id": "lenis-vue-nuxt-module",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/animations/lenis.md",
+   "license_status": "verified",
+   "motion": "subtle",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "lenis"
+   ],
+   "source_paths": [
+    "lenis:packages/vue/src/provider.ts",
+    "lenis:packages/vue/src/use-lenis.ts",
+    "lenis:packages/vue/nuxt/module.ts",
+    "lenis:packages/vue/README.md"
+   ],
+   "summary": "VueLenis component, useLenis composable, a global plugin and a Nuxt module (lenis/nuxt) that registers the component and auto-imports the composable.",
+   "tags": [
+    "vue",
+    "nuxt",
+    "composable",
+    "smooth-scroll"
+   ],
+   "title": "Lenis for Vue and Nuxt"
+  },
+  {
+   "category": "button",
+   "dependencies": [
+    "html2canvas"
+   ],
+   "frameworks": [
+    "javascript",
+    "webgl",
+    "glsl",
+    "css"
+   ],
+   "gpu_intensity": "medium",
+   "id": "liquid-glass-button",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/shaders/liquid-glass.md",
+   "license_status": "verified",
+   "motion": "subtle",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "liquid-glass-js"
+   ],
+   "source_paths": [
+    "liquid-glass-js:button.js",
+    "liquid-glass-js:container.js",
+    "liquid-glass-js:glass.css",
+    "liquid-glass-js:demo.js"
+   ],
+   "summary": "A pill, circle or rounded glass button that extends the glass container with a text overlay and click handler, and optionally nested glass that samples its parent container's canvas every frame.",
+   "tags": [
+    "liquid-glass",
+    "glass-button",
+    "pill",
+    "webgl",
+    "nested-glass",
+    "button"
+   ],
+   "title": "WebGL liquid glass button"
+  },
+  {
+   "category": "liquid-glass",
+   "dependencies": [
+    "html2canvas"
+   ],
+   "frameworks": [
+    "javascript",
+    "webgl",
+    "glsl",
+    "css"
+   ],
+   "gpu_intensity": "high",
+   "id": "liquid-glass-container",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/shaders/liquid-glass.md",
+   "license_status": "verified",
+   "motion": "subtle",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "liquid-glass-js"
+   ],
+   "source_paths": [
+    "liquid-glass-js:container.js",
+    "liquid-glass-js:glass.css",
+    "liquid-glass-js:controls.js",
+    "liquid-glass-js:demo.js",
+    "liquid-glass-js:README.md"
+   ],
+   "summary": "A glass panel drawn by a WebGL canvas that refracts, blurs and tints a one-time html2canvas snapshot of the page, with rounded-rectangle, circle and pill shapes, edge, rim and tint parameters and support for nested glass children.",
+   "tags": [
+    "liquid-glass",
+    "glassmorphism",
+    "refraction",
+    "webgl",
+    "html2canvas",
+    "signed-distance",
+    "container"
+   ],
+   "title": "WebGL liquid glass container"
+  },
+  {
+   "category": "liquid-glass",
+   "dependencies": [],
+   "frameworks": [
+    "css"
+   ],
+   "gpu_intensity": "low",
+   "id": "liquid-glass-css-fallback",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/shaders/liquid-glass.md",
+   "license_status": "verified",
+   "motion": "subtle",
+   "recipe": "knowledge/implementation-recipes/liquid-glass-ui-with-css-fallback.md",
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "liquid-glass-js"
+   ],
+   "source_paths": [
+    "liquid-glass-js:glass.css",
+    "liquid-glass-js:container.js",
+    "liquid-glass-js:README.md"
+   ],
+   "summary": "Glass-style cards, nav pills and buttons in plain CSS: backdrop blur and saturation, a tint and dark scrim, a gradient lit rim, @supports and user-preference fallbacks, and measured text-contrast guidance, with an optional WebGL layer behind a capability check.",
+   "tags": [
+    "glassmorphism",
+    "backdrop-filter",
+    "css-only",
+    "fallback",
+    "progressive-enhancement",
+    "contrast",
+    "liquid-glass"
+   ],
+   "title": "Frosted glass with plain CSS"
+  },
+  {
+   "category": "interactive-logo",
+   "dependencies": [],
+   "frameworks": [
+    "javascript",
+    "webgl",
+    "glsl"
+   ],
+   "gpu_intensity": "high",
+   "id": "liquid-metal-logo",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/shaders/liquid-metal-logo.md",
+   "license_status": "verified",
+   "motion": "moderate",
+   "recipe": "knowledge/implementation-recipes/liquid-metal-logo-integration.md",
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "liquid-logo"
+   ],
+   "source_paths": [
+    "liquid-logo:fragment-shader.glsl",
+    "liquid-logo:vertex-shader.glsl",
+    "liquid-logo:main.js",
+    "liquid-logo:presets.js",
+    "liquid-logo:gui-controls.js"
+   ],
+   "summary": "Animate a transparent-background logo as a flowing liquid-metal surface in a WebGL canvas, using the logo alpha as a mask and its edges to steer a plasma-style fragment shader, with an original recipe that adds fallback, reduced motion and cost caps.",
+   "tags": [
+    "liquid-metal",
+    "chrome",
+    "logo",
+    "animated-logo",
+    "webgl",
+    "glsl",
+    "fragment-shader",
+    "alpha-mask",
+    "hero"
+   ],
+   "title": "Liquid metal animated logo"
+  },
+  {
+   "category": "workflow",
+   "dependencies": [
+    "mp4-muxer"
+   ],
+   "frameworks": [
+    "javascript",
+    "webgl"
+   ],
+   "gpu_intensity": "low",
+   "id": "logo-video-export",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/shaders/liquid-metal-logo.md",
+   "license_status": "verified",
+   "motion": "moderate",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "liquid-logo"
+   ],
+   "source_paths": [
+    "liquid-logo:canvasVideoExport.js",
+    "liquid-logo:index.html",
+    "liquid-logo:mp4-muxer-main/package.json",
+    "liquid-logo:mp4-muxer-main/LICENSE"
+   ],
+   "summary": "Export an animated WebGL canvas as a transparent PNG still or an MP4: WebCodecs VideoEncoder with a vendored mp4-muxer on desktop browsers other than Firefox, MediaRecorder on iOS, Android and Firefox.",
+   "tags": [
+    "video-export",
+    "webcodecs",
+    "mp4",
+    "mediarecorder",
+    "canvas",
+    "png-export",
+    "muxer"
+   ],
+   "title": "Export a WebGL canvas as PNG or MP4"
+  },
+  {
+   "category": "animation",
+   "dependencies": [],
+   "frameworks": [
+    "css",
+    "javascript",
+    "gsap"
+   ],
+   "gpu_intensity": "none",
+   "id": "motion-principles",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/animations/motion-principles-for-ui.md",
+   "license_status": "verified",
+   "motion": "subtle",
+   "recipe": null,
+   "redistribution_status": "original",
+   "reduced_motion_alternative": true,
+   "reuse": "original",
+   "source_ids": [],
+   "source_paths": [],
+   "summary": "Project-authored guidance on duration and easing bands, choreography, stagger rules, restraint, performance, a reduced-motion policy and a motion_intensity 1 to 10 budget table.",
+   "tags": [
+    "motion-design",
+    "easing",
+    "duration",
+    "stagger",
+    "reduced-motion",
+    "motion-intensity",
+    "budget"
+   ],
+   "title": "Motion principles for interfaces"
+  },
+  {
+   "category": "page-transition",
+   "dependencies": [
+    "gsap"
+   ],
+   "frameworks": [
+    "javascript",
+    "typescript",
+    "gsap",
+    "lenis"
+   ],
+   "gpu_intensity": "low",
+   "id": "page-transition-gsap",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/animations/gsap.md",
+   "license_status": "custom_terms",
+   "motion": "moderate",
+   "recipe": "knowledge/implementation-recipes/page-transition-with-gsap.md",
+   "redistribution_status": "license_specific",
+   "reduced_motion_alternative": true,
+   "reuse": "license_review_required",
+   "source_ids": [
+    "gsap",
+    "lenis"
+   ],
+   "source_paths": [
+    "gsap:types/gsap-core.d.ts",
+    "gsap:types/animation.d.ts",
+    "lenis:packages/core/src/lenis.ts"
+   ],
+   "summary": "Original fetch-and-swap transition: a GSAP curtain covers the page, content is swapped and per-page animation rebuilt, then the curtain reveals, with focus, title, scroll reset and reduced motion handled.",
+   "tags": [
+    "page-transition",
+    "curtain",
+    "router",
+    "focus-management",
+    "gsap-context"
+   ],
+   "title": "Curtain page transition with GSAP"
+  },
+  {
+   "category": "three-scene",
+   "dependencies": [
+    "three",
+    "@react-three/fiber",
+    "react"
+   ],
+   "frameworks": [
+    "react",
+    "typescript",
+    "r3f",
+    "three"
+   ],
+   "gpu_intensity": "medium",
+   "id": "r3f-adaptive-resolution-performance",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/animations/r3f-animation-and-performance.md",
+   "license_status": "verified",
+   "motion": "none",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": false,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "react-three-fiber"
+   ],
+   "source_paths": [
+    "react-three-fiber:docs/advanced/scaling-performance.mdx",
+    "react-three-fiber:docs/API/canvas.mdx",
+    "react-three-fiber:packages/fiber/src/core/store.ts",
+    "react-three-fiber:packages/fiber/src/core/configuration.ts",
+    "react-three-fiber:packages/fiber/tests/dpr.test.tsx"
+   ],
+   "summary": "Bound pixel cost with the Canvas dpr range, optionally disable antialiasing, and use performance.regress to lower resolution while the camera moves and restore it afterwards.",
+   "tags": [
+    "dpr",
+    "pixel-ratio",
+    "performance",
+    "regress",
+    "adaptive-quality",
+    "antialias",
+    "r3f",
+    "3d"
+   ],
+   "title": "Adaptive resolution with dpr range and performance regression"
+  },
+  {
+   "category": "three-scene",
+   "dependencies": [
+    "three",
+    "@react-three/fiber",
+    "react",
+    "react-dom"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "typescript",
+    "three",
+    "r3f",
+    "webgl"
+   ],
+   "gpu_intensity": "medium",
+   "id": "r3f-canvas-setup",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/components/react-three-fiber.md",
+   "license_status": "verified",
+   "motion": "none",
+   "recipe": "knowledge/implementation-recipes/r3f-canvas-in-a-page-with-fallback.md",
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "react-three-fiber"
+   ],
+   "source_paths": [
+    "react-three-fiber:docs/getting-started/your-first-scene.mdx",
+    "react-three-fiber:docs/getting-started/installation.mdx",
+    "react-three-fiber:docs/API/canvas.mdx",
+    "react-three-fiber:packages/fiber/src/web/Canvas.tsx",
+    "react-three-fiber:packages/fiber/src/core/configuration.ts"
+   ],
+   "summary": "Mount a declarative three.js scene in a React page with the R3F Canvas, which creates the renderer, scene, camera and render loop and fits the size of its parent element.",
+   "tags": [
+    "react-three-fiber",
+    "r3f",
+    "three",
+    "webgl",
+    "canvas",
+    "3d",
+    "scene-graph",
+    "jsx"
+   ],
+   "title": "React Three Fiber Canvas and declarative scene setup"
+  },
+  {
+   "category": "animation",
+   "dependencies": [
+    "three",
+    "@react-three/fiber",
+    "react"
+   ],
+   "frameworks": [
+    "react",
+    "typescript",
+    "r3f",
+    "three"
+   ],
+   "gpu_intensity": "medium",
+   "id": "r3f-frame-loop-animation",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/animations/r3f-animation-and-performance.md",
+   "license_status": "verified",
+   "motion": "moderate",
+   "recipe": "knowledge/implementation-recipes/r3f-product-showcase-scene.md",
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "react-three-fiber"
+   ],
+   "source_paths": [
+    "react-three-fiber:docs/advanced/pitfalls.mdx",
+    "react-three-fiber:docs/tutorials/basic-animations.mdx",
+    "react-three-fiber:docs/API/hooks.mdx",
+    "react-three-fiber:packages/fiber/src/core/loop.ts",
+    "react-three-fiber:packages/fiber/src/core/hooks.tsx"
+   ],
+   "summary": "Drive continuous animation by mutating three.js objects inside useFrame with clamped frame deltas instead of calling setState, so animation runs outside React's render cycle.",
+   "tags": [
+    "useframe",
+    "animation",
+    "delta-time",
+    "refs",
+    "transient-updates",
+    "r3f",
+    "3d",
+    "performance"
+   ],
+   "title": "Animate with useFrame and refs instead of React state"
+  },
+  {
+   "category": "three-scene",
+   "dependencies": [
+    "three",
+    "@react-three/fiber",
+    "react"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "typescript",
+    "r3f",
+    "three"
+   ],
+   "gpu_intensity": "medium",
+   "id": "r3f-gltf-loading-suspense",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/components/react-three-fiber.md",
+   "license_status": "verified",
+   "motion": "none",
+   "recipe": "knowledge/implementation-recipes/r3f-product-showcase-scene.md",
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": false,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "react-three-fiber"
+   ],
+   "source_paths": [
+    "react-three-fiber:docs/tutorials/loading-models.mdx",
+    "react-three-fiber:docs/API/hooks.mdx",
+    "react-three-fiber:packages/fiber/src/core/hooks.tsx",
+    "react-three-fiber:example/src/demos/Gltf.tsx",
+    "react-three-fiber:example/src/demos/SuspenseAndErrors.tsx"
+   ],
+   "summary": "Load glTF or GLB models with useLoader and GLTFLoader inside Suspense, mount the scene with a primitive, configure Draco through loader extensions, and let load errors reach an error boundary.",
+   "tags": [
+    "gltf",
+    "glb",
+    "useloader",
+    "suspense",
+    "primitive",
+    "draco",
+    "model-loading",
+    "r3f",
+    "3d"
+   ],
+   "title": "Load GLTF models with useLoader, Suspense and primitive"
+  },
+  {
+   "category": "three-scene",
+   "dependencies": [
+    "three",
+    "@react-three/fiber",
+    "react"
+   ],
+   "frameworks": [
+    "react",
+    "typescript",
+    "r3f",
+    "three"
+   ],
+   "gpu_intensity": "medium",
+   "id": "r3f-instancing-and-resource-reuse",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/animations/r3f-animation-and-performance.md",
+   "license_status": "verified",
+   "motion": "none",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": false,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "react-three-fiber"
+   ],
+   "source_paths": [
+    "react-three-fiber:docs/advanced/scaling-performance.mdx",
+    "react-three-fiber:docs/advanced/pitfalls.mdx",
+    "react-three-fiber:docs/API/objects.mdx",
+    "react-three-fiber:packages/fiber/src/core/reconciler.tsx",
+    "react-three-fiber:packages/eslint-plugin/docs/rules/no-new-in-loop.md"
+   ],
+   "summary": "Cut draw calls and memory by instancing repeated meshes, sharing geometries and materials, caching loads with useLoader, and controlling disposal with dispose null and manual disposal of primitives.",
+   "tags": [
+    "instancing",
+    "instancedmesh",
+    "draw-calls",
+    "dispose",
+    "memory",
+    "geometry-reuse",
+    "r3f",
+    "performance",
+    "3d"
+   ],
+   "title": "Instancing, shared resources and explicit disposal in R3F"
+  },
+  {
+   "category": "three-scene",
+   "dependencies": [
+    "three",
+    "@react-three/fiber",
+    "react"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "typescript",
+    "r3f",
+    "three",
+    "webgl"
+   ],
+   "gpu_intensity": "medium",
+   "id": "r3f-lazy-canvas-webgl-fallback",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/components/react-three-fiber.md",
+   "license_status": "verified",
+   "motion": "subtle",
+   "recipe": "knowledge/implementation-recipes/r3f-canvas-in-a-page-with-fallback.md",
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "react-three-fiber"
+   ],
+   "source_paths": [
+    "react-three-fiber:docs/API/canvas.mdx",
+    "react-three-fiber:packages/fiber/src/web/Canvas.tsx",
+    "react-three-fiber:packages/fiber/src/core/root.tsx",
+    "react-three-fiber:packages/fiber/src/core/renderer.ts",
+    "react-three-fiber:packages/fiber/tests/canvas.test.tsx"
+   ],
+   "summary": "Fetch the three.js and R3F chunk only when the section nears the viewport and WebGL works, idle rendering off-screen, and show a static poster when WebGL is missing, the renderer throws or the context is lost.",
+   "tags": [
+    "lazy-loading",
+    "webgl-detection",
+    "fallback",
+    "error-boundary",
+    "intersection-observer",
+    "poster",
+    "reduced-motion",
+    "r3f",
+    "3d"
+   ],
+   "title": "Lazy-mounted R3F canvas with WebGL detection and static fallback"
+  },
+  {
+   "category": "three-scene",
+   "dependencies": [
+    "three",
+    "@react-three/fiber",
+    "react"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "typescript",
+    "r3f",
+    "three"
+   ],
+   "gpu_intensity": "medium",
+   "id": "r3f-on-demand-rendering",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/animations/r3f-animation-and-performance.md",
+   "license_status": "verified",
+   "motion": "none",
+   "recipe": "knowledge/implementation-recipes/r3f-canvas-in-a-page-with-fallback.md",
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "react-three-fiber"
+   ],
+   "source_paths": [
+    "react-three-fiber:docs/advanced/scaling-performance.mdx",
+    "react-three-fiber:docs/API/additional-exports.mdx",
+    "react-three-fiber:packages/fiber/src/core/loop.ts",
+    "react-three-fiber:packages/fiber/src/core/store.ts"
+   ],
+   "summary": "Render only when something changes by setting frameloop to demand and calling invalidate after mutations made outside React, so idle 3D scenes stop using the GPU, battery and fans.",
+   "tags": [
+    "frameloop",
+    "demand",
+    "invalidate",
+    "on-demand-rendering",
+    "battery",
+    "idle",
+    "r3f",
+    "performance",
+    "3d"
+   ],
+   "title": "On-demand rendering with frameloop demand and invalidate"
+  },
+  {
+   "category": "three-scene",
+   "dependencies": [
+    "three",
+    "@react-three/fiber",
+    "react"
+   ],
+   "frameworks": [
+    "react",
+    "typescript",
+    "r3f",
+    "three"
+   ],
+   "gpu_intensity": "medium",
+   "id": "r3f-pointer-events-interaction",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/components/react-three-fiber.md",
+   "license_status": "verified",
+   "motion": "none",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": false,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "react-three-fiber"
+   ],
+   "source_paths": [
+    "react-three-fiber:docs/API/events.mdx",
+    "react-three-fiber:docs/tutorials/events-and-interaction.mdx",
+    "react-three-fiber:packages/fiber/src/core/events.ts",
+    "react-three-fiber:packages/fiber/src/web/events.ts",
+    "react-three-fiber:example/src/demos/StopPropagation.tsx"
+   ],
+   "summary": "Attach click, hover, wheel and pointer handlers directly to meshes while R3F handles raycasting, propagation, stopPropagation and pointer capture, with onPointerMissed for background clicks.",
+   "tags": [
+    "pointer-events",
+    "raycasting",
+    "hover",
+    "click",
+    "stoppropagation",
+    "pointer-capture",
+    "interaction",
+    "r3f",
+    "3d"
+   ],
+   "title": "Pointer events and interaction on R3F objects"
+  },
+  {
+   "category": "product-showcase",
+   "dependencies": [
+    "three",
+    "@react-three/fiber",
+    "react"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "typescript",
+    "r3f",
+    "three",
+    "webgl"
+   ],
+   "gpu_intensity": "medium",
+   "id": "r3f-product-showcase-scene",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/components/react-three-fiber.md",
+   "license_status": "verified",
+   "motion": "moderate",
+   "recipe": "knowledge/implementation-recipes/r3f-product-showcase-scene.md",
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "react-three-fiber"
+   ],
+   "source_paths": [
+    "react-three-fiber:docs/tutorials/loading-models.mdx",
+    "react-three-fiber:docs/advanced/scaling-performance.mdx",
+    "react-three-fiber:docs/tutorials/v9-migration-guide.mdx",
+    "react-three-fiber:example/src/demos/Gltf.tsx",
+    "react-three-fiber:example/src/demos/Activity.tsx"
+   ],
+   "summary": "A draggable, slowly rotating product viewer with a GLTF model fitted to the view, studio lighting from a room environment, on-demand rendering, a pause control and a reduced-motion state.",
+   "tags": [
+    "product-viewer",
+    "product-showcase",
+    "turntable",
+    "orbit-controls",
+    "gltf",
+    "environment-lighting",
+    "r3f",
+    "3d",
+    "ecommerce"
+   ],
+   "title": "Rotating product viewer scene in R3F"
+  },
+  {
+   "category": "workflow",
+   "dependencies": [
+    "@react-three/test-renderer",
+    "@react-three/fiber",
+    "three"
+   ],
+   "frameworks": [
+    "react",
+    "typescript",
+    "r3f",
+    "three"
+   ],
+   "gpu_intensity": "none",
+   "id": "r3f-test-renderer-unit-tests",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/components/react-three-fiber.md",
+   "license_status": "verified",
+   "motion": "none",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": false,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "react-three-fiber"
+   ],
+   "source_paths": [
+    "react-three-fiber:docs/API/testing.mdx",
+    "react-three-fiber:packages/test-renderer/README.md",
+    "react-three-fiber:packages/test-renderer/markdown/rttr.md",
+    "react-three-fiber:packages/test-renderer/src/index.tsx"
+   ],
+   "summary": "Test scene graphs, props, pointer events and useFrame logic in Node without WebGL using @react-three/test-renderer, with create, fireEvent, advanceFrames and toGraph.",
+   "tags": [
+    "testing",
+    "test-renderer",
+    "jest",
+    "unit-tests",
+    "scene-graph",
+    "r3f"
+   ],
+   "title": "Unit-test R3F scenes with the test renderer"
+  },
+  {
+   "category": "product-showcase",
+   "dependencies": [
+    "ogl",
+    "@use-gesture/react"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "typescript",
+    "javascript",
+    "tailwind",
+    "css",
+    "webgl"
+   ],
+   "gpu_intensity": "medium",
+   "id": "react-bits-3d-image-galleries",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/components/react-bits-catalog.md",
+   "license_status": "custom_terms",
+   "motion": "moderate",
+   "recipe": "knowledge/implementation-recipes/react-bits-heavy-background-budget.md",
+   "redistribution_status": "license_specific",
+   "reduced_motion_alternative": true,
+   "reuse": "license_review_required",
+   "source_ids": [
+    "react-bits"
+   ],
+   "source_paths": [
+    "react-bits:src/ts-tailwind/Components/CircularGallery/CircularGallery.tsx",
+    "react-bits:src/ts-tailwind/Components/DomeGallery/DomeGallery.tsx",
+    "react-bits:src/ts-tailwind/Components/InfiniteMenu/InfiniteMenu.tsx"
+   ],
+   "summary": "Image showcases with depth: CircularGallery (OGL orbit), DomeGallery (draggable hemisphere in CSS 3D), InfiniteMenu (draggable sphere on raw WebGL2) and FlexCarousel (OGL image row).",
+   "tags": [
+    "gallery",
+    "3d",
+    "webgl",
+    "carousel",
+    "images",
+    "drag"
+   ],
+   "title": "React Bits 3D image galleries"
+  },
+  {
+   "category": "navigation",
+   "dependencies": [
+    "gsap",
+    "react-router-dom",
+    "react-icons"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "typescript",
+    "javascript",
+    "tailwind",
+    "css",
+    "gsap"
+   ],
+   "gpu_intensity": "none",
+   "id": "react-bits-animated-navigation-menus",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/components/react-bits-catalog.md",
+   "license_status": "custom_terms",
+   "motion": "moderate",
+   "recipe": "knowledge/implementation-recipes/react-bits-choose-variant-and-install.md",
+   "redistribution_status": "license_specific",
+   "reduced_motion_alternative": true,
+   "reuse": "license_review_required",
+   "source_ids": [
+    "react-bits"
+   ],
+   "source_paths": [
+    "react-bits:src/ts-tailwind/Components/PillNav/PillNav.tsx",
+    "react-bits:src/ts-tailwind/Components/StaggeredMenu/StaggeredMenu.tsx",
+    "react-bits:src/ts-tailwind/Components/CardNav/CardNav.tsx",
+    "react-bits:src/ts-tailwind/Components/FlowingMenu/FlowingMenu.tsx"
+   ],
+   "summary": "Animated menus and bars: PillNav (sliding pill highlight), StaggeredMenu (layered slide-in panel), CardNav (expandable card panels) and FlowingMenu (liquid hover highlight), mostly on GSAP.",
+   "tags": [
+    "navigation",
+    "menu",
+    "gsap",
+    "header",
+    "overlay"
+   ],
+   "title": "React Bits animated navigation menus"
+  },
+  {
+   "category": "card-grid",
+   "dependencies": [
+    "gsap"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "typescript",
+    "javascript",
+    "tailwind",
+    "css",
+    "gsap"
+   ],
+   "gpu_intensity": "none",
+   "id": "react-bits-bento-and-card-grids",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/components/react-bits-catalog.md",
+   "license_status": "custom_terms",
+   "motion": "moderate",
+   "recipe": "knowledge/implementation-recipes/react-bits-choose-variant-and-install.md",
+   "redistribution_status": "license_specific",
+   "reduced_motion_alternative": true,
+   "reuse": "license_review_required",
+   "source_ids": [
+    "react-bits"
+   ],
+   "source_paths": [
+    "react-bits:src/ts-tailwind/Components/MagicBento/MagicBento.tsx",
+    "react-bits:src/ts-tailwind/Components/ChromaGrid/ChromaGrid.tsx",
+    "react-bits:src/ts-tailwind/Components/Masonry/Masonry.tsx"
+   ],
+   "summary": "Grid layouts with motion: MagicBento (bento tiles with spotlight, border glow, particles and tilt), ChromaGrid (greyscale tiles regaining colour under the pointer) and Masonry (animated masonry reflow), all on GSAP.",
+   "tags": [
+    "grid",
+    "bento",
+    "cards",
+    "gsap",
+    "masonry",
+    "hover"
+   ],
+   "title": "React Bits bento and card grids"
+  },
+  {
+   "category": "animation",
+   "dependencies": [
+    "gsap"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "typescript",
+    "javascript",
+    "tailwind",
+    "css",
+    "gsap"
+   ],
+   "gpu_intensity": "low",
+   "id": "react-bits-canvas-grid-backgrounds",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/components/react-bits-catalog.md",
+   "license_status": "custom_terms",
+   "motion": "moderate",
+   "recipe": "knowledge/implementation-recipes/react-bits-heavy-background-budget.md",
+   "redistribution_status": "license_specific",
+   "reduced_motion_alternative": true,
+   "reuse": "license_review_required",
+   "source_ids": [
+    "react-bits"
+   ],
+   "source_paths": [
+    "react-bits:src/ts-tailwind/Backgrounds/DotGrid/DotGrid.tsx",
+    "react-bits:src/ts-tailwind/Backgrounds/LetterGlitch/LetterGlitch.tsx",
+    "react-bits:src/ts-tailwind/Backgrounds/GridMotion/GridMotion.tsx"
+   ],
+   "summary": "Backgrounds without a shader: DotGrid (canvas with GSAP inertia), LetterGlitch (canvas) and GridMotion (DOM tile wall), cheaper than WebGL options for texture and pointer reaction.",
+   "tags": [
+    "canvas",
+    "background",
+    "grid",
+    "interactive",
+    "dots"
+   ],
+   "title": "React Bits canvas and DOM grid backgrounds"
+  },
+  {
+   "category": "liquid-glass",
+   "dependencies": [
+    "ogl",
+    "three",
+    "@react-three/fiber",
+    "@react-three/drei",
+    "maath"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "typescript",
+    "javascript",
+    "tailwind",
+    "css",
+    "webgl",
+    "three",
+    "r3f"
+   ],
+   "gpu_intensity": "medium",
+   "id": "react-bits-glass-surfaces",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/components/react-bits-catalog.md",
+   "license_status": "custom_terms",
+   "motion": "subtle",
+   "recipe": "knowledge/implementation-recipes/react-bits-heavy-background-budget.md",
+   "redistribution_status": "license_specific",
+   "reduced_motion_alternative": true,
+   "reuse": "license_review_required",
+   "source_ids": [
+    "react-bits"
+   ],
+   "source_paths": [
+    "react-bits:src/ts-tailwind/Components/GlassSurface/GlassSurface.tsx",
+    "react-bits:src/ts-tailwind/Components/SpecularButton/SpecularButton.tsx",
+    "react-bits:src/ts-tailwind/Components/FluidGlass/FluidGlass.tsx"
+   ],
+   "summary": "Glass looks: GlassSurface (SVG displacement filters with feature detection and fallbacks), SpecularButton (OGL shader rim light) and FluidGlass (R3F lens, bar or cube over a 3D scene).",
+   "tags": [
+    "glass",
+    "refraction",
+    "webgl",
+    "svg-filter",
+    "button",
+    "r3f"
+   ],
+   "title": "React Bits glass surfaces"
+  },
+  {
+   "category": "typography",
+   "dependencies": [
+    "gsap",
+    "@gsap/react"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "typescript",
+    "javascript",
+    "tailwind",
+    "css",
+    "gsap"
+   ],
+   "gpu_intensity": "none",
+   "id": "react-bits-gsap-text-reveals",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/components/react-bits-catalog.md",
+   "license_status": "custom_terms",
+   "motion": "moderate",
+   "recipe": "knowledge/implementation-recipes/react-bits-choose-variant-and-install.md",
+   "redistribution_status": "license_specific",
+   "reduced_motion_alternative": true,
+   "reuse": "license_review_required",
+   "source_ids": [
+    "react-bits"
+   ],
+   "source_paths": [
+    "react-bits:src/ts-tailwind/TextAnimations/SplitText/SplitText.tsx",
+    "react-bits:src/ts-tailwind/TextAnimations/ScrollReveal/ScrollReveal.tsx",
+    "react-bits:src/ts-tailwind/TextAnimations/ScrollFloat/ScrollFloat.tsx",
+    "react-bits:src/ts-tailwind/TextAnimations/Shuffle/Shuffle.tsx"
+   ],
+   "summary": "Scroll-triggered text reveals built on GSAP ScrollTrigger and SplitText (SplitText, ScrollReveal, ScrollFloat, Shuffle): staggered characters, words or lines entering once as the block scrolls into view.",
+   "tags": [
+    "text",
+    "gsap",
+    "scroll",
+    "reveal",
+    "split-text"
+   ],
+   "title": "React Bits GSAP text reveals"
+  },
+  {
+   "category": "typography",
+   "dependencies": [
+    "motion"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "typescript",
+    "javascript",
+    "tailwind",
+    "css",
+    "motion"
+   ],
+   "gpu_intensity": "none",
+   "id": "react-bits-lightweight-text-effects",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/components/react-bits-catalog.md",
+   "license_status": "custom_terms",
+   "motion": "moderate",
+   "recipe": "knowledge/implementation-recipes/react-bits-choose-variant-and-install.md",
+   "redistribution_status": "license_specific",
+   "reduced_motion_alternative": true,
+   "reuse": "license_review_required",
+   "source_ids": [
+    "react-bits"
+   ],
+   "source_paths": [
+    "react-bits:src/ts-tailwind/TextAnimations/BlurText/BlurText.tsx",
+    "react-bits:src/ts-tailwind/TextAnimations/DecryptedText/DecryptedText.tsx",
+    "react-bits:src/ts-tailwind/TextAnimations/ShinyText/ShinyText.tsx",
+    "react-bits:src/ts-tailwind/TextAnimations/GradientText/GradientText.tsx"
+   ],
+   "summary": "Text effects that avoid GSAP: BlurText and DecryptedText on motion, ShinyText and GradientText with no packages at all, plus CountUp, RotatingText and similar small pieces.",
+   "tags": [
+    "text",
+    "motion",
+    "gradient",
+    "shine",
+    "blur",
+    "decrypt"
+   ],
+   "title": "React Bits lightweight text effects"
+  },
+  {
+   "category": "button",
+   "dependencies": [
+    "motion",
+    "@hugeicons/react",
+    "@hugeicons/core-free-icons"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "typescript",
+    "javascript",
+    "tailwind",
+    "css",
+    "motion"
+   ],
+   "gpu_intensity": "none",
+   "id": "react-bits-micro-spring-controls",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/components/react-bits-catalog.md",
+   "license_status": "custom_terms",
+   "motion": "subtle",
+   "recipe": "knowledge/implementation-recipes/react-bits-choose-variant-and-install.md",
+   "redistribution_status": "license_specific",
+   "reduced_motion_alternative": true,
+   "reuse": "license_review_required",
+   "source_ids": [
+    "react-bits"
+   ],
+   "source_paths": [
+    "react-bits:src/ts-tailwind/Micro/SquishSwitch/SquishSwitch.tsx",
+    "react-bits:src/ts-tailwind/Micro/HoldButton/HoldButton.tsx",
+    "react-bits:src/ts-tailwind/Micro/SlideCommit/SlideCommit.tsx",
+    "react-bits:src/ts-tailwind/Micro/CodeSlots/CodeSlots.tsx"
+   ],
+   "summary": "Form-level micro-interactions added in September 2026: SquishSwitch, HoldButton, SlideCommit and CodeSlots, built on motion springs with ARIA, keyboard and reduced-motion handling.",
+   "tags": [
+    "micro-interaction",
+    "form",
+    "button",
+    "spring",
+    "motion",
+    "a11y"
+   ],
+   "title": "React Bits micro-interaction controls"
+  },
+  {
+   "category": "background-shader",
+   "dependencies": [
+    "ogl"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "typescript",
+    "javascript",
+    "tailwind",
+    "css",
+    "webgl",
+    "glsl"
+   ],
+   "gpu_intensity": "medium",
+   "id": "react-bits-ogl-shader-backgrounds",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/components/react-bits-catalog.md",
+   "license_status": "custom_terms",
+   "motion": "moderate",
+   "recipe": "knowledge/implementation-recipes/react-bits-heavy-background-budget.md",
+   "redistribution_status": "license_specific",
+   "reduced_motion_alternative": true,
+   "reuse": "license_review_required",
+   "source_ids": [
+    "react-bits"
+   ],
+   "source_paths": [
+    "react-bits:src/ts-tailwind/Backgrounds/Aurora/Aurora.tsx",
+    "react-bits:src/ts-tailwind/Backgrounds/DarkVeil/DarkVeil.tsx",
+    "react-bits:src/ts-tailwind/Backgrounds/Galaxy/Galaxy.tsx",
+    "react-bits:src/ts-tailwind/Backgrounds/LiquidChrome/LiquidChrome.tsx"
+   ],
+   "summary": "Full-bleed fragment-shader backdrops on the small OGL WebGL library (Aurora, DarkVeil, Galaxy, LiquidChrome and about 30 more backgrounds), installed as copy-in React components.",
+   "tags": [
+    "webgl",
+    "shader",
+    "ogl",
+    "background",
+    "hero",
+    "fragment-shader"
+   ],
+   "title": "React Bits OGL shader backgrounds"
+  },
+  {
+   "category": "card-grid",
+   "dependencies": [
+    "motion"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "typescript",
+    "javascript",
+    "tailwind",
+    "css",
+    "motion"
+   ],
+   "gpu_intensity": "low",
+   "id": "react-bits-pointer-lit-cards",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/components/react-bits-catalog.md",
+   "license_status": "custom_terms",
+   "motion": "subtle",
+   "recipe": "knowledge/implementation-recipes/react-bits-choose-variant-and-install.md",
+   "redistribution_status": "license_specific",
+   "reduced_motion_alternative": true,
+   "reuse": "license_review_required",
+   "source_ids": [
+    "react-bits"
+   ],
+   "source_paths": [
+    "react-bits:src/ts-tailwind/Components/SpotlightCard/SpotlightCard.tsx",
+    "react-bits:src/ts-tailwind/Components/TiltedCard/TiltedCard.tsx",
+    "react-bits:src/ts-tailwind/Components/BorderGlow/BorderGlow.tsx",
+    "react-bits:src/ts-tailwind/Animations/GlareHover/GlareHover.tsx"
+   ],
+   "summary": "Single-card hover effects driven by the pointer: SpotlightCard (follow spotlight), TiltedCard (3D tilt on motion), BorderGlow (mesh-gradient edge glow) and GlareHover (moving glare on any element).",
+   "tags": [
+    "cards",
+    "hover",
+    "spotlight",
+    "tilt",
+    "glow",
+    "pointer"
+   ],
+   "title": "React Bits pointer-lit cards"
+  },
+  {
+   "category": "scroll",
+   "dependencies": [
+    "gsap",
+    "lenis"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "typescript",
+    "javascript",
+    "tailwind",
+    "css",
+    "gsap",
+    "lenis"
+   ],
+   "gpu_intensity": "none",
+   "id": "react-bits-scroll-driven-components",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/components/react-bits-catalog.md",
+   "license_status": "custom_terms",
+   "motion": "moderate",
+   "recipe": "knowledge/implementation-recipes/react-bits-choose-variant-and-install.md",
+   "redistribution_status": "license_specific",
+   "reduced_motion_alternative": true,
+   "reuse": "license_review_required",
+   "source_ids": [
+    "react-bits"
+   ],
+   "source_paths": [
+    "react-bits:src/ts-tailwind/Animations/AnimatedContent/AnimatedContent.tsx",
+    "react-bits:src/ts-tailwind/Animations/FadeContent/FadeContent.tsx",
+    "react-bits:src/ts-tailwind/Animations/ScrollExpand/ScrollExpand.tsx",
+    "react-bits:src/ts-tailwind/Components/ScrollStack/ScrollStack.tsx"
+   ],
+   "summary": "Scroll-triggered wrappers and layouts: AnimatedContent and FadeContent (GSAP ScrollTrigger entrances), ScrollExpand (media frame growing to full bleed) and ScrollStack (overlapping cards on Lenis).",
+   "tags": [
+    "scroll",
+    "gsap",
+    "lenis",
+    "reveal",
+    "scrolltrigger"
+   ],
+   "title": "React Bits scroll-driven reveals and stacks"
+  },
+  {
+   "category": "background-shader",
+   "dependencies": [
+    "ogl"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "typescript",
+    "javascript",
+    "tailwind",
+    "css",
+    "webgl",
+    "glsl"
+   ],
+   "gpu_intensity": "medium",
+   "id": "react-bits-self-pausing-shader-backgrounds",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/components/react-bits-catalog.md",
+   "license_status": "custom_terms",
+   "motion": "moderate",
+   "recipe": "knowledge/implementation-recipes/react-bits-heavy-background-budget.md",
+   "redistribution_status": "license_specific",
+   "reduced_motion_alternative": true,
+   "reuse": "license_review_required",
+   "source_ids": [
+    "react-bits"
+   ],
+   "source_paths": [
+    "react-bits:src/ts-tailwind/Backgrounds/Plasma/Plasma.tsx",
+    "react-bits:src/ts-tailwind/Backgrounds/PatternWaves/PatternWaves.tsx",
+    "react-bits:src/ts-tailwind/Backgrounds/MicroSlats/MicroSlats.tsx",
+    "react-bits:src/ts-tailwind/Backgrounds/GhostFibers/GhostFibers.tsx"
+   ],
+   "summary": "Newer React Bits shader backgrounds that carry their own safeguards: pause offscreen and in hidden tabs, freeze under reduced motion, and expose paused, fps or pixel-ratio props (Plasma, PatternWaves, MicroSlats, GhostFibers, Threads, Iridescence).",
+   "tags": [
+    "webgl",
+    "shader",
+    "background",
+    "performance",
+    "pause",
+    "reduced-motion"
+   ],
+   "title": "React Bits self-pausing shader backgrounds"
+  },
+  {
+   "category": "cursor",
+   "dependencies": [
+    "gsap"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "typescript",
+    "javascript",
+    "tailwind",
+    "css",
+    "gsap"
+   ],
+   "gpu_intensity": "none",
+   "id": "react-bits-target-cursor",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/components/react-bits-catalog.md",
+   "license_status": "custom_terms",
+   "motion": "moderate",
+   "recipe": "knowledge/implementation-recipes/react-bits-choose-variant-and-install.md",
+   "redistribution_status": "license_specific",
+   "reduced_motion_alternative": true,
+   "reuse": "license_review_required",
+   "source_ids": [
+    "react-bits"
+   ],
+   "source_paths": [
+    "react-bits:src/ts-tailwind/Animations/TargetCursor/TargetCursor.tsx",
+    "react-bits:src/ts-tailwind/Animations/Crosshair/Crosshair.tsx"
+   ],
+   "summary": "Custom cursors that lock onto interactive elements: TargetCursor (four corners snapping to a selector, GSAP) and Crosshair (canvas crosshair with live coordinates that measures hovered links and buttons).",
+   "tags": [
+    "cursor",
+    "gsap",
+    "pointer",
+    "interaction",
+    "hover"
+   ],
+   "title": "React Bits target and crosshair cursors"
+  },
+  {
+   "category": "three-scene",
+   "dependencies": [
+    "three",
+    "@react-three/fiber",
+    "@react-three/drei",
+    "@react-three/postprocessing",
+    "postprocessing"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "typescript",
+    "javascript",
+    "tailwind",
+    "css",
+    "webgl",
+    "three",
+    "r3f"
+   ],
+   "gpu_intensity": "high",
+   "id": "react-bits-three-r3f-backgrounds",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/components/react-bits-catalog.md",
+   "license_status": "custom_terms",
+   "motion": "moderate",
+   "recipe": "knowledge/implementation-recipes/react-bits-heavy-background-budget.md",
+   "redistribution_status": "license_specific",
+   "reduced_motion_alternative": true,
+   "reuse": "license_review_required",
+   "source_ids": [
+    "react-bits"
+   ],
+   "source_paths": [
+    "react-bits:src/ts-tailwind/Backgrounds/Beams/Beams.tsx",
+    "react-bits:src/ts-tailwind/Backgrounds/Silk/Silk.tsx",
+    "react-bits:src/ts-tailwind/Backgrounds/Dither/Dither.tsx",
+    "react-bits:src/ts-tailwind/Backgrounds/Hyperspeed/Hyperspeed.tsx"
+   ],
+   "summary": "Backgrounds built on three.js or React Three Fiber (Beams, Silk, Dither, Hyperspeed, LiquidEther, Ballpit, GridScan, PixelBlast): heavier scenes with bloom, post-processing or simulation, installed as copy-in components.",
+   "tags": [
+    "three",
+    "r3f",
+    "webgl",
+    "background",
+    "postprocessing",
+    "3d"
+   ],
+   "title": "React Bits three.js and R3F backgrounds"
+  },
+  {
+   "category": "cursor",
+   "dependencies": [
+    "ogl",
+    "three"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "typescript",
+    "javascript",
+    "tailwind",
+    "css",
+    "webgl",
+    "three"
+   ],
+   "gpu_intensity": "high",
+   "id": "react-bits-webgl-cursor-trails",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/components/react-bits-catalog.md",
+   "license_status": "custom_terms",
+   "motion": "intense",
+   "recipe": "knowledge/implementation-recipes/react-bits-heavy-background-budget.md",
+   "redistribution_status": "license_specific",
+   "reduced_motion_alternative": true,
+   "reuse": "license_review_required",
+   "source_ids": [
+    "react-bits"
+   ],
+   "source_paths": [
+    "react-bits:src/ts-tailwind/Animations/GlowCursor/GlowCursor.tsx",
+    "react-bits:src/ts-tailwind/Animations/SplashCursor/SplashCursor.tsx",
+    "react-bits:src/ts-tailwind/Animations/GhostCursor/GhostCursor.tsx",
+    "react-bits:src/ts-tailwind/Animations/BlobCursor/BlobCursor.tsx"
+   ],
+   "summary": "GPU cursor effects that follow the pointer: GlowCursor (OGL light trail), SplashCursor (fluid simulation), GhostCursor (three.js ghost with bloom) and BlobCursor (liquid-metal blob).",
+   "tags": [
+    "cursor",
+    "webgl",
+    "fluid",
+    "trail",
+    "pointer",
+    "three",
+    "ogl"
+   ],
+   "title": "React Bits WebGL cursor trails"
+  },
+  {
+   "category": "background-shader",
+   "dependencies": [
+    "vgpu"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "typescript",
+    "javascript",
+    "tailwind",
+    "css"
+   ],
+   "gpu_intensity": "high",
+   "id": "react-bits-webgpu-backgrounds",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/components/react-bits-catalog.md",
+   "license_status": "custom_terms",
+   "motion": "moderate",
+   "recipe": "knowledge/implementation-recipes/react-bits-heavy-background-budget.md",
+   "redistribution_status": "license_specific",
+   "reduced_motion_alternative": true,
+   "reuse": "license_review_required",
+   "source_ids": [
+    "react-bits"
+   ],
+   "source_paths": [
+    "react-bits:src/ts-tailwind/Backgrounds/AeroShards/AeroShards.tsx",
+    "react-bits:src/ts-tailwind/Backgrounds/ShapeWaves/ShapeWaves.tsx",
+    "react-bits:package.json"
+   ],
+   "summary": "AeroShards and ShapeWaves, the two React Bits backgrounds written for WebGPU through the vgpu package, with paused and onError props, observer gating and runtime quality adaptation.",
+   "tags": [
+    "webgpu",
+    "vgpu",
+    "background",
+    "shader",
+    "post-processing"
+   ],
+   "title": "React Bits WebGPU backgrounds"
+  },
+  {
+   "category": "workflow",
+   "dependencies": [],
+   "frameworks": [],
+   "gpu_intensity": "none",
+   "id": "reference-animmaster-lib",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/website-references/animmaster-lib.md",
+   "license_status": "proprietary_terms",
+   "motion": "none",
+   "recipe": null,
+   "redistribution_status": "reference_only",
+   "reduced_motion_alternative": false,
+   "reuse": "reference_only",
+   "source_ids": [
+    "animmaster-lib"
+   ],
+   "source_paths": [],
+   "summary": "Link-only reference to Animmaster Lib, a paid animated component library whose terms prohibit resale and redistribution. Only its public category list is recorded; no component code is used or copied.",
+   "tags": [
+    "animmaster",
+    "paid-library",
+    "components",
+    "scroll-animations",
+    "reference"
+   ],
+   "title": "Animmaster Lib reference"
+  },
+  {
+   "category": "workflow",
+   "dependencies": [],
+   "frameworks": [],
+   "gpu_intensity": "none",
+   "id": "reference-refero-styles",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/website-references/refero-styles.md",
+   "license_status": "unknown",
+   "motion": "none",
+   "recipe": null,
+   "redistribution_status": "reference_only",
+   "reduced_motion_alternative": false,
+   "reuse": "reference_only",
+   "source_ids": [
+    "refero-styles"
+   ],
+   "source_paths": [],
+   "summary": "Link-only reference to Refero Styles, a library of real website styles with AI-readable DESIGN.md files. Not fetched or stored because its robots.txt disallows AI crawlers; open it in your own browser and follow its terms.",
+   "tags": [
+    "refero",
+    "style-library",
+    "design-md",
+    "inspiration",
+    "reference"
+   ],
+   "title": "Refero Styles reference"
+  },
+  {
+   "category": "workflow",
+   "dependencies": [],
+   "frameworks": [],
+   "gpu_intensity": "none",
+   "id": "reference-uxplanet-design-styles",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/website-references/uxplanet-50-design-styles.md",
+   "license_status": "unknown",
+   "motion": "none",
+   "recipe": null,
+   "redistribution_status": "reference_only",
+   "reduced_motion_alternative": false,
+   "reuse": "reference_only",
+   "source_ids": [
+    "uxplanet-50-design-styles"
+   ],
+   "source_paths": [],
+   "summary": "Link-only reference to a UX Planet article on design styles for better prompting. Inspection was blocked and nothing was read or copied; the project's style taxonomy is independent writing.",
+   "tags": [
+    "uxplanet",
+    "design-styles",
+    "taxonomy",
+    "prompting",
+    "reference"
+   ],
+   "title": "UX Planet design styles article reference"
+  },
+  {
+   "category": "gradient",
+   "dependencies": [],
+   "frameworks": [
+    "javascript",
+    "webgl",
+    "glsl"
+   ],
+   "gpu_intensity": "medium",
+   "id": "shader-gradient-background",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/shaders/shadergradient.md",
+   "license_status": "unknown",
+   "motion": "subtle",
+   "recipe": "knowledge/implementation-recipes/animated-shader-gradient-background.md",
+   "redistribution_status": "license_specific",
+   "reduced_motion_alternative": true,
+   "reuse": "license_review_required",
+   "source_ids": [
+    "shadergradient"
+   ],
+   "source_paths": [
+    "shadergradient:packages/shadergradient/src/shaders/defaults/plane/vertex.glsl",
+    "shadergradient:packages/shadergradient/src/shaders/defaults/plane/fragment.glsl",
+    "shadergradient:packages/shadergradient/src/ShaderGradientCanvas.tsx",
+    "shadergradient:README.md"
+   ],
+   "summary": "An animated full-bleed gradient drawn by a small fragment shader behind page content, with a matching CSS gradient fallback, a reduced-motion still frame, offscreen pausing and pixel caps; the ShaderGradient package is the dependency route for a 3D-noise look.",
+   "tags": [
+    "gradient",
+    "animated-background",
+    "webgl",
+    "glsl",
+    "noise",
+    "hero-background",
+    "mesh-gradient"
+   ],
+   "title": "Animated shader gradient background"
+  },
+  {
+   "category": "gradient",
+   "dependencies": [
+    "@shadergradient/react",
+    "@react-three/fiber",
+    "three",
+    "three-stdlib",
+    "camera-controls",
+    "react",
+    "react-dom"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "three",
+    "r3f",
+    "typescript",
+    "webgl",
+    "glsl"
+   ],
+   "gpu_intensity": "medium",
+   "id": "shader-gradient-react",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/shaders/shadergradient.md",
+   "license_status": "unknown",
+   "motion": "moderate",
+   "recipe": "knowledge/implementation-recipes/animated-shader-gradient-background.md",
+   "redistribution_status": "license_specific",
+   "reduced_motion_alternative": true,
+   "reuse": "license_review_required",
+   "source_ids": [
+    "shadergradient"
+   ],
+   "source_paths": [
+    "shadergradient:packages/shadergradient/src/ShaderGradientCanvas.tsx",
+    "shadergradient:packages/shadergradient/src/ShaderGradient/ShaderGradient.tsx",
+    "shadergradient:packages/shadergradient/src/ShaderGradient/Mesh/Mesh.tsx",
+    "shadergradient:packages/shadergradient/src/types.ts",
+    "shadergradient:README.md",
+    "shadergradient:apps/examples/example-vite-react/src/App.tsx"
+   ],
+   "summary": "Render a moving 3D-noise gradient with the ShaderGradient React package: a ShaderGradientCanvas wrapping a ShaderGradient mesh (plane, sphere or waterPlane) driven by colour, noise, animation, lighting and camera props, built on react-three-fiber and three.",
+   "tags": [
+    "shadergradient",
+    "gradient",
+    "react",
+    "nextjs",
+    "three",
+    "r3f",
+    "animated-background",
+    "webgl"
+   ],
+   "title": "ShaderGradient in React"
+  },
+  {
+   "category": "workflow",
+   "dependencies": [
+    "@shadergradient/react"
+   ],
+   "frameworks": [
+    "react",
+    "vue",
+    "typescript"
+   ],
+   "gpu_intensity": "medium",
+   "id": "shader-gradient-url-config",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/shaders/shadergradient.md",
+   "license_status": "unknown",
+   "motion": "moderate",
+   "recipe": null,
+   "redistribution_status": "license_specific",
+   "reduced_motion_alternative": true,
+   "reuse": "license_review_required",
+   "source_ids": [
+    "shadergradient"
+   ],
+   "source_paths": [
+    "shadergradient:README.md",
+    "shadergradient:packages/shadergradient/src/ShaderGradient/ShaderGradient.tsx",
+    "shadergradient:packages/shadergradient/src/utils/index.ts",
+    "shadergradient:packages/shadergradient-vue/src/ShaderGradient.ts"
+   ],
+   "summary": "Design a gradient visually on the vendor's customizer, then paste its URL into the component with control set to query and urlString; React replaces the prop set with the parsed query, so the URL must be complete, while Vue merges missing values with defaults.",
+   "tags": [
+    "shadergradient",
+    "configuration",
+    "query-string",
+    "customizer",
+    "design-handoff"
+   ],
+   "title": "ShaderGradient settings from a customizer URL"
+  },
+  {
+   "category": "gradient",
+   "dependencies": [
+    "@shadergradient/vue",
+    "vue",
+    "@tresjs/core",
+    "three"
+   ],
+   "frameworks": [
+    "vue",
+    "nuxt",
+    "three",
+    "tresjs",
+    "typescript",
+    "webgl",
+    "glsl"
+   ],
+   "gpu_intensity": "medium",
+   "id": "shader-gradient-vue",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/shaders/shadergradient.md",
+   "license_status": "unknown",
+   "motion": "moderate",
+   "recipe": null,
+   "redistribution_status": "license_specific",
+   "reduced_motion_alternative": true,
+   "reuse": "license_review_required",
+   "source_ids": [
+    "shadergradient"
+   ],
+   "source_paths": [
+    "shadergradient:packages/shadergradient-vue/README.md",
+    "shadergradient:packages/shadergradient-vue/src/ShaderGradientCanvas.ts",
+    "shadergradient:packages/shadergradient-vue/src/ShaderGradient.ts",
+    "shadergradient:packages/shadergradient-vue/src/ShaderGradientSource.ts"
+   ],
+   "summary": "The Vue 3 renderer for ShaderGradient on TresJS: an SSR-safe canvas with a fallback slot, automatic reduced-motion freezing, context release offscreen, aria-hidden and pointer-events none by default, and single-context view sharing.",
+   "tags": [
+    "shadergradient",
+    "gradient",
+    "vue",
+    "nuxt",
+    "tresjs",
+    "three",
+    "ssr",
+    "reduced-motion"
+   ],
+   "title": "ShaderGradient for Vue and Nuxt"
+  },
+  {
+   "category": "product-showcase",
+   "dependencies": [
+    "swiper"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "tailwind",
+    "typescript"
+   ],
+   "gpu_intensity": "low",
+   "id": "skiper-ui-coverflow-card-carousel",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/components/skiper-ui.md",
+   "license_status": "not_found",
+   "motion": "moderate",
+   "recipe": null,
+   "redistribution_status": "unresolved",
+   "reduced_motion_alternative": true,
+   "reuse": "reimplement_only",
+   "source_ids": [
+    "skiper-ui"
+   ],
+   "source_paths": [
+    "skiper-ui:src/componets/ui/card-carousel.tsx",
+    "skiper-ui:src/componets/homeCards/CardCarouselParent.tsx"
+   ],
+   "summary": "Idea reference only. A centred, looping, autoplaying image carousel in a coverflow arrangement built on the Swiper library, set inside a nested rounded frame with a badge. Rights are unresolved, so build your own.",
+   "tags": [
+    "carousel",
+    "coverflow",
+    "swiper",
+    "autoplay",
+    "cards"
+   ],
+   "title": "Coverflow card carousel on Swiper (Skiper UI clone, reference only)"
+  },
+  {
+   "category": "card-grid",
+   "dependencies": [
+    "motion",
+    "react-wrap-balancer"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "tailwind",
+    "typescript"
+   ],
+   "gpu_intensity": "low",
+   "id": "skiper-ui-stepped-feature-card",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/components/skiper-ui.md",
+   "license_status": "not_found",
+   "motion": "moderate",
+   "recipe": null,
+   "redistribution_status": "unresolved",
+   "reduced_motion_alternative": true,
+   "reuse": "reimplement_only",
+   "source_ids": [
+    "skiper-ui"
+   ],
+   "source_paths": [
+    "skiper-ui:src/componets/ui/skiper-card.tsx",
+    "skiper-ui:src/componets/homeCards/SpecialCard.tsx"
+   ],
+   "summary": "Idea reference only. A dark feature card whose stacked screenshots cross-fade between four states on a timer or on click, with a three-item progress list. Pointer position is tracked into CSS variables that nothing consumes yet. Rights are unresolved.",
+   "tags": [
+    "feature-card",
+    "step-cycler",
+    "cross-fade",
+    "progress-steps",
+    "screenshots"
+   ],
+   "title": "Stepped feature card with timed cross-fades (Skiper UI clone, reference only)"
+  },
+  {
+   "category": "page-transition",
+   "dependencies": [
+    "next-themes"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "tailwind",
+    "typescript"
+   ],
+   "gpu_intensity": "unknown",
+   "id": "skiper-ui-theme-toggle-view-transition",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/components/skiper-ui.md",
+   "license_status": "not_found",
+   "motion": "moderate",
+   "recipe": null,
+   "redistribution_status": "unresolved",
+   "reduced_motion_alternative": true,
+   "reuse": "reimplement_only",
+   "source_ids": [
+    "skiper-ui"
+   ],
+   "source_paths": [
+    "skiper-ui:src/componets/ui/theme-toggle-button.tsx",
+    "skiper-ui:src/componets/ui/theme-animations.ts",
+    "skiper-ui:src/componets/homeCards/ThemeChange.tsx"
+   ],
+   "summary": "Idea reference only. A theme button injects transition rules for a circle, blurred circle, polygon or GIF-mask reveal, then runs the theme change inside a view transition and falls back to an instant switch. Rights are unresolved, so build your own.",
+   "tags": [
+    "theme-toggle",
+    "view-transitions",
+    "clip-path",
+    "mask",
+    "dark-mode"
+   ],
+   "title": "Theme toggle with View Transitions reveal (Skiper UI clone, reference only)"
+  },
+  {
+   "category": "scroll",
+   "dependencies": [
+    "lenis"
+   ],
+   "frameworks": [
+    "javascript",
+    "typescript",
+    "lenis"
+   ],
+   "gpu_intensity": "none",
+   "id": "smooth-scroll-lenis",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/animations/lenis.md",
+   "license_status": "verified",
+   "motion": "subtle",
+   "recipe": "knowledge/implementation-recipes/lenis-smooth-scroll-setup.md",
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "lenis"
+   ],
+   "source_paths": [
+    "lenis:packages/core/src/lenis.ts",
+    "lenis:packages/core/src/animate.ts",
+    "lenis:packages/core/src/virtual-scroll.ts",
+    "lenis:packages/core/lenis.css",
+    "lenis:README.md"
+   ],
+   "summary": "Wheel-driven smooth scrolling that keeps the browser's native scroll position, so sticky, anchors and keyboard scrolling keep working; includes a reduced-motion policy and cleanup.",
+   "tags": [
+    "smooth-scroll",
+    "inertia",
+    "lerp",
+    "native-scroll",
+    "scroll-feel"
+   ],
+   "title": "Smooth scroll with Lenis"
+  },
+  {
+   "category": "design-style",
+   "dependencies": [],
+   "frameworks": [
+    "css",
+    "svg"
+   ],
+   "gpu_intensity": "none",
+   "id": "style-art-deco",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/design-styles/art-deco.md",
+   "license_status": "verified",
+   "motion": "subtle",
+   "recipe": null,
+   "redistribution_status": "original",
+   "reduced_motion_alternative": true,
+   "reuse": "original",
+   "source_ids": [],
+   "source_paths": [],
+   "summary": "1920s-30s geometric glamour: symmetry, sunbursts, stepped forms, gold on black, navy or emerald, tall lettering and ornamental borders. Gold fails on white, so use bronze or ink there.",
+   "tags": [
+    "art-deco",
+    "deco",
+    "gold",
+    "symmetry",
+    "sunburst",
+    "geometric",
+    "ornament",
+    "gatsby"
+   ],
+   "title": "Art Deco"
+  },
+  {
+   "category": "design-style",
+   "dependencies": [],
+   "frameworks": [
+    "css",
+    "react",
+    "three",
+    "webgl"
+   ],
+   "gpu_intensity": "medium",
+   "id": "style-aurora-gradient-mesh",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/design-styles/aurora-gradient-mesh.md",
+   "license_status": "unknown",
+   "motion": "subtle",
+   "recipe": null,
+   "redistribution_status": "license_specific",
+   "reduced_motion_alternative": true,
+   "reuse": "license_review_required",
+   "source_ids": [
+    "fancy",
+    "react-bits",
+    "shadergradient",
+    "vengeance-ui"
+   ],
+   "source_paths": [
+    "shadergradient:packages/shadergradient/src/ShaderGradientCanvas.tsx",
+    "shadergradient:packages/shadergradient/src/ShaderGradient/Mesh/Materials.tsx",
+    "shadergradient:packages/shadergradient/src/types.ts",
+    "react-bits:src/content/Backgrounds/Aurora/Aurora.jsx",
+    "fancy:src/fancy/components/background/animated-gradient-with-svg.tsx",
+    "vengeance-ui:src/components/ui/aurora-hero.tsx"
+   ],
+   "summary": "Soft multi-colour gradients that drift like light, from static CSS to blurred shapes to WebGL shaders. Palette discipline, grain against banding, text-safe layouts and freeze-frame fallbacks.",
+   "tags": [
+    "aurora",
+    "gradient",
+    "mesh-gradient",
+    "background",
+    "blur",
+    "ambient",
+    "shader-gradient"
+   ],
+   "title": "Aurora and gradient mesh"
+  },
+  {
+   "category": "design-style",
+   "dependencies": [],
+   "frameworks": [
+    "css",
+    "react",
+    "tailwind"
+   ],
+   "gpu_intensity": "none",
+   "id": "style-bento-layouts",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/design-styles/bento-layouts.md",
+   "license_status": "custom_terms",
+   "motion": "moderate",
+   "recipe": null,
+   "redistribution_status": "license_specific",
+   "reduced_motion_alternative": true,
+   "reuse": "license_review_required",
+   "source_ids": [
+    "react-bits",
+    "taste-skill",
+    "vengeance-ui"
+   ],
+   "source_paths": [
+    "react-bits:src/content/Components/MagicBento/MagicBento.jsx",
+    "react-bits:src/content/Components/MagicBento/MagicBento.css",
+    "vengeance-ui:src/components/ui/research-bento-grid.tsx",
+    "vengeance-ui:src/components/ui/why-us-bento.tsx",
+    "taste-skill:skills/soft-skill/SKILL.md"
+   ],
+   "summary": "Modular grid of rounded tiles of varied sizes, each holding one idea, where size signals priority. Covers responsive collapse, container queries, reading order and motion-safe tiles.",
+   "tags": [
+    "bento",
+    "grid",
+    "tiles",
+    "cards",
+    "dashboard",
+    "feature-grid",
+    "modular"
+   ],
+   "title": "Bento layouts"
+  },
+  {
+   "category": "design-style",
+   "dependencies": [],
+   "frameworks": [
+    "css"
+   ],
+   "gpu_intensity": "none",
+   "id": "style-brutalism",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/design-styles/brutalism.md",
+   "license_status": "verified",
+   "motion": "none",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "astryx",
+    "taste-skill"
+   ],
+   "source_paths": [
+    "astryx:packages/core/src/theme/defineTheme.ts",
+    "taste-skill:skills/brutalist-skill/SKILL.md"
+   ],
+   "summary": "Raw, exposed-structure design: default or heavy type, hard borders, harsh contrast and no gloss, in raw-HTML and industrial flavours. Needs an internal logic and a mobile pass to stay usable.",
+   "tags": [
+    "brutalism",
+    "brutalist",
+    "raw",
+    "anti-design",
+    "harsh",
+    "monospace",
+    "grid"
+   ],
+   "title": "Brutalism"
+  },
+  {
+   "category": "design-style",
+   "dependencies": [],
+   "frameworks": [
+    "css"
+   ],
+   "gpu_intensity": "low",
+   "id": "style-claymorphism",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/design-styles/claymorphism.md",
+   "license_status": "verified",
+   "motion": "subtle",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "vengeance-ui"
+   ],
+   "source_paths": [
+    "vengeance-ui:src/components/ui/candy-button.tsx"
+   ],
+   "summary": "Inflated matte clay-like shapes with large radii, soft outer shadows and paired inner highlights in friendly pastels. Pastel fills need dark text; press feedback is a short squish.",
+   "tags": [
+    "claymorphism",
+    "clay",
+    "soft-3d",
+    "pastel",
+    "inflated",
+    "playful",
+    "rounded"
+   ],
+   "title": "Claymorphism"
+  },
+  {
+   "category": "design-style",
+   "dependencies": [],
+   "frameworks": [
+    "css",
+    "react",
+    "webgl"
+   ],
+   "gpu_intensity": "medium",
+   "id": "style-cyberpunk",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/design-styles/cyberpunk.md",
+   "license_status": "custom_terms",
+   "motion": "intense",
+   "recipe": null,
+   "redistribution_status": "license_specific",
+   "reduced_motion_alternative": true,
+   "reuse": "license_review_required",
+   "source_ids": [
+    "fancy",
+    "react-bits",
+    "vengeance-ui"
+   ],
+   "source_paths": [
+    "fancy:src/fancy/components/text/scramble-hover.tsx",
+    "vengeance-ui:src/components/ui/cyber-glitch-text.tsx",
+    "react-bits:src/content/Backgrounds/FaultyTerminal/FaultyTerminal.jsx",
+    "react-bits:src/content/Backgrounds/CRTWarp/CRTWarp.jsx",
+    "react-bits:src/content/TextAnimations/GlitchText/GlitchText.css"
+   ],
+   "summary": "Neon dystopian tech: purple-black grounds, magenta, cyan and acid-yellow accents, glitch, CRT and terminal motifs. Effects are short bursts with clean text underneath and photosensitivity limits.",
+   "tags": [
+    "cyberpunk",
+    "neon",
+    "glitch",
+    "crt",
+    "terminal",
+    "scanlines",
+    "dystopian",
+    "hud"
+   ],
+   "title": "Cyberpunk"
+  },
+  {
+   "category": "design-style",
+   "dependencies": [],
+   "frameworks": [
+    "css",
+    "react"
+   ],
+   "gpu_intensity": "none",
+   "id": "style-dark-technical-developer-tools",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/design-styles/dark-technical-developer-tools.md",
+   "license_status": "verified",
+   "motion": "subtle",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "astryx",
+    "taste-skill",
+    "vengeance-ui"
+   ],
+   "source_paths": [
+    "astryx:packages/themes/gothic/src/gothicTheme.ts",
+    "vengeance-ui:src/components/ui/kbd.tsx",
+    "vengeance-ui:src/components/ui/command.tsx",
+    "vengeance-ui:src/components/ui/code-block.tsx",
+    "taste-skill:skills/brutalist-skill/SKILL.md"
+   ],
+   "summary": "Dark-first, dense, keyboard-centric UI for developers: cool near-black surfaces, alpha borders, monospace for code, paired syntax themes and quiet fast motion. Measure muted text and focus rings in dark.",
+   "tags": [
+    "dark",
+    "developer-tools",
+    "devtools",
+    "terminal",
+    "monospace",
+    "dashboard",
+    "command-palette",
+    "dark-mode"
+   ],
+   "title": "Dark technical / developer tools"
+  },
+  {
+   "category": "design-style",
+   "dependencies": [],
+   "frameworks": [
+    "css",
+    "react"
+   ],
+   "gpu_intensity": "none",
+   "id": "style-editorial",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/design-styles/editorial.md",
+   "license_status": "verified",
+   "motion": "subtle",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "astryx",
+    "fancy",
+    "taste-skill"
+   ],
+   "source_paths": [
+    "astryx:packages/themes/gothic/src/gothicTheme.ts",
+    "astryx:docs/design/typography-hierarchy.md",
+    "fancy:src/fancy/components/text/vertical-cut-reveal.tsx",
+    "taste-skill:skills/soft-skill/SKILL.md"
+   ],
+   "summary": "Magazine-style hierarchy for the web: kicker, headline, standfirst, byline, body measure, captions and rules on an asymmetric grid. Best for publications, long-form features and brand storytelling with real copy and photography.",
+   "tags": [
+    "editorial",
+    "magazine",
+    "serif",
+    "typography",
+    "long-form",
+    "hierarchy"
+   ],
+   "title": "Editorial design"
+  },
+  {
+   "category": "design-style",
+   "dependencies": [],
+   "frameworks": [
+    "react",
+    "three",
+    "r3f",
+    "webgl"
+   ],
+   "gpu_intensity": "high",
+   "id": "style-experimental-3d",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/design-styles/experimental-3d.md",
+   "license_status": "verified",
+   "motion": "moderate",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "img2threejs",
+    "react-three-fiber",
+    "vengeance-ui"
+   ],
+   "source_paths": [
+    "react-three-fiber:docs/API/canvas.mdx",
+    "react-three-fiber:docs/advanced/scaling-performance.mdx",
+    "react-three-fiber:docs/advanced/pitfalls.mdx",
+    "img2threejs:docs/materials/THREEJS_MATERIAL_REFERENCE.md",
+    "vengeance-ui:src/components/ui/model-viewer.tsx"
+   ],
+   "summary": "Real-time 3D scenes as the primary experience with three.js and React Three Fiber: art direction, one-canvas budgets, DOM text over WebGL, keyboard-accessible viewers, fallbacks and reduced motion.",
+   "tags": [
+    "3d",
+    "webgl",
+    "three",
+    "r3f",
+    "immersive",
+    "product-stage",
+    "scroll-camera",
+    "experimental"
+   ],
+   "title": "Experimental 3D"
+  },
+  {
+   "category": "design-style",
+   "dependencies": [],
+   "frameworks": [
+    "react",
+    "three",
+    "r3f",
+    "webgl",
+    "css"
+   ],
+   "gpu_intensity": "medium",
+   "id": "style-futurism",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/design-styles/futurism.md",
+   "license_status": "custom_terms",
+   "motion": "moderate",
+   "recipe": null,
+   "redistribution_status": "license_specific",
+   "reduced_motion_alternative": true,
+   "reuse": "license_review_required",
+   "source_ids": [
+    "react-bits",
+    "react-three-fiber",
+    "vengeance-ui"
+   ],
+   "source_paths": [
+    "react-three-fiber:docs/API/canvas.mdx",
+    "react-three-fiber:docs/advanced/scaling-performance.mdx",
+    "vengeance-ui:src/components/ui/liquid-ocean.tsx",
+    "react-bits:src/content/Backgrounds/Galaxy/Galaxy.jsx",
+    "react-bits:src/content/Backgrounds/Hyperspeed/Hyperspeed.jsx"
+   ],
+   "summary": "Contemporary future-tech look: cool dark stage, luminous accents used as light, HUD framing, spatial depth and exact motion. One-canvas budgets, DOM text over WebGL and a static poster fallback.",
+   "tags": [
+    "futurism",
+    "sci-fi",
+    "hud",
+    "future-tech",
+    "dark",
+    "glow",
+    "spatial",
+    "tech"
+   ],
+   "title": "Futurism (digital sci-fi)"
+  },
+  {
+   "category": "design-style",
+   "dependencies": [],
+   "frameworks": [
+    "javascript",
+    "react",
+    "webgl",
+    "glsl"
+   ],
+   "gpu_intensity": "medium",
+   "id": "style-generative-design",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/design-styles/generative-design.md",
+   "license_status": "custom_terms",
+   "motion": "moderate",
+   "recipe": null,
+   "redistribution_status": "license_specific",
+   "reduced_motion_alternative": true,
+   "reuse": "license_review_required",
+   "source_ids": [
+    "fancy",
+    "img2threejs",
+    "liquid-logo",
+    "react-bits"
+   ],
+   "source_paths": [
+    "liquid-logo:fragment-shader.glsl",
+    "liquid-logo:presets.js",
+    "fancy:src/fancy/components/background/animated-gradient-with-svg.tsx",
+    "img2threejs:README.md"
+   ],
+   "summary": "Rule- and seed-based visuals: noise fields, contours, cells, particles, dithering and procedural geometry. Palettes as data, reproducible seeds, frame budgets and static posters.",
+   "tags": [
+    "generative",
+    "procedural",
+    "noise",
+    "algorithmic",
+    "creative-coding",
+    "dither",
+    "particles",
+    "seed"
+   ],
+   "title": "Generative design"
+  },
+  {
+   "category": "design-style",
+   "dependencies": [],
+   "frameworks": [
+    "css",
+    "react",
+    "javascript",
+    "webgl"
+   ],
+   "gpu_intensity": "medium",
+   "id": "style-glassmorphism",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/design-styles/glassmorphism.md",
+   "license_status": "custom_terms",
+   "motion": "subtle",
+   "recipe": null,
+   "redistribution_status": "license_specific",
+   "reduced_motion_alternative": true,
+   "reuse": "license_review_required",
+   "source_ids": [
+    "design-md",
+    "liquid-glass-js",
+    "react-bits",
+    "vengeance-ui"
+   ],
+   "source_paths": [
+    "liquid-glass-js:container.js",
+    "liquid-glass-js:glass.css",
+    "react-bits:src/content/Components/GlassSurface/GlassSurface.jsx",
+    "react-bits:src/content/Components/GlassSurface/GlassSurface.css",
+    "design-md:examples/atmospheric-glass/DESIGN.md",
+    "vengeance-ui:src/components/ui/music-player.tsx"
+   ],
+   "summary": "Translucent blurred panels over rich backdrops, from CSS backdrop-filter to SVG displacement and WebGL refraction. Requires contrast checks against the worst backdrop region, scrims and opaque fallbacks.",
+   "tags": [
+    "glass",
+    "glassmorphism",
+    "frosted",
+    "blur",
+    "translucent",
+    "backdrop-filter",
+    "liquid-glass"
+   ],
+   "title": "Glassmorphism"
+  },
+  {
+   "category": "design-style",
+   "dependencies": [],
+   "frameworks": [
+    "css",
+    "react",
+    "webgl"
+   ],
+   "gpu_intensity": "low",
+   "id": "style-grain-and-texture",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/design-styles/grain-and-texture.md",
+   "license_status": "unknown",
+   "motion": "subtle",
+   "recipe": null,
+   "redistribution_status": "license_specific",
+   "reduced_motion_alternative": true,
+   "reuse": "license_review_required",
+   "source_ids": [
+    "react-bits",
+    "shadergradient",
+    "taste-skill"
+   ],
+   "source_paths": [
+    "react-bits:src/content/Animations/Noise/Noise.jsx",
+    "react-bits:src/content/Backgrounds/Grainient/Grainient.jsx",
+    "react-bits:src/tools/texture-lab/types.js",
+    "shadergradient:packages/shadergradient/src/types.ts",
+    "taste-skill:skills/soft-skill/SKILL.md"
+   ],
+   "summary": "Film grain, paper, halftone and dither as a finishing layer that adds warmth and removes banding. Keep opacity low, text above the texture, overlays fixed and non-interactive, and freeze under reduced motion.",
+   "tags": [
+    "grain",
+    "noise",
+    "texture",
+    "film-grain",
+    "halftone",
+    "dither",
+    "paper",
+    "overlay"
+   ],
+   "title": "Grain and texture"
+  },
+  {
+   "category": "design-style",
+   "dependencies": [],
+   "frameworks": [
+    "css",
+    "react"
+   ],
+   "gpu_intensity": "low",
+   "id": "style-high-fashion-luxury",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/design-styles/high-fashion-luxury.md",
+   "license_status": "verified",
+   "motion": "moderate",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "lenis",
+    "taste-skill"
+   ],
+   "source_paths": [
+    "lenis:README.md",
+    "lenis:packages/core/src/lenis.ts",
+    "taste-skill:skills/soft-skill/SKILL.md"
+   ],
+   "summary": "Exclusivity through restraint: art-directed full-bleed imagery, high-contrast serifs or light grotesques, wide-tracked small caps, muted metals and slow motion. Avoids the black-and-gold cliche.",
+   "tags": [
+    "luxury",
+    "high-fashion",
+    "premium",
+    "serif",
+    "cinematic",
+    "editorial",
+    "minimal-nav"
+   ],
+   "title": "High-fashion and luxury"
+  },
+  {
+   "category": "design-style",
+   "dependencies": [],
+   "frameworks": [
+    "react",
+    "motion",
+    "css"
+   ],
+   "gpu_intensity": "low",
+   "id": "style-kinetic-typography",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/design-styles/kinetic-typography.md",
+   "license_status": "verified",
+   "motion": "moderate",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "fancy"
+   ],
+   "source_paths": [
+    "fancy:src/fancy/components/text/variable-font-cursor-proximity.tsx",
+    "fancy:src/fancy/components/text/scramble-hover.tsx",
+    "fancy:src/fancy/components/text/vertical-cut-reveal.tsx",
+    "fancy:src/fancy/components/text/text-along-path.tsx",
+    "fancy:src/fancy/components/text/breathing-text.tsx"
+   ],
+   "summary": "Type as moving material: staggered reveals, variable-font morphing, scramble, cursor proximity, scroll-linked and path-bound text. Requires real DOM text, short animated units and a static reduced-motion state.",
+   "tags": [
+    "kinetic",
+    "kinetic-type",
+    "text-animation",
+    "variable-font",
+    "scramble",
+    "split-text",
+    "marquee",
+    "typography"
+   ],
+   "title": "Kinetic typography"
+  },
+  {
+   "category": "design-style",
+   "dependencies": [],
+   "frameworks": [
+    "webgl",
+    "glsl",
+    "react",
+    "css"
+   ],
+   "gpu_intensity": "high",
+   "id": "style-liquid-materials",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/design-styles/liquid-materials.md",
+   "license_status": "verified",
+   "motion": "moderate",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "fancy",
+    "img2threejs",
+    "liquid-logo",
+    "vengeance-ui"
+   ],
+   "source_paths": [
+    "liquid-logo:fragment-shader.glsl",
+    "liquid-logo:shaders.js",
+    "liquid-logo:presets.js",
+    "liquid-logo:README.MD",
+    "fancy:src/fancy/components/filter/gooey-svg-filter.tsx",
+    "img2threejs:docs/materials/THREEJS_MATERIAL_REFERENCE.md"
+   ],
+   "summary": "Surfaces that flow like molten metal, oil, gel or water via shaders, PBR materials or SVG goo. Covers fragment-cost limits, poster and video fallbacks, and keeping text off the effect.",
+   "tags": [
+    "liquid",
+    "chrome",
+    "metal",
+    "iridescent",
+    "goo",
+    "shader",
+    "fluid",
+    "mercury"
+   ],
+   "title": "Liquid materials"
+  },
+  {
+   "category": "design-style",
+   "dependencies": [],
+   "frameworks": [
+    "css",
+    "react",
+    "motion"
+   ],
+   "gpu_intensity": "low",
+   "id": "style-maximalism",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/design-styles/maximalism.md",
+   "license_status": "verified",
+   "motion": "moderate",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "fancy"
+   ],
+   "source_paths": [
+    "fancy:src/fancy/components/blocks/simple-marquee.tsx",
+    "fancy:src/fancy/components/blocks/media-between-text.tsx",
+    "fancy:src/fancy/components/image/parallax-floating.tsx"
+   ],
+   "summary": "More-is-more design from layered collage, pattern, clashing colour and mixed type at extreme scales, held together by a hidden grid, rest areas and a clear reading path.",
+   "tags": [
+    "maximalism",
+    "maximalist",
+    "collage",
+    "pattern",
+    "clash",
+    "ornament",
+    "dense"
+   ],
+   "title": "Maximalism"
+  },
+  {
+   "category": "design-style",
+   "dependencies": [],
+   "frameworks": [
+    "css",
+    "tailwind"
+   ],
+   "gpu_intensity": "none",
+   "id": "style-minimalism",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/design-styles/minimalism.md",
+   "license_status": "verified",
+   "motion": "subtle",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "astryx",
+    "taste-skill"
+   ],
+   "source_paths": [
+    "astryx:packages/themes/neutral/README.md",
+    "astryx:packages/themes/neutral/neutral.spec.md",
+    "astryx:docs/design/elevation-hierarchy.md",
+    "taste-skill:skills/minimalist-skill/SKILL.md"
+   ],
+   "summary": "Reduction with purpose: one type family, a near-neutral palette, generous space and carefully designed quiet states. Includes the contrast and affordance traps of minimal interfaces.",
+   "tags": [
+    "minimal",
+    "minimalism",
+    "clean",
+    "whitespace",
+    "neutral",
+    "restrained",
+    "quiet"
+   ],
+   "title": "Minimalism"
+  },
+  {
+   "category": "design-style",
+   "dependencies": [],
+   "frameworks": [
+    "javascript",
+    "react",
+    "lenis",
+    "gsap",
+    "motion"
+   ],
+   "gpu_intensity": "low",
+   "id": "style-motion-led-storytelling",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/design-styles/motion-led-storytelling.md",
+   "license_status": "verified",
+   "motion": "intense",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "astryx",
+    "fancy",
+    "lenis",
+    "vengeance-ui"
+   ],
+   "source_paths": [
+    "lenis:README.md",
+    "lenis:packages/core/src/lenis.ts",
+    "astryx:docs/design/motion.md",
+    "fancy:src/fancy/components/blocks/stacking-cards.tsx",
+    "vengeance-ui:src/components/ui/smooth-scroll.tsx"
+   ],
+   "summary": "Scroll-driven narrative where pacing, pinned scenes and reveals carry the story. Lenis and ScrollTrigger mapping with a mandatory static, reduced-motion version and no scroll-jacking.",
+   "tags": [
+    "scrollytelling",
+    "storytelling",
+    "scroll",
+    "parallax",
+    "pinning",
+    "narrative",
+    "chapters",
+    "motion"
+   ],
+   "title": "Motion-led storytelling"
+  },
+  {
+   "category": "design-style",
+   "dependencies": [],
+   "frameworks": [
+    "css"
+   ],
+   "gpu_intensity": "none",
+   "id": "style-neo-brutalism",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/design-styles/neo-brutalism.md",
+   "license_status": "verified",
+   "motion": "subtle",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "astryx"
+   ],
+   "source_paths": [
+    "astryx:packages/themes/y2k/src/y2kTheme.ts"
+   ],
+   "summary": "Friendly systematic brutalism: thick black outlines, hard offset shadows, flat saturated fills, chunky type and pressable controls. Text on bright fills must be black.",
+   "tags": [
+    "neo-brutalism",
+    "neubrutalism",
+    "outline",
+    "hard-shadow",
+    "flat",
+    "playful",
+    "chunky"
+   ],
+   "title": "Neo-brutalism"
+  },
+  {
+   "category": "design-style",
+   "dependencies": [],
+   "frameworks": [
+    "css"
+   ],
+   "gpu_intensity": "none",
+   "id": "style-neumorphism",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/design-styles/neumorphism.md",
+   "license_status": "verified",
+   "motion": "subtle",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "astryx"
+   ],
+   "source_paths": [
+    "astryx:docs/design/elevation-hierarchy.md"
+   ],
+   "summary": "Soft UI of paired light and dark shadows on a single-colour surface. It fails boundary contrast by default, so use it for a few hardware-like controls with borders and explicit state indicators.",
+   "tags": [
+    "neumorphism",
+    "soft-ui",
+    "skeuomorphic",
+    "shadow",
+    "extruded",
+    "monochrome",
+    "dial"
+   ],
+   "title": "Neumorphism"
+  },
+  {
+   "category": "design-style",
+   "dependencies": [],
+   "frameworks": [
+    "css",
+    "react",
+    "motion"
+   ],
+   "gpu_intensity": "low",
+   "id": "style-organic-tactile",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/design-styles/organic-tactile.md",
+   "license_status": "verified",
+   "motion": "moderate",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "astryx",
+    "fancy"
+   ],
+   "source_paths": [
+    "astryx:packages/themes/matcha/README.md",
+    "astryx:packages/themes/stone/README.md",
+    "astryx:packages/themes/chocolate/README.md",
+    "fancy:src/fancy/components/physics/gravity.tsx",
+    "fancy:src/fancy/components/filter/gooey-svg-filter.tsx"
+   ],
+   "summary": "Soft, natural, hand-made interfaces: earthy palettes, humanist type, blob shapes and bounded spring micro-interactions. Watch contrast on muted palettes and replace bounce under reduced motion.",
+   "tags": [
+    "organic",
+    "tactile",
+    "earthy",
+    "soft",
+    "spring",
+    "wellness",
+    "hand-made",
+    "warm"
+   ],
+   "title": "Organic and tactile"
+  },
+  {
+   "category": "design-style",
+   "dependencies": [],
+   "frameworks": [
+    "css",
+    "react",
+    "nextjs",
+    "tailwind"
+   ],
+   "gpu_intensity": "low",
+   "id": "style-product-led-saas",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/design-styles/product-led-saas.md",
+   "license_status": "verified",
+   "motion": "subtle",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "design-md",
+    "taste-skill",
+    "vengeance-ui"
+   ],
+   "source_paths": [
+    "vengeance-ui:src/components/landing/hero.tsx",
+    "vengeance-ui:src/components/landing/features.tsx",
+    "vengeance-ui:src/components/landing/cta.tsx",
+    "design-md:examples/paws-and-paths/DESIGN.md",
+    "taste-skill:skills/taste-skill/SKILL.md"
+   ],
+   "summary": "Marketing and product sites where the real interface is the hero: a clear promise, proof, hairline structure and restrained polish. Page anatomy, tokens and avoiding the generic AI landing page.",
+   "tags": [
+    "saas",
+    "landing-page",
+    "product",
+    "startup",
+    "marketing",
+    "hero",
+    "pricing",
+    "b2b"
+   ],
+   "title": "Product-led SaaS"
+  },
+  {
+   "category": "design-style",
+   "dependencies": [],
+   "frameworks": [
+    "css"
+   ],
+   "gpu_intensity": "low",
+   "id": "style-retro-vintage",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/design-styles/retro-vintage.md",
+   "license_status": "custom_terms",
+   "motion": "subtle",
+   "recipe": null,
+   "redistribution_status": "license_specific",
+   "reduced_motion_alternative": true,
+   "reuse": "license_review_required",
+   "source_ids": [
+    "react-bits",
+    "taste-skill"
+   ],
+   "source_paths": [
+    "react-bits:src/content/Animations/Noise/Noise.jsx",
+    "react-bits:src/content/Backgrounds/CRTWarp/CRTWarp.jsx",
+    "react-bits:src/tools/texture-lab/types.js",
+    "taste-skill:skills/brutalist-skill/SKILL.md"
+   ],
+   "summary": "Nostalgia from print and analogue production logic: spot-colour palettes on paper, era-specific type, badges and stamps, halftone and grain, mechanical motion. Commit to one era.",
+   "tags": [
+    "retro",
+    "vintage",
+    "print",
+    "halftone",
+    "risograph",
+    "letterpress",
+    "analog",
+    "badge"
+   ],
+   "title": "Retro and vintage"
+  },
+  {
+   "category": "design-style",
+   "dependencies": [],
+   "frameworks": [
+    "css",
+    "svg",
+    "three"
+   ],
+   "gpu_intensity": "low",
+   "id": "style-skeuomorphism",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/design-styles/skeuomorphism.md",
+   "license_status": "verified",
+   "motion": "subtle",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "img2threejs",
+    "vengeance-ui"
+   ],
+   "source_paths": [
+    "vengeance-ui:src/components/ui/interactive-keyboard.tsx",
+    "img2threejs:docs/materials/THREEJS_MATERIAL_REFERENCE.md"
+   ],
+   "summary": "Interfaces imitating real materials and objects, lit consistently and behaving physically. Suits instruments and audio tools; custom controls need real ARIA semantics and keyboard support.",
+   "tags": [
+    "skeuomorphism",
+    "skeuomorphic",
+    "realistic",
+    "texture",
+    "knob",
+    "hardware",
+    "material",
+    "tactile"
+   ],
+   "title": "Skeuomorphism"
+  },
+  {
+   "category": "design-style",
+   "dependencies": [],
+   "frameworks": [
+    "css"
+   ],
+   "gpu_intensity": "none",
+   "id": "style-swiss-international-typographic",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/design-styles/swiss-international-typographic.md",
+   "license_status": "verified",
+   "motion": "none",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "astryx",
+    "taste-skill"
+   ],
+   "source_paths": [
+    "astryx:docs/design/spatial-hierarchy.md",
+    "astryx:docs/design/typography-hierarchy.md",
+    "taste-skill:skills/brutalist-skill/SKILL.md"
+   ],
+   "summary": "Grid-governed layout with one neo-grotesque, flush-left ragged-right text, objective imagery and a single signal colour. Hierarchy comes from scale and alignment, not decoration; built with CSS Grid and subgrid.",
+   "tags": [
+    "swiss",
+    "grid",
+    "international-style",
+    "neo-grotesque",
+    "typography",
+    "modular",
+    "baseline"
+   ],
+   "title": "Swiss / International Typographic Style"
+  },
+  {
+   "category": "design-style",
+   "dependencies": [],
+   "frameworks": [
+    "css"
+   ],
+   "gpu_intensity": "low",
+   "id": "style-vaporwave",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/design-styles/vaporwave.md",
+   "license_status": "verified",
+   "motion": "moderate",
+   "recipe": null,
+   "redistribution_status": "original",
+   "reduced_motion_alternative": true,
+   "reuse": "original",
+   "source_ids": [],
+   "source_paths": [],
+   "summary": "Ironic 1980s-90s digital nostalgia: pastel pink, cyan and purple, perspective grids, sunsets, retro-OS windows and VHS artefacts. Keep assets original and pause background motion.",
+   "tags": [
+    "vaporwave",
+    "synthwave",
+    "retro-futurism",
+    "pastel",
+    "grid",
+    "80s",
+    "90s",
+    "glitch"
+   ],
+   "title": "Vaporwave"
+  },
+  {
+   "category": "design-style",
+   "dependencies": [],
+   "frameworks": [
+    "css",
+    "react",
+    "webgl"
+   ],
+   "gpu_intensity": "low",
+   "id": "style-y2k",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/design-styles/y2k.md",
+   "license_status": "custom_terms",
+   "motion": "moderate",
+   "recipe": null,
+   "redistribution_status": "license_specific",
+   "reduced_motion_alternative": true,
+   "reuse": "license_review_required",
+   "source_ids": [
+    "astryx",
+    "react-bits"
+   ],
+   "source_paths": [
+    "astryx:packages/themes/y2k/README.md",
+    "astryx:packages/themes/y2k/src/y2kTheme.ts",
+    "react-bits:src/content/Components/HoloCard/HoloCard.jsx",
+    "react-bits:src/content/Backgrounds/Iridescence/Iridescence.jsx"
+   ],
+   "summary": "Late-1990s and early-2000s digital optimism: candy plastics, chrome, bubbles, holographic foils and pastel bases, with controlled contrast and pausable decoration.",
+   "tags": [
+    "y2k",
+    "chrome",
+    "holographic",
+    "glossy",
+    "bubble",
+    "pastel",
+    "millennium",
+    "iridescent"
+   ],
+   "title": "Y2K"
+  },
+  {
+   "category": "workflow",
+   "dependencies": [],
+   "frameworks": [
+    "css",
+    "tailwind",
+    "react"
+   ],
+   "gpu_intensity": "none",
+   "id": "taste-skill-anti-generic-ui-checklist",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/design-intelligence/taste-skill.md",
+   "license_status": "verified",
+   "motion": "none",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": false,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "taste-skill"
+   ],
+   "source_paths": [
+    "taste-skill:skills/taste-skill/SKILL.md",
+    "taste-skill:skills/redesign-skill/SKILL.md",
+    "taste-skill:skills/taste-skill-v1/SKILL.md",
+    "taste-skill:CHANGELOG.md"
+   ],
+   "summary": "A pre-flight review that checks generated UI against default-look rules (single accent, one radius system, hero limits, eyebrow and zigzag caps, placeholder content, reduced motion) before delivery. Treat each rule as a default with an override.",
+   "tags": [
+    "anti-slop",
+    "checklist",
+    "design-review",
+    "generic-ui",
+    "pre-flight"
+   ],
+   "title": "Anti-generic UI pre-flight checklist"
+  },
+  {
+   "category": "workflow",
+   "dependencies": [],
+   "frameworks": [],
+   "gpu_intensity": "none",
+   "id": "taste-skill-image-to-code-workflow",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/design-intelligence/taste-skill.md",
+   "license_status": "verified",
+   "motion": "subtle",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": false,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "taste-skill"
+   ],
+   "source_paths": [
+    "taste-skill:skills/image-to-code-skill/SKILL.md",
+    "taste-skill:skills/imagegen-frontend-web/SKILL.md",
+    "taste-skill:README.md"
+   ],
+   "summary": "Generate large per-section reference images first, analyse text, type, spacing, colour and components in detail, then implement the page to match them, regenerating unclear sections instead of cropping old images.",
+   "tags": [
+    "image-to-code",
+    "reference-images",
+    "design-analysis",
+    "workflow",
+    "art-direction"
+   ],
+   "title": "Image-first design-to-code workflow"
+  },
+  {
+   "category": "workflow",
+   "dependencies": [],
+   "frameworks": [
+    "css",
+    "tailwind"
+   ],
+   "gpu_intensity": "none",
+   "id": "taste-skill-redesign-audit-protocol",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/design-intelligence/taste-skill.md",
+   "license_status": "verified",
+   "motion": "none",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": false,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "taste-skill"
+   ],
+   "source_paths": [
+    "taste-skill:skills/redesign-skill/SKILL.md",
+    "taste-skill:skills/taste-skill/SKILL.md"
+   ],
+   "summary": "Detect whether a redesign is greenfield, preserve or overhaul, audit typography, colour, layout, states, content and code quality first, then apply fixes in a fixed priority order without changing the stack or silently altering URLs and form names.",
+   "tags": [
+    "redesign",
+    "audit",
+    "existing-project",
+    "design-review",
+    "workflow"
+   ],
+   "title": "Redesign audit before changes"
+  },
+  {
+   "category": "design-system",
+   "dependencies": [],
+   "frameworks": [
+    "css",
+    "tailwind"
+   ],
+   "gpu_intensity": "none",
+   "id": "taste-skill-three-dials",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/design-intelligence/taste-skill.md",
+   "license_status": "verified",
+   "motion": "moderate",
+   "recipe": "knowledge/implementation-recipes/art-direction-brief-from-dials.md",
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "taste-skill"
+   ],
+   "source_paths": [
+    "taste-skill:skills/taste-skill/SKILL.md",
+    "taste-skill:skills/taste-skill-v1/SKILL.md",
+    "taste-skill:skills/stitch-skill/DESIGN.md",
+    "taste-skill:CHANGELOG.md"
+   ],
+   "summary": "Three 1-10 dials (design variance, motion intensity, visual density) that turn a vague brief into concrete layout, motion and spacing decisions. Design Sensei maps them to design_variance, motion_intensity and visual_density.",
+   "tags": [
+    "dials",
+    "art-direction",
+    "design-variance",
+    "motion-intensity",
+    "visual-density",
+    "brief-inference"
+   ],
+   "title": "Three dials for art direction"
+  },
+  {
+   "category": "product-showcase",
+   "dependencies": [
+    "framer-motion",
+    "gsap",
+    "lucide-react"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "tailwind",
+    "framer-motion",
+    "gsap",
+    "css"
+   ],
+   "gpu_intensity": "low",
+   "id": "vengeance-ui-3d-image-carousels",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/components/vengeance-ui.md",
+   "license_status": "verified",
+   "motion": "moderate",
+   "recipe": "knowledge/implementation-recipes/vengeance-ui-motion-safe-wrapper.md",
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "vengeance-ui"
+   ],
+   "source_paths": [
+    "vengeance-ui:src/components/ui/perspective-carousel.tsx",
+    "vengeance-ui:src/components/ui/diagonal-carousel.tsx",
+    "vengeance-ui:src/components/ui/cylinder-carousel.tsx",
+    "vengeance-ui:src/components/ui/circular-gallery.tsx"
+   ],
+   "summary": "Image carousels with depth: spring-driven perspective and diagonal carousels with ARIA region and arrow keys, a pure-CSS cylinder that rotates continuously, and a GSAP ring gallery of 150 cards by default with drag, parallax tilt and a centre preview.",
+   "tags": [
+    "carousel",
+    "gallery",
+    "3d-transform",
+    "perspective",
+    "drag",
+    "showcase"
+   ],
+   "title": "3D and ring image carousels"
+  },
+  {
+   "category": "workflow",
+   "dependencies": [
+    "@modelcontextprotocol/sdk",
+    "zod",
+    "@inquirer/prompts",
+    "interactive-commander"
+   ],
+   "frameworks": [
+    "typescript",
+    "javascript"
+   ],
+   "gpu_intensity": "none",
+   "id": "vengeance-ui-agent-skill-mcp-cli",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/components/vengeance-ui-agent-interfaces.md",
+   "license_status": "verified",
+   "motion": "none",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": false,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "vengeance-ui"
+   ],
+   "source_paths": [
+    "vengeance-ui:packages/mcp/src/tools.ts",
+    "vengeance-ui:packages/mcp/scripts/generate-index.mjs",
+    "vengeance-ui:packages/cli/src/init.ts",
+    "vengeance-ui:packages/cli/templates/skill/SKILL.md"
+   ],
+   "summary": "Make a component library agent-ready with a short skill, an MCP server that searches a bundled index and prints install commands, and an idempotent init CLI that writes the skill, MCP config and an instruction block into a project.",
+   "tags": [
+    "mcp",
+    "agent-skill",
+    "cli",
+    "claude-code",
+    "cursor",
+    "component-index"
+   ],
+   "title": "Agent-ready library: skill, MCP server and init CLI"
+  },
+  {
+   "category": "button",
+   "dependencies": [
+    "framer-motion",
+    "clsx",
+    "tailwind-merge"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "tailwind",
+    "css",
+    "framer-motion"
+   ],
+   "gpu_intensity": "low",
+   "id": "vengeance-ui-animated-cta-buttons",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/components/vengeance-ui.md",
+   "license_status": "verified",
+   "motion": "moderate",
+   "recipe": "knowledge/implementation-recipes/vengeance-ui-motion-safe-wrapper.md",
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "vengeance-ui"
+   ],
+   "source_paths": [
+    "vengeance-ui:src/components/ui/animated-button.tsx",
+    "vengeance-ui:src/components/ui/candy-button.tsx",
+    "vengeance-ui:src/components/ui/radial-glow-button.tsx",
+    "vengeance-ui:src/components/ui/generate-button.tsx"
+   ],
+   "summary": "Animated call-to-action buttons: a framer-motion button with a looping shine mask and border sweep, a radial-gradient candy button, a CSS-only radial glow button driven by @property custom properties, and a hue-configurable generate button.",
+   "tags": [
+    "cta",
+    "button",
+    "shine",
+    "glow",
+    "framer-motion",
+    "css-property",
+    "hover"
+   ],
+   "title": "Animated call-to-action buttons (shine, glow, candy)"
+  },
+  {
+   "category": "hero",
+   "dependencies": [
+    "framer-motion",
+    "clsx",
+    "tailwind-merge"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "tailwind",
+    "css",
+    "svg"
+   ],
+   "gpu_intensity": "low",
+   "id": "vengeance-ui-aurora-hero-backgrounds",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/components/vengeance-ui.md",
+   "license_status": "verified",
+   "motion": "moderate",
+   "recipe": "knowledge/implementation-recipes/vengeance-ui-motion-safe-wrapper.md",
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "vengeance-ui"
+   ],
+   "source_paths": [
+    "vengeance-ui:src/components/ui/aurora-hero.tsx",
+    "vengeance-ui:src/components/ui/animated-rays.tsx",
+    "vengeance-ui:src/components/ui/fluid-morph-bg.tsx",
+    "vengeance-ui:src/components/ui/light-lines.tsx"
+   ],
+   "summary": "Decorative hero backgrounds: an aurora stripe gradient with a fluted-glass SVG displacement title, the same stripes as a background that needs two global CSS rules, morphing SVG blobs, and animated SVG light streaks.",
+   "tags": [
+    "hero",
+    "aurora",
+    "gradient",
+    "svg-filter",
+    "background",
+    "blend-mode"
+   ],
+   "title": "Aurora and SVG hero backgrounds"
+  },
+  {
+   "category": "card-grid",
+   "dependencies": [
+    "framer-motion",
+    "@phosphor-icons/react",
+    "react-icons",
+    "lucide-react"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "tailwind",
+    "framer-motion"
+   ],
+   "gpu_intensity": "low",
+   "id": "vengeance-ui-bento-grids",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/components/vengeance-ui.md",
+   "license_status": "verified",
+   "motion": "moderate",
+   "recipe": "knowledge/implementation-recipes/vengeance-ui-motion-safe-wrapper.md",
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "vengeance-ui"
+   ],
+   "source_paths": [
+    "vengeance-ui:src/components/ui/agent-bento-grid.tsx",
+    "vengeance-ui:src/components/ui/expandable-bento-grid.tsx",
+    "vengeance-ui:src/components/ui/research-bento-grid.tsx",
+    "vengeance-ui:src/components/ui/why-us-bento.tsx"
+   ],
+   "summary": "Bento-style card grids with micro-interactions: an agent workspace grid, an expandable grid whose cards open into a shared-layout overlay, a pricing and brand grid that honours reduced motion, and an isometric why-us grid.",
+   "tags": [
+    "bento",
+    "card-grid",
+    "shared-layout",
+    "micro-interaction",
+    "features",
+    "framer-motion"
+   ],
+   "title": "Animated bento grids with micro-interactions"
+  },
+  {
+   "category": "cursor",
+   "dependencies": [
+    "framer-motion"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "tailwind",
+    "framer-motion"
+   ],
+   "gpu_intensity": "low",
+   "id": "vengeance-ui-cursor-image-trails",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/components/vengeance-ui.md",
+   "license_status": "verified",
+   "motion": "moderate",
+   "recipe": "knowledge/implementation-recipes/vengeance-ui-motion-safe-wrapper.md",
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "vengeance-ui"
+   ],
+   "source_paths": [
+    "vengeance-ui:src/components/ui/image-trail.tsx",
+    "vengeance-ui:src/components/ui/pixelated-image-trail.tsx",
+    "vengeance-ui:src/components/ui/cursor-card.tsx"
+   ],
+   "summary": "Pointer-driven image effects: a framer-motion trail that spawns rotated images after a distance threshold and removes them on a timer, a sliced trail driven by requestAnimationFrame, and a portal preview card that follows the cursor over a link.",
+   "tags": [
+    "cursor",
+    "image-trail",
+    "pointer",
+    "hover-preview",
+    "portal",
+    "framer-motion"
+   ],
+   "title": "Cursor image trails and hover preview cards"
+  },
+  {
+   "category": "navigation",
+   "dependencies": [
+    "gsap",
+    "framer-motion",
+    "@phosphor-icons/react",
+    "lucide-react"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "gsap",
+    "framer-motion"
+   ],
+   "gpu_intensity": "low",
+   "id": "vengeance-ui-floating-dock-navigation",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/components/vengeance-ui.md",
+   "license_status": "verified",
+   "motion": "subtle",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": false,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "vengeance-ui"
+   ],
+   "source_paths": [
+    "vengeance-ui:src/components/ui/glass-dock.tsx",
+    "vengeance-ui:src/components/ui/awwwards-nav.tsx",
+    "vengeance-ui:src/components/ui/verse-cards.tsx",
+    "vengeance-ui:src/app/globals.css"
+   ],
+   "summary": "Floating navigation widgets driven by GSAP and framer-motion: a dock with morphing SVG icons, a bottom glass pill that expands into a mega menu, and a nav tile that fans out a deck of cards.",
+   "tags": [
+    "dock",
+    "floating-nav",
+    "bottom-nav",
+    "gsap",
+    "svg-morph",
+    "glassmorphism"
+   ],
+   "title": "Floating dock and expanding glass navigation"
+  },
+  {
+   "category": "typography",
+   "dependencies": [
+    "gsap",
+    "@gsap/react"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "gsap",
+    "typescript"
+   ],
+   "gpu_intensity": "low",
+   "id": "vengeance-ui-gooey-text-reveal",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/components/vengeance-ui.md",
+   "license_status": "verified",
+   "motion": "moderate",
+   "recipe": "knowledge/implementation-recipes/vengeance-ui-gooey-text-hero-nextjs.md",
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "vengeance-ui"
+   ],
+   "source_paths": [
+    "vengeance-ui:src/components/ui/gooey-text-reveal.tsx",
+    "vengeance-ui:public/r/gooey-text-reveal.json",
+    "vengeance-ui:src/components/docs/gooey-text-reveal-demo.tsx"
+   ],
+   "summary": "Line-by-line text reveal: GSAP SplitText splits headings or paragraphs into lines and an SVG colour-matrix goo filter plus blur resolves each line, in immediate, scroll or scrub modes. The component leaves text untouched when reduced motion is requested.",
+   "tags": [
+    "text-reveal",
+    "splittext",
+    "scrolltrigger",
+    "svg-filter",
+    "gooey",
+    "blur",
+    "gsap"
+   ],
+   "title": "Gooey line-by-line text reveal (GSAP SplitText)"
+  },
+  {
+   "category": "typography",
+   "dependencies": [
+    "framer-motion",
+    "clsx",
+    "tailwind-merge"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "framer-motion",
+    "css"
+   ],
+   "gpu_intensity": "low",
+   "id": "vengeance-ui-kinetic-text-effects",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/components/vengeance-ui.md",
+   "license_status": "verified",
+   "motion": "moderate",
+   "recipe": "knowledge/implementation-recipes/vengeance-ui-motion-safe-wrapper.md",
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "vengeance-ui"
+   ],
+   "source_paths": [
+    "vengeance-ui:src/components/ui/staggerText.tsx",
+    "vengeance-ui:src/components/ui/flip-fade-text.tsx",
+    "vengeance-ui:src/components/ui/stats-counter.tsx",
+    "vengeance-ui:src/components/ui/morph-text.tsx"
+   ],
+   "summary": "Small kinetic text components: masked word or letter slide-up on scroll, per-letter flip and fade word cycling, spring count-up stats, and a blur-morph word rotator built on an SVG threshold filter.",
+   "tags": [
+    "text-animation",
+    "stagger",
+    "count-up",
+    "flip",
+    "morph",
+    "framer-motion",
+    "svg-filter"
+   ],
+   "title": "Kinetic text effects (stagger, flip-fade, count-up, morph)"
+  },
+  {
+   "category": "navigation",
+   "dependencies": [
+    "framer-motion",
+    "lucide-react",
+    "next-themes",
+    "clsx",
+    "tailwind-merge"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "tailwind",
+    "framer-motion"
+   ],
+   "gpu_intensity": "low",
+   "id": "vengeance-ui-landing-navbars",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/components/vengeance-ui.md",
+   "license_status": "verified",
+   "motion": "subtle",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": false,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "vengeance-ui"
+   ],
+   "source_paths": [
+    "vengeance-ui:src/components/ui/spotlight-navbar.tsx",
+    "vengeance-ui:src/components/ui/notch-navbar.tsx",
+    "vengeance-ui:src/components/ui/mega-menu-navbar.tsx",
+    "vengeance-ui:public/r/mega-menu-navbar.json"
+   ],
+   "summary": "Three landing-page navbars: a pill with a cursor-following spotlight and spring-moved active glow, a notch-cutout header drawn with SVG outlines, and a SaaS mega menu with rich dropdowns and a mobile dialog.",
+   "tags": [
+    "navbar",
+    "spotlight",
+    "mega-menu",
+    "notch",
+    "mobile-menu",
+    "glass"
+   ],
+   "title": "Landing navbars: spotlight pill, notch header, mega menu"
+  },
+  {
+   "category": "button",
+   "dependencies": [
+    "@paper-design/shaders-react",
+    "clsx",
+    "tailwind-merge"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "webgl",
+    "tailwind"
+   ],
+   "gpu_intensity": "medium",
+   "id": "vengeance-ui-liquid-metal-button",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/components/vengeance-ui.md",
+   "license_status": "verified",
+   "motion": "subtle",
+   "recipe": "knowledge/implementation-recipes/vengeance-ui-motion-safe-wrapper.md",
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "vengeance-ui"
+   ],
+   "source_paths": [
+    "vengeance-ui:src/components/ui/liquid-metal.tsx",
+    "vengeance-ui:public/r/liquid-metal.json",
+    "vengeance-ui:src/components/docs/liquid-metal.tsx"
+   ],
+   "summary": "Pill button whose border is a live WebGL liquid-metal shader from the Paper Design shaders package, with size variants, an icon slot and shader settings; the base LiquidMetal component can also fill any container.",
+   "tags": [
+    "shader",
+    "webgl",
+    "liquid-metal",
+    "chrome",
+    "button",
+    "paper-shaders"
+   ],
+   "title": "Liquid metal shader button"
+  },
+  {
+   "category": "workflow",
+   "dependencies": [
+    "clsx",
+    "tailwind-merge"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "tailwind",
+    "typescript"
+   ],
+   "gpu_intensity": "none",
+   "id": "vengeance-ui-registry-copy-paste-install",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/components/vengeance-ui.md",
+   "license_status": "verified",
+   "motion": "none",
+   "recipe": "knowledge/implementation-recipes/vengeance-ui-install-and-verify-component.md",
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": false,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "vengeance-ui"
+   ],
+   "source_paths": [
+    "vengeance-ui:src/lib/registry.ts",
+    "vengeance-ui:public/r/registry.json",
+    "vengeance-ui:public/r/animated-button.json",
+    "vengeance-ui:src/app/docs/cli/page.tsx"
+   ],
+   "summary": "Ship components as registry JSON files, each embedding its source, npm dependencies and target path, that the shadcn CLI installs by URL or alias. The consumer owns and edits the code. Vengeance UI serves them from public/r through GitHub raw.",
+   "tags": [
+    "shadcn-registry",
+    "copy-paste",
+    "registry-json",
+    "cli",
+    "distribution"
+   ],
+   "title": "Copy-paste component install via a shadcn registry"
+  },
+  {
+   "category": "design-system",
+   "dependencies": [
+    "tailwindcss",
+    "next-themes"
+   ],
+   "frameworks": [
+    "tailwind",
+    "css",
+    "react",
+    "nextjs"
+   ],
+   "gpu_intensity": "none",
+   "id": "vengeance-ui-theme-token-layer",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/components/vengeance-ui.md",
+   "license_status": "verified",
+   "motion": "none",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": false,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "vengeance-ui"
+   ],
+   "source_paths": [
+    "vengeance-ui:public/r/vengeance-theme.json",
+    "vengeance-ui:src/app/globals.css",
+    "vengeance-ui:src/app/docs/theming/page.tsx",
+    "vengeance-ui:src/lib/utils.ts"
+   ],
+   "summary": "Two-layer CSS variable theme: semantic --vng-* tokens for colour, radius, spacing and transition speed feed the shadcn-style tokens through Tailwind v4 theme inline, with light and dark sets and var() fallbacks inside components so they work without the theme.",
+   "tags": [
+    "design-tokens",
+    "css-variables",
+    "tailwind-v4",
+    "dark-mode",
+    "shadcn",
+    "theming"
+   ],
+   "title": "Two-layer CSS token theme for copy-paste components"
+  },
+  {
+   "category": "three-scene",
+   "dependencies": [
+    "three",
+    "@react-three/fiber",
+    "@react-three/drei",
+    "gsap",
+    "framer-motion"
+   ],
+   "frameworks": [
+    "react",
+    "nextjs",
+    "three",
+    "r3f",
+    "webgl",
+    "glsl"
+   ],
+   "gpu_intensity": "high",
+   "id": "vengeance-ui-three-js-scenes",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/components/vengeance-ui.md",
+   "license_status": "verified",
+   "motion": "moderate",
+   "recipe": "knowledge/implementation-recipes/vengeance-ui-motion-safe-wrapper.md",
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "vengeance-ui"
+   ],
+   "source_paths": [
+    "vengeance-ui:src/components/ui/scroll-dissolve-reveal.tsx",
+    "vengeance-ui:src/components/ui/interactive-particles.tsx",
+    "vengeance-ui:src/components/ui/books-showcase.tsx",
+    "vengeance-ui:src/components/ui/wave-grid-background.tsx"
+   ],
+   "summary": "Interactive Three.js and react-three-fiber scenes packaged as components: a scroll-driven shader dissolve between two images, an image-sampled GPU particle field, a procedural 3D book showcase, and a cursor-driven wave grid.",
+   "tags": [
+    "three",
+    "r3f",
+    "webgl",
+    "glsl",
+    "shader",
+    "scroll-driven",
+    "particles"
+   ],
+   "title": "Three.js and R3F interactive scenes"
+  },
+  {
+   "category": "background-shader",
+   "dependencies": [],
+   "frameworks": [
+    "javascript",
+    "webgl",
+    "react",
+    "vue"
+   ],
+   "gpu_intensity": "none",
+   "id": "webgl-effect-fallback-and-reduced-motion",
+   "implementation_status": "recipe_available",
+   "knowledge_doc": "knowledge/shaders/glsl-ui-fundamentals.md",
+   "license_status": "unknown",
+   "motion": "none",
+   "recipe": "knowledge/implementation-recipes/animated-shader-gradient-background.md",
+   "redistribution_status": "license_specific",
+   "reduced_motion_alternative": true,
+   "reuse": "license_review_required",
+   "source_ids": [
+    "liquid-logo",
+    "shadergradient"
+   ],
+   "source_paths": [
+    "shadergradient:packages/shadergradient-vue/src/ShaderGradientCanvas.ts",
+    "shadergradient:packages/shadergradient-vue/src/shared.ts",
+    "shadergradient:packages/shadergradient/src/hooks/useInView.ts",
+    "liquid-logo:main.js"
+   ],
+   "summary": "Make any WebGL visual resilient: ask for a hardware context, keep an img or CSS fallback underneath, show a still frame for reduced motion, pause offscreen and in hidden tabs, recover from context loss and release the context on teardown.",
+   "tags": [
+    "webgl",
+    "fallback",
+    "reduced-motion",
+    "context-loss",
+    "intersection-observer",
+    "progressive-enhancement",
+    "accessibility"
+   ],
+   "title": "WebGL effect fallback, reduced motion and teardown"
+  }
+ ],
+ "version": 1
+}

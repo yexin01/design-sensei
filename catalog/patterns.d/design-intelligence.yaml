@@ -1,0 +1,229 @@
+# yaml-language-server: $schema=../schemas/patterns.schema.json
+#
+# Design-intelligence patterns: the DESIGN.md format and tooling (design-md), the Taste Skill
+# rule sets and workflows (taste-skill) and the Opus prompt corpus (awesome-opus-videos).
+# Every source_paths entry was read at the pinned commit. Notes: knowledge/design-intelligence/.
+schema_version: 1
+patterns:
+  - id: design-md-spec
+    title: DESIGN.md design-system file
+    category: design-system
+    summary: A plain-text design system for coding agents that pairs YAML design tokens (colors, typography, rounded, spacing, components) with eight ordered prose sections, so agents get exact values and the intent behind them.
+    provenance: mixed
+    tags: [design-md, design-tokens, front-matter, specification, agent-context]
+    source_ids: [design-md]
+    frameworks: [tailwind, css]
+    dependencies: []
+    implementation_status: recipe_available
+    use_cases:
+      - persistent design context for coding agents
+      - handing a brand or product design system to an AI agent
+      - keeping generated UI consistent across sessions
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: Documentation format with no runtime cost.
+    accessibility:
+      motion: none
+      reduced_motion_alternative: false
+      notes: The spec defines no motion tokens. Component text and background pairs can be checked against WCAG AA 4.5:1 (the linter ignores alpha).
+    source_paths:
+      - design-md:docs/spec.md
+      - design-md:README.md
+      - design-md:PHILOSOPHY.md
+      - design-md:packages/cli/src/linter/spec-config.yaml
+      - design-md:examples/atmospheric-glass/DESIGN.md
+      - design-md:examples/paws-and-paths/DESIGN.md
+    knowledge_doc: knowledge/design-intelligence/design-md-format.md
+    recipe: knowledge/implementation-recipes/write-a-design-md.md
+    related: [design-md-lint-and-export, taste-skill-three-dials]
+    notes: The format is version alpha and may change. The format note lists gaps between the spec and the linter code.
+
+  - id: design-md-lint-and-export
+    title: Lint a DESIGN.md and export its tokens
+    category: workflow
+    summary: Validate a DESIGN.md with the official CLI (reference checks, WCAG contrast, section order) and export its tokens to Tailwind v3 JSON, a Tailwind v4 CSS theme, CSS variables or W3C design-token JSON.
+    provenance: mixed
+    tags: [design-md, lint, design-tokens, tailwind, css-variables, dtcg]
+    source_ids: [design-md]
+    frameworks: [tailwind, css, nodejs]
+    dependencies:
+      - "@google/design.md"
+    implementation_status: recipe_available
+    use_cases:
+      - gate a DESIGN.md before agents use it
+      - generate Tailwind or CSS variable tokens from the file
+      - review token changes between two versions
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: Build-time command line tool; no browser runtime cost.
+    accessibility:
+      motion: none
+      reduced_motion_alternative: false
+      notes: The contrast rule flags component pairs under 4.5:1 but ignores alpha. Exporters never emit component tokens.
+    source_paths:
+      - design-md:packages/cli/package.json
+      - design-md:packages/cli/src/commands/lint.ts
+      - design-md:packages/cli/src/commands/export.ts
+      - design-md:packages/cli/src/linter/linter/rules/index.ts
+      - design-md:packages/cli/src/linter/tailwind/v4/handler.ts
+      - design-md:packages/cli/src/linter/dtcg/handler.ts
+    knowledge_doc: knowledge/design-intelligence/design-md-format.md
+    recipe: knowledge/implementation-recipes/write-a-design-md.md
+    related: [design-md-spec]
+    notes: The CLI is optional. Installing it needs npm and network access, so ask first. A YAML parse failure is reported as a warning with exit code 0.
+
+  - id: taste-skill-three-dials
+    title: Three dials for art direction
+    category: design-system
+    summary: Three 1-10 dials (design variance, motion intensity, visual density) that turn a vague brief into concrete layout, motion and spacing decisions. Design Sensei maps them to design_variance, motion_intensity and visual_density.
+    provenance: mixed
+    tags: [dials, art-direction, design-variance, motion-intensity, visual-density, brief-inference]
+    source_ids: [taste-skill]
+    frameworks: [css, tailwind]
+    dependencies: []
+    implementation_status: recipe_available
+    use_cases:
+      - turn mood words into measurable design decisions
+      - calibrate motion and density for an audience
+      - write a testable art-direction brief before coding
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: A planning method; the cost depends on the effects the chosen band allows.
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: Output ranges from static to scroll-led. The recipe requires a prefers-reduced-motion alternative for motion 4 or more and gives a helper for JavaScript scenes.
+    source_paths:
+      - taste-skill:skills/taste-skill/SKILL.md
+      - taste-skill:skills/taste-skill-v1/SKILL.md
+      - taste-skill:skills/stitch-skill/DESIGN.md
+      - taste-skill:CHANGELOG.md
+    knowledge_doc: knowledge/design-intelligence/taste-skill.md
+    recipe: knowledge/implementation-recipes/art-direction-brief-from-dials.md
+    related: [taste-skill-anti-generic-ui-checklist, design-md-spec]
+    notes: Upstream baseline is 8 / 6 / 4; Design Sensei defaults are 6 / 5 / 5. The decision tables and token code in the recipe are original.
+
+  - id: taste-skill-anti-generic-ui-checklist
+    title: Anti-generic UI pre-flight checklist
+    category: workflow
+    summary: A pre-flight review that checks generated UI against default-look rules (single accent, one radius system, hero limits, eyebrow and zigzag caps, placeholder content, reduced motion) before delivery. Treat each rule as a default with an override.
+    provenance: upstream
+    tags: [anti-slop, checklist, design-review, generic-ui, pre-flight]
+    source_ids: [taste-skill]
+    frameworks: [css, tailwind, react]
+    dependencies: []
+    implementation_status: reference_only
+    use_cases:
+      - review generated landing pages before delivery
+      - spot template-looking output
+      - add a don'ts list to an art-direction brief
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: A review procedure with no runtime cost.
+    accessibility:
+      motion: none
+      reduced_motion_alternative: false
+      notes: Includes contrast checks for buttons and forms and a reduced-motion rule; the paraphrased rules are in the knowledge note.
+    source_paths:
+      - taste-skill:skills/taste-skill/SKILL.md
+      - taste-skill:skills/redesign-skill/SKILL.md
+      - taste-skill:skills/taste-skill-v1/SKILL.md
+      - taste-skill:CHANGELOG.md
+    knowledge_doc: knowledge/design-intelligence/taste-skill.md
+    related: [taste-skill-three-dials, taste-skill-redesign-audit-protocol]
+    notes: Rules are opinionated, absolute in tone and aimed at marketing pages; sibling skills in the repo contradict each other. The repository ships no evaluation data.
+
+  - id: taste-skill-image-to-code-workflow
+    title: Image-first design-to-code workflow
+    category: workflow
+    summary: Generate large per-section reference images first, analyse text, type, spacing, colour and components in detail, then implement the page to match them, regenerating unclear sections instead of cropping old images.
+    provenance: upstream
+    tags: [image-to-code, reference-images, design-analysis, workflow, art-direction]
+    source_ids: [taste-skill]
+    frameworks: []
+    dependencies: []
+    implementation_status: reference_only
+    use_cases:
+      - visually led landing pages when an image generator is available
+      - extract a design system from generated section comps
+      - keep implementation faithful to an approved visual
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: Planning workflow. It needs an image-generation tool in the environment.
+    accessibility:
+      motion: subtle
+      reduced_motion_alternative: false
+      notes: The images only imply motion; implementation must still follow the project's reduced-motion rules.
+    source_paths:
+      - taste-skill:skills/image-to-code-skill/SKILL.md
+      - taste-skill:skills/imagegen-frontend-web/SKILL.md
+      - taste-skill:README.md
+    knowledge_doc: knowledge/design-intelligence/taste-skill.md
+    related: [taste-skill-anti-generic-ui-checklist]
+    notes: Written mainly for Codex. Without an image generator the main skill falls back to seeded placeholder photos and labelled empty slots.
+
+  - id: taste-skill-redesign-audit-protocol
+    title: Redesign audit before changes
+    category: workflow
+    summary: Detect whether a redesign is greenfield, preserve or overhaul, audit typography, colour, layout, states, content and code quality first, then apply fixes in a fixed priority order without changing the stack or silently altering URLs and form names.
+    provenance: upstream
+    tags: [redesign, audit, existing-project, design-review, workflow]
+    source_ids: [taste-skill]
+    frameworks: [css, tailwind]
+    dependencies: []
+    implementation_status: reference_only
+    use_cases:
+      - upgrade an existing site without breaking it
+      - decide between targeted evolution and a full redesign
+      - protect SEO, analytics and accessibility during visual changes
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: Review procedure; the fixes it recommends should animate only transform and opacity.
+    accessibility:
+      motion: none
+      reduced_motion_alternative: false
+      notes: Requires preserving existing focus states, alt text, keyboard navigation and contrast.
+    source_paths:
+      - taste-skill:skills/redesign-skill/SKILL.md
+      - taste-skill:skills/taste-skill/SKILL.md
+    knowledge_doc: knowledge/design-intelligence/taste-skill.md
+    related: [taste-skill-anti-generic-ui-checklist, taste-skill-three-dials]
+    notes: The audit list lives in the standalone redesign skill; the mode detection and preservation rules are in section 11 of the default skill.
+
+  - id: awesome-opus-videos-prompt-mining
+    title: Mine a prompt library for art-direction vocabulary
+    category: workflow
+    summary: Filter a corpus of 513 creator-shared prompts to complete, long, distinct entries, classify the typography, colour, motion, camera and light language, and rewrite useful terms as an original glossary with attribution.
+    provenance: mixed
+    tags: [prompt-library, vocabulary, art-direction, motion-design, attribution]
+    source_ids: [awesome-opus-videos]
+    frameworks: []
+    dependencies: []
+    implementation_status: reference_only
+    use_cases:
+      - build a glossary of motion and art-direction terms
+      - learn how creators structure long design briefs
+      - find direction language for motion and 3D scenes
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: Offline reading and filtering of a JSON file; no runtime cost.
+    accessibility:
+      motion: none
+      reduced_motion_alternative: false
+      notes: The corpus describes video and animation; any derived motion guidance still needs reduced-motion alternatives.
+    source_paths:
+      - awesome-opus-videos:data/videos.json
+      - awesome-opus-videos:README.md
+      - awesome-opus-videos:prompts/twoclipping-402193.md
+      - awesome-opus-videos:prompts/brainextends-606193.md
+      - awesome-opus-videos:prompts/alexwtlf-981005.md
+    knowledge_doc: knowledge/design-intelligence/awesome-opus-videos.md
+    related: [taste-skill-three-dials]
+    notes: Prompts are third-party works; quote briefly with the creator handle and link. 234 of 513 entries are partial, and few prompts concern web pages.

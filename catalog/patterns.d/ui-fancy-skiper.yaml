@@ -1,0 +1,489 @@
+# Patterns drawn from two UI collections.
+#   fancy     MIT, redistributable with notice. Four patterns have an original recipe under
+#             knowledge/implementation-recipes/; the rest point to upstream files.
+#   skiper-ui No licence (unofficial clone). Reference only: ideas, no recipes, no quoted code.
+# Prose for every pattern lives in knowledge/components/fancy.md and knowledge/components/skiper-ui.md.
+schema_version: 1
+patterns:
+  # ------------------------------------------------------------------ fancy: typography
+  - id: fancy-letter-swap-text
+    title: "Letter swap and roll text effects (Fancy)"
+    category: typography
+    summary: "Hover or focus effect where each letter of a short label rolls out of an overflow-hidden box while an identical copy rolls in, staggered. Fancy ships 2D forward, ping-pong, random-order and 3D box-roll variants."
+    provenance: mixed
+    tags: [text-effect, hover, stagger, letter-swap, microinteraction, css-3d]
+    source_ids: [fancy]
+    frameworks: [react, nextjs, tailwind, typescript, motion]
+    dependencies: [motion]
+    implementation_status: recipe_available
+    use_cases: [navigation links, buttons, footer links, hero labels]
+    performance:
+      gpu_intensity: low
+      fallback_required: false
+      notes: "Animates transform only, with one box per letter, so keep labels short. Upstream ping-pong and random variants also import lodash for debouncing; the recipe does not need it."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "The recipe moves nothing under prefers-reduced-motion and exposes a data-active cue; focus triggers it as well as hover. Upstream reacts to mouse hover only and has no reduced-motion branch. One sr-only label with aria-hidden letters."
+    source_paths:
+      - "fancy:src/fancy/components/text/letter-swap-forward-anim.tsx"
+      - "fancy:src/fancy/components/text/letter-swap-pingpong-anim.tsx"
+      - "fancy:src/fancy/components/text/random-letter-swap-forward-anim.tsx"
+      - "fancy:src/fancy/components/text/letter-3d-swap.tsx"
+    knowledge_doc: knowledge/components/fancy.md
+    recipe: knowledge/implementation-recipes/fancy-letter-swap-text.md
+    related: [fancy-scramble-text, fancy-variable-font-text]
+
+  - id: fancy-vertical-cut-reveal
+    title: "Vertical cut text reveal (Fancy)"
+    category: typography
+    summary: "Text split into words, characters or lines that slide up from beneath an overflow-hidden mask, with a stagger origin of first, last, centre, random or a chosen index, and ref methods to start and reset the reveal."
+    provenance: upstream
+    tags: [text-reveal, mask, stagger, split-text, headline]
+    source_ids: [fancy]
+    frameworks: [react, nextjs, tailwind, typescript, motion]
+    dependencies: [motion, clsx, tailwind-merge]
+    implementation_status: reference_only
+    use_cases: [hero headlines, section titles, scroll reveals]
+    performance:
+      gpu_intensity: low
+      fallback_required: false
+      notes: "Transform animation on one box per piece; characters mode creates many nodes. Piece boxes use overflow hidden, which can clip italic or tightly set glyphs."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "Renders an sr-only copy and hides the pieces with aria-hidden. Reduced motion: pass transition with duration 0 and staggerDuration 0, or render plain text (see knowledge/components/fancy.md). Upstream has no built-in check."
+    source_paths:
+      - "fancy:src/fancy/components/text/vertical-cut-reveal.tsx"
+      - "fancy:src/content/docs/components/text/vertical-cut-reveal.mdx"
+      - "fancy:src/fancy/examples/text/vertical-cut-reveal-scroll-demo.tsx"
+    knowledge_doc: knowledge/components/fancy.md
+    related: [fancy-text-rotate]
+
+  - id: fancy-text-rotate
+    title: "Rotating text with AnimatePresence (Fancy)"
+    category: typography
+    summary: "Cycles through a list of strings, animating the outgoing text out and the incoming text in per character, word or line with AnimatePresence. Supports automatic rotation and ref-driven next, previous and jumpTo."
+    provenance: upstream
+    tags: [text-rotate, rotating-words, animate-presence, stagger, headline]
+    source_ids: [fancy]
+    frameworks: [react, nextjs, tailwind, typescript, motion]
+    dependencies: [motion, clsx, tailwind-merge]
+    implementation_status: reference_only
+    use_cases: [hero headline with a changing word, value propositions, taglines]
+    performance:
+      gpu_intensity: low
+      fallback_required: false
+      notes: "Uses layout animation on the container and a setInterval that is cleared on unmount. Keep rotationInterval longer than the in and out animations (docs)."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "Auto mode replaces the visible text every 2 seconds by default with no pause control, and the sr-only copy holds only the current string. Reduced motion: set auto to false and show the first string, or list all strings statically."
+    source_paths:
+      - "fancy:src/fancy/components/text/text-rotate.tsx"
+      - "fancy:src/content/docs/components/text/text-rotate.mdx"
+      - "fancy:src/fancy/examples/text/text-rotate-demo.tsx"
+    knowledge_doc: knowledge/components/fancy.md
+    related: [fancy-vertical-cut-reveal]
+
+  - id: fancy-scramble-text
+    title: "Scramble text on hover or on entry (Fancy)"
+    category: typography
+    summary: "Replaces letters with random characters that resolve into the real text, on hover (random or sequential reveal from start, end or centre) or once on mount. The scrambling itself is driven by intervals and React state."
+    provenance: upstream
+    tags: [scramble, text-effect, hover, glitch, monospace]
+    source_ids: [fancy]
+    frameworks: [react, nextjs, tailwind, typescript, motion]
+    dependencies: [motion, clsx, tailwind-merge]
+    implementation_status: reference_only
+    use_cases: [technical or terminal-styled headings, link hover states, loading labels]
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: "Re-renders the component every scrambleSpeed milliseconds (default 50) while active. Keep strings short. Timers are cleared in the effect cleanup."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "Scramble In keeps the final text in an sr-only span, but Scramble Hover mirrors the changing text there. Reduced motion: render the final text as plain text; Scramble In starts empty, so do not mount it."
+    source_paths:
+      - "fancy:src/fancy/components/text/scramble-hover.tsx"
+      - "fancy:src/fancy/components/text/scramble-in.tsx"
+      - "fancy:src/content/docs/components/text/scramble-hover.mdx"
+    knowledge_doc: knowledge/components/fancy.md
+    related: [fancy-letter-swap-text]
+
+  - id: fancy-variable-font-text
+    title: "Variable-font weight and slant animation (Fancy)"
+    category: typography
+    summary: "Animates font-variation-settings per letter on hover, in sequence or random order, or continuously with Breathing Text, using stagger and spring or tween transitions. Requires a variable font that has the named axes."
+    provenance: upstream
+    tags: [variable-font, font-variation-settings, weight, hover, breathing]
+    source_ids: [fancy]
+    frameworks: [react, nextjs, tailwind, typescript, motion]
+    dependencies: [motion, lodash, clsx, tailwind-merge]
+    implementation_status: reference_only
+    use_cases: [expressive headlines, hover states on display type, brand wordmarks]
+    performance:
+      gpu_intensity: low
+      fallback_required: false
+      notes: "Animating font-variation-settings re-shapes glyphs on the main thread every frame, and heavier weights are wider. Breathing Text never stops; hover by letter re-creates a lodash debounce on each render."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "sr-only label with aria-hidden letters. Reduced motion: render static text at fromFontVariationSettings and never mount Breathing Text. Reserve room for the heaviest weight to avoid layout shift."
+    source_paths:
+      - "fancy:src/fancy/components/text/variable-font-hover-by-letter.tsx"
+      - "fancy:src/fancy/components/text/variable-font-hover-by-random-letter.tsx"
+      - "fancy:src/fancy/components/text/breathing-text.tsx"
+      - "fancy:src/content/docs/components/text/variable-font-hover-by-letter.mdx"
+    knowledge_doc: knowledge/components/fancy.md
+    related: [fancy-cursor-proximity-text, fancy-letter-swap-text]
+
+  - id: fancy-text-highlighter
+    title: "Animated text highlighter (Fancy)"
+    category: typography
+    summary: "Marker-style highlight drawn behind inline text by animating the background-size of a gradient, in four directions, triggered by hover, in-view, a ref call or automatically. A cloned box decoration keeps wrapped lines correct."
+    provenance: upstream
+    tags: [highlight, marker, background-size, in-view, inline-text]
+    source_ids: [fancy]
+    frameworks: [react, nextjs, tailwind, typescript, motion]
+    dependencies: [motion, clsx, tailwind-merge]
+    implementation_status: reference_only
+    use_cases: [emphasis inside paragraphs, key phrases revealed on scroll, link emphasis]
+    performance:
+      gpu_intensity: low
+      fallback_required: false
+      notes: "background-size is a paint property, so each animated span repaints. The in-view trigger calls useInView conditionally, so keep triggerType constant."
+    accessibility:
+      motion: subtle
+      reduced_motion_alternative: true
+      notes: "The text stays real text and the highlight is decorative. Check text contrast against the highlight colour. Reduced motion: pass transition with duration 0. The docs warn that heavy highlighting hurts readability."
+    source_paths:
+      - "fancy:src/fancy/components/text/text-highlighter.tsx"
+      - "fancy:src/content/docs/components/text/text-highlighter.mdx"
+      - "fancy:src/fancy/examples/text/text-highlighter-scroll-demo.tsx"
+    knowledge_doc: knowledge/components/fancy.md
+    related: [fancy-vertical-cut-reveal]
+
+  # ------------------------------------------------------------------ fancy: cursor
+  - id: fancy-cursor-proximity-text
+    title: "Cursor proximity text effects (Fancy)"
+    category: cursor
+    summary: "Letters respond to pointer distance. One version interpolates any CSS properties between two values with linear, exponential or gaussian falloff, one animates variable-font axes, and one maps pointer x and y to two axes of the whole text."
+    provenance: mixed
+    tags: [cursor, proximity, per-letter, variable-font, pointer]
+    source_ids: [fancy]
+    frameworks: [react, nextjs, tailwind, typescript, motion]
+    dependencies: [motion]
+    implementation_status: recipe_available
+    use_cases: [hero headlines on desktop, event posters, interactive display typography]
+    performance:
+      gpu_intensity: low
+      fallback_required: false
+      notes: "Upstream keeps a frame loop alive and reads layout for every letter each frame, and its docs advise short text. The recipe measures once, schedules a frame only while the pointer moves inside the area, and drives the look through a CSS variable."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "The recipe leaves letters static under prefers-reduced-motion and for touch pointers. sr-only label with aria-hidden letters, as upstream."
+    source_paths:
+      - "fancy:src/fancy/components/text/text-cursor-proximity.tsx"
+      - "fancy:src/fancy/components/text/variable-font-cursor-proximity.tsx"
+      - "fancy:src/fancy/components/text/variable-font-and-cursor.tsx"
+      - "fancy:src/hooks/use-mouse-position-ref.ts"
+    knowledge_doc: knowledge/components/fancy.md
+    recipe: knowledge/implementation-recipes/fancy-cursor-proximity-text.md
+    related: [fancy-variable-font-text, fancy-image-trail]
+
+  - id: fancy-image-trail
+    title: "Image trail following the cursor (Fancy)"
+    category: cursor
+    summary: "A pool of child elements (images, video, SVG or any markup) shown one after another along the pointer path once it has travelled a threshold distance, animated with configurable keyframes and z-index order. Written by Khoa Phan inside the Fancy repository."
+    provenance: upstream
+    tags: [image-trail, cursor, pointer, pooled-elements, gallery]
+    source_ids: [fancy]
+    frameworks: [react, nextjs, tailwind, typescript, motion]
+    dependencies: [motion, clsx, tailwind-merge]
+    implementation_status: reference_only
+    use_cases: [portfolio landing pages, gallery intros, brutalist hero sections]
+    performance:
+      gpu_intensity: low
+      fallback_required: false
+      notes: "Animates transforms of a fixed pool and mutates inline styles on each pointer event. The docs warn against very large images or videos. Children are repeated three times by default."
+    accessibility:
+      motion: intense
+      reduced_motion_alternative: true
+      notes: "Decorative and pointer-only; elements appear and vanish quickly. Reduced motion and touch: do not mount it and show static images instead. Give meaningful images alt text where they appear elsewhere."
+    source_paths:
+      - "fancy:src/fancy/components/image/image-trail.tsx"
+      - "fancy:src/content/docs/components/image/image-trail.mdx"
+      - "fancy:src/fancy/examples/image/image-trail-demo.tsx"
+    knowledge_doc: knowledge/components/fancy.md
+    related: [fancy-pixel-trail, fancy-cursor-proximity-text]
+
+  - id: fancy-pixel-trail
+    title: "Pixel grid trail under the cursor (Fancy)"
+    category: cursor
+    summary: "An absolutely positioned grid of div cells that each flash and fade when the pointer passes over them, giving a pixelated trail across a section background. Cell size, fade duration and delay are props, and a class prop styles each cell, which has no default colour."
+    provenance: upstream
+    tags: [pixel-trail, grid, cursor, fade, background]
+    source_ids: [fancy]
+    frameworks: [react, nextjs, tailwind, typescript, motion]
+    dependencies: [motion, uuid, clsx, tailwind-merge]
+    implementation_status: reference_only
+    use_cases: [hero backgrounds, interactive section backgrounds, retro or pixel aesthetics]
+    performance:
+      gpu_intensity: low
+      fallback_required: false
+      notes: "One motion div per cell, so a small pixelSize multiplies the node count; the docs warn about large grids on first render."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "Pure decoration. Keep its z-index below the content so it does not steal pointer events (docs). Reduced motion and touch: do not mount it."
+    source_paths:
+      - "fancy:src/fancy/components/background/pixel-trail.tsx"
+      - "fancy:src/hooks/use-dimensions.ts"
+      - "fancy:src/content/docs/components/background/pixel-trail.mdx"
+    knowledge_doc: knowledge/components/fancy.md
+    related: [fancy-image-trail, fancy-svg-filters]
+
+  # ------------------------------------------------------------------ fancy: physics, scroll, motion blocks
+  - id: fancy-matter-gravity
+    title: "Matter.js gravity and attractor wrappers for DOM elements (Fancy)"
+    category: animation
+    summary: "Wrapper components turn DOM children into Matter.js bodies (rectangle, circle or SVG path), sync their transforms every frame and make them draggable. A variant replaces gravity with an attractor point and a cursor force that pulls or pushes."
+    provenance: mixed
+    tags: [physics, matter-js, gravity, drag, attractor, dom-bodies]
+    source_ids: [fancy]
+    frameworks: [react, nextjs, tailwind, typescript, motion, matter-js]
+    dependencies: [matter-js, "@types/matter-js", motion]
+    implementation_status: recipe_available
+    use_cases: [playful footers, tech stack sections, hero toys]
+    performance:
+      gpu_intensity: low
+      fallback_required: true
+      notes: "CPU physics plus per-frame DOM writes. Upstream also runs Matter's canvas renderer and never pauses off screen; the recipe runs only while visible and keeps a static layout as fallback. SVG bodies need a slow path-to-vertices step (docs). Upstream also needs poly-decomp and svg-path-commander for SVG bodies."
+    accessibility:
+      motion: intense
+      reduced_motion_alternative: true
+      notes: "The recipe renders a static wrapped list under reduced motion and before JavaScript runs, and the elements keep DOM order. Dragging is pointer-only."
+    source_paths:
+      - "fancy:src/fancy/components/physics/gravity.tsx"
+      - "fancy:src/fancy/components/physics/cursor-attractor-and-gravity.tsx"
+      - "fancy:src/utils/svg-path-to-vertices.ts"
+      - "fancy:src/utils/calculate-position.ts"
+    knowledge_doc: knowledge/components/fancy.md
+    recipe: knowledge/implementation-recipes/fancy-matter-gravity-pile.md
+    related: [fancy-pixel-trail]
+
+  - id: fancy-stacking-cards
+    title: "Sticky stacking cards on scroll (Fancy)"
+    category: scroll
+    summary: "Cards use position sticky with growing top offsets while a shared scroll-progress value scales earlier cards down as later cards arrive, built from useScroll, useTransform and React context. Written by Khoa Phan inside the Fancy repository."
+    provenance: mixed
+    tags: [stacking-cards, sticky, scroll-progress, scale, case-studies]
+    source_ids: [fancy]
+    frameworks: [react, nextjs, tailwind, typescript, motion]
+    dependencies: [motion]
+    implementation_status: recipe_available
+    use_cases: [case study lists, feature walkthroughs, process steps]
+    performance:
+      gpu_intensity: low
+      fallback_required: false
+      notes: "Transform-only scaling driven by motion values, with no per-frame React renders. Sticky fails under any ancestor with overflow other than visible."
+    accessibility:
+      motion: subtle
+      reduced_motion_alternative: true
+      notes: "The recipe drops the scaling under reduced motion and keeps the sticky layering, which is native scrolling. Content stays in DOM order."
+    source_paths:
+      - "fancy:src/fancy/components/blocks/stacking-cards.tsx"
+      - "fancy:src/fancy/examples/blocks/stacking-cards-demo.tsx"
+      - "fancy:src/content/docs/components/blocks/stacking-cards.mdx"
+    knowledge_doc: knowledge/components/fancy.md
+    recipe: knowledge/implementation-recipes/fancy-stacking-cards-scroll.md
+    related: [fancy-simple-marquee]
+
+  - id: fancy-simple-marquee
+    title: "Frame-driven marquee with scroll and drag response (Fancy)"
+    category: animation
+    summary: "A marquee that moves repeated children with a per-frame loop: four directions, slow-down on hover, speed that follows scroll velocity, inertial drag and easing. A sibling component makes items follow an SVG path through CSS offset-path."
+    provenance: upstream
+    tags: [marquee, ticker, scroll-velocity, drag, offset-path]
+    source_ids: [fancy]
+    frameworks: [react, nextjs, tailwind, typescript, motion]
+    dependencies: [motion, clsx, tailwind-merge]
+    implementation_status: reference_only
+    use_cases: [logo strips, text tickers, scrolling galleries]
+    performance:
+      gpu_intensity: low
+      fallback_required: false
+      notes: "A useAnimationFrame loop runs for as long as the component is mounted and the repeat copies multiply DOM nodes. The path version slows with path length and item count (docs) and calls hooks inside a loop."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "Repeated copies are aria-hidden, but there is no pause control and no reduced-motion branch. Alternative: render the items as a static wrapped list."
+    source_paths:
+      - "fancy:src/fancy/components/blocks/simple-marquee.tsx"
+      - "fancy:src/fancy/components/blocks/marquee-along-svg-path.tsx"
+      - "fancy:src/content/docs/components/blocks/simple-marquee.mdx"
+      - "fancy:src/content/docs/components/blocks/marquee-along-svg-path.mdx"
+    knowledge_doc: knowledge/components/fancy.md
+    related: [fancy-stacking-cards]
+
+  - id: fancy-box-carousel
+    title: "3D box carousel (Fancy)"
+    category: product-showcase
+    summary: "A four-face rotating cube carousel of images or videos with drag, arrow-key navigation, ref methods, optional autoplay and transitions that drop to zero duration when the user prefers reduced motion."
+    provenance: upstream
+    tags: [carousel, cube, css-3d, drag, keyboard, reduced-motion]
+    source_ids: [fancy]
+    frameworks: [react, nextjs, tailwind, typescript, motion]
+    dependencies: [motion, clsx, tailwind-merge]
+    implementation_status: reference_only
+    use_cases: [product showcases, portfolio media, feature galleries]
+    performance:
+      gpu_intensity: low
+      fallback_required: false
+      notes: "Each of the four faces renders an image or an autoplaying muted video, and videos are the main cost. Rotation uses CSS 3D transforms driven by motion values."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "The only Fancy component that calls useReducedMotion. It has arrow-key navigation and live-region text, but autoplay does not stop for reduced motion, the focus outline is removed and aria-describedby points to a missing id. Set autoPlay to false for reduced motion."
+    source_paths:
+      - "fancy:src/fancy/components/carousel/box-carousel.tsx"
+      - "fancy:src/content/docs/components/carousel/box-carousel.mdx"
+      - "fancy:src/fancy/examples/carousel/box-carousel-demo.tsx"
+    knowledge_doc: knowledge/components/fancy.md
+    related: [fancy-simple-marquee]
+
+  - id: fancy-animated-gradient-svg
+    title: "Animated blurred SVG gradient background (Fancy)"
+    category: gradient
+    summary: "A full-bleed background of coloured SVG circles at random positions and sizes, blurred with Tailwind utilities and drifting along CSS keyframes defined in a Tailwind v4 theme block. Colours, speed and blur level are props."
+    provenance: upstream
+    tags: [gradient, blur, svg, background, css-keyframes, hero]
+    source_ids: [fancy]
+    frameworks: [react, nextjs, tailwind, typescript, css]
+    dependencies: [clsx, tailwind-merge]
+    implementation_status: reference_only
+    use_cases: [hero backgrounds, section backdrops, login screens]
+    performance:
+      gpu_intensity: medium
+      fallback_required: true
+      notes: "Large blur radii over full-bleed layers can be paint-heavy; cost was not measured here. Positions use Math.random during render, so server and client markup can differ. Provide a static gradient fallback."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "Continuous slow motion behind content. Reduced motion: drop the inline animation style in your copy, or override it with animation none inside a prefers-reduced-motion media query. Check text contrast against the moving colours."
+    source_paths:
+      - "fancy:src/fancy/components/background/animated-gradient-with-svg.tsx"
+      - "fancy:src/fancy/components/background/animated-gradient-with-svg.json"
+      - "fancy:src/hooks/use-debounced-dimensions.ts"
+      - "fancy:src/content/docs/components/background/animated-gradient-svg.mdx"
+    knowledge_doc: knowledge/components/fancy.md
+    related: [fancy-svg-filters]
+
+  - id: fancy-svg-filters
+    title: "Gooey and pixelate SVG filters (Fancy)"
+    category: animation
+    summary: "Two hidden SVG filter components applied through CSS filter url references: a gooey filter (Gaussian blur, colour matrix, composite) that merges nearby shapes, and a pixelate filter built from convolution, tile and morphology primitives."
+    provenance: upstream
+    tags: [svg-filter, gooey, pixelate, blur, filter-effect]
+    source_ids: [fancy]
+    frameworks: [react, nextjs, tailwind, typescript, svg, css]
+    dependencies: []
+    implementation_status: reference_only
+    use_cases: [gooey menus, blobby buttons, pixelated image reveals]
+    performance:
+      gpu_intensity: unknown
+      fallback_required: true
+      notes: "Cost was not measured here. The docs say Safari support is limited for the gooey filter and missing for the pixelate filter, so a fallback is needed. Leave generous space around the filtered element to avoid clipping."
+    accessibility:
+      motion: none
+      reduced_motion_alternative: false
+      notes: "The filters themselves are static. Demos animate the content under them, so apply reduced-motion handling to that content."
+    source_paths:
+      - "fancy:src/fancy/components/filter/gooey-svg-filter.tsx"
+      - "fancy:src/fancy/components/filter/pixelate-svg-filter.tsx"
+      - "fancy:src/content/docs/components/filter/gooey-svg-filter.mdx"
+      - "fancy:src/content/docs/components/filter/pixelate-svg-filter.mdx"
+    knowledge_doc: knowledge/components/fancy.md
+    related: [fancy-pixel-trail, fancy-animated-gradient-svg]
+
+  # ------------------------------------------------------------------ skiper-ui: reference only
+  - id: skiper-ui-theme-toggle-view-transition
+    title: "Theme toggle with View Transitions reveal (Skiper UI clone, reference only)"
+    category: page-transition
+    summary: "Idea reference only. A theme button injects transition rules for a circle, blurred circle, polygon or GIF-mask reveal, then runs the theme change inside a view transition and falls back to an instant switch. Rights are unresolved, so build your own."
+    provenance: upstream
+    tags: [theme-toggle, view-transitions, clip-path, mask, dark-mode]
+    source_ids: [skiper-ui]
+    frameworks: [react, nextjs, tailwind, typescript]
+    dependencies: [next-themes]
+    implementation_status: reference_only
+    use_cases: [dark mode toggle, theme switch animation, portfolio sites]
+    performance:
+      gpu_intensity: unknown
+      fallback_required: true
+      notes: "Not measured. Browsers without the View Transitions API need an instant switch. The clone loads GIF masks from third-party URLs."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "The clone has no reduced-motion check. Guidance in knowledge/components/skiper-ui.md: switch the theme immediately when prefers-reduced-motion is set."
+    source_paths:
+      - "skiper-ui:src/componets/ui/theme-toggle-button.tsx"
+      - "skiper-ui:src/componets/ui/theme-animations.ts"
+      - "skiper-ui:src/componets/homeCards/ThemeChange.tsx"
+    knowledge_doc: knowledge/components/skiper-ui.md
+    notes: "No licence and an unofficial clone of another site. Do not copy code, styles or assets. Learn the View Transitions API from public documentation and write original code."
+
+  - id: skiper-ui-coverflow-card-carousel
+    title: "Coverflow card carousel on Swiper (Skiper UI clone, reference only)"
+    category: product-showcase
+    summary: "Idea reference only. A centred, looping, autoplaying image carousel in a coverflow arrangement built on the Swiper library, set inside a nested rounded frame with a badge. Rights are unresolved, so build your own."
+    provenance: upstream
+    tags: [carousel, coverflow, swiper, autoplay, cards]
+    source_ids: [skiper-ui]
+    frameworks: [react, nextjs, tailwind, typescript]
+    dependencies: [swiper]
+    implementation_status: reference_only
+    use_cases: [image showcases, template galleries, portfolio highlights]
+    performance:
+      gpu_intensity: low
+      fallback_required: false
+      notes: "The clone renders the image list twice to support looping and keeps autoplay running after user interaction. Not measured."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "The clone autoplays every 1.5 seconds by default with no pause control and no reduced-motion check. Guidance in knowledge/components/skiper-ui.md: no autoplay under reduced motion, and a visible pause control otherwise."
+    source_paths:
+      - "skiper-ui:src/componets/ui/card-carousel.tsx"
+      - "skiper-ui:src/componets/homeCards/CardCarouselParent.tsx"
+    knowledge_doc: knowledge/components/skiper-ui.md
+    related: [skiper-ui-stepped-feature-card]
+    notes: "No licence and an unofficial clone of another site. Use Swiper's own documentation for the coverflow effect and write original markup, styles and images."
+
+  - id: skiper-ui-stepped-feature-card
+    title: "Stepped feature card with timed cross-fades (Skiper UI clone, reference only)"
+    category: card-grid
+    summary: "Idea reference only. A dark feature card whose stacked screenshots cross-fade between four states on a timer or on click, with a three-item progress list. Pointer position is tracked into CSS variables that nothing consumes yet. Rights are unresolved."
+    provenance: upstream
+    tags: [feature-card, step-cycler, cross-fade, progress-steps, screenshots]
+    source_ids: [skiper-ui]
+    frameworks: [react, nextjs, tailwind, typescript]
+    dependencies: [motion, react-wrap-balancer]
+    implementation_status: reference_only
+    use_cases: [feature walkthroughs, product tour cards, landing page highlights]
+    performance:
+      gpu_intensity: low
+      fallback_required: false
+      notes: "CSS transitions between staged states; a timer re-renders the card every three seconds. Not measured."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "The clone has no pause control and no reduced-motion check. Guidance in knowledge/components/skiper-ui.md: stop the timer, show the first state and let people step through with buttons, or list the states statically."
+    source_paths:
+      - "skiper-ui:src/componets/ui/skiper-card.tsx"
+      - "skiper-ui:src/componets/homeCards/SpecialCard.tsx"
+    knowledge_doc: knowledge/components/skiper-ui.md
+    related: [skiper-ui-coverflow-card-carousel]
+    notes: "No licence and an unofficial clone of another site. Do not copy markup, class strings or images; design your own staged card."

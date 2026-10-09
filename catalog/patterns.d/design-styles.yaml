@@ -1,0 +1,813 @@
+# Design-style patterns (original guidance) and website-reference workflow patterns.
+# Written by the design-styles author; notes live in knowledge/design-styles/ and knowledge/website-references/.
+schema_version: 1
+patterns:
+  - id: style-editorial
+    title: "Editorial design"
+    category: design-style
+    summary: "Magazine-style hierarchy for the web: kicker, headline, standfirst, byline, body measure, captions and rules on an asymmetric grid. Best for publications, long-form features and brand storytelling with real copy and photography."
+    provenance: mixed
+    tags: [editorial, magazine, serif, typography, long-form, hierarchy]
+    source_ids: [astryx, fancy, taste-skill]
+    frameworks: [css, react]
+    dependencies: []
+    implementation_status: reference_only
+    use_cases: ["magazine and publication sites", "long-form journalism and essays", "case studies and annual reports", "cultural institution sites"]
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: "CSS and DOM only."
+    accessibility:
+      motion: subtle
+      reduced_motion_alternative: true
+      notes: "Scroll reveals are optional; the note defines final-state rendering under reduced motion. Check text over photos with a scrim."
+    source_paths:
+      - astryx:packages/themes/gothic/src/gothicTheme.ts
+      - astryx:docs/design/typography-hierarchy.md
+      - fancy:src/fancy/components/text/vertical-cut-reveal.tsx
+      - taste-skill:skills/soft-skill/SKILL.md
+    knowledge_doc: knowledge/design-styles/editorial.md
+    related: [astryx-typography-scale, fancy-vertical-cut-reveal]
+
+  - id: style-swiss-international-typographic
+    title: "Swiss / International Typographic Style"
+    category: design-style
+    summary: "Grid-governed layout with one neo-grotesque, flush-left ragged-right text, objective imagery and a single signal colour. Hierarchy comes from scale and alignment, not decoration; built with CSS Grid and subgrid."
+    provenance: mixed
+    tags: [swiss, grid, international-style, neo-grotesque, typography, modular, baseline]
+    source_ids: [astryx, taste-skill]
+    frameworks: [css]
+    dependencies: []
+    implementation_status: reference_only
+    use_cases: ["documentation and technical product sites", "research and institutional sites", "design and architecture studios", "event programmes and indexes"]
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: "CSS only."
+    accessibility:
+      motion: none
+      reduced_motion_alternative: true
+      notes: "Motion is minimal and instant; the note removes entrance effects under reduced motion. Keep small caps labels at 12px or more and red not as sole status cue."
+    source_paths:
+      - astryx:docs/design/spatial-hierarchy.md
+      - astryx:docs/design/typography-hierarchy.md
+      - taste-skill:skills/brutalist-skill/SKILL.md
+    knowledge_doc: knowledge/design-styles/swiss-international-typographic.md
+    related: [astryx-responsive-layout-primitives, astryx-typography-scale]
+
+  - id: style-minimalism
+    title: "Minimalism"
+    category: design-style
+    summary: "Reduction with purpose: one type family, a near-neutral palette, generous space and carefully designed quiet states. Includes the contrast and affordance traps of minimal interfaces."
+    provenance: mixed
+    tags: [minimal, minimalism, clean, whitespace, neutral, restrained, quiet]
+    source_ids: [astryx, taste-skill]
+    frameworks: [css, tailwind]
+    dependencies: []
+    implementation_status: reference_only
+    use_cases: ["portfolios and single-message product pages", "focused tools, settings and forms", "documentation", "craft-led brands"]
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: "CSS only."
+    accessibility:
+      motion: subtle
+      reduced_motion_alternative: true
+      notes: "Subtle fades only; note defines opacity-only reduced-motion behaviour. Main risk is low-contrast grey text and missing affordances."
+    source_paths:
+      - astryx:packages/themes/neutral/README.md
+      - astryx:packages/themes/neutral/neutral.spec.md
+      - astryx:docs/design/elevation-hierarchy.md
+      - taste-skill:skills/minimalist-skill/SKILL.md
+    knowledge_doc: knowledge/design-styles/minimalism.md
+    related: [astryx-theme-presets, taste-skill-anti-generic-ui-checklist]
+
+  - id: style-brutalism
+    title: "Brutalism"
+    category: design-style
+    summary: "Raw, exposed-structure design: default or heavy type, hard borders, harsh contrast and no gloss, in raw-HTML and industrial flavours. Needs an internal logic and a mobile pass to stay usable."
+    provenance: mixed
+    tags: [brutalism, brutalist, raw, anti-design, harsh, monospace, grid]
+    source_ids: [astryx, taste-skill]
+    frameworks: [css]
+    dependencies: []
+    implementation_status: reference_only
+    use_cases: ["art, music and culture projects", "independent publishers and zines", "designer portfolios and manifestos", "technical projects with an uncompromising tone"]
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: "CSS only."
+    accessibility:
+      motion: none
+      reduced_motion_alternative: true
+      notes: "Motion is abrupt or absent; pause any marquee. Overlapping giant type can hide text and break reading order."
+    source_paths:
+      - astryx:packages/core/src/theme/defineTheme.ts
+      - taste-skill:skills/brutalist-skill/SKILL.md
+    knowledge_doc: knowledge/design-styles/brutalism.md
+    related: [astryx-theme-token-system]
+
+  - id: style-neo-brutalism
+    title: "Neo-brutalism"
+    category: design-style
+    summary: "Friendly systematic brutalism: thick black outlines, hard offset shadows, flat saturated fills, chunky type and pressable controls. Text on bright fills must be black."
+    provenance: mixed
+    tags: [neo-brutalism, neubrutalism, outline, hard-shadow, flat, playful, chunky]
+    source_ids: [astryx]
+    frameworks: [css]
+    dependencies: []
+    implementation_status: reference_only
+    use_cases: ["creator tools and communities", "consumer start-ups and education", "playful landing pages", "bento-style feature grids"]
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: "CSS only."
+    accessibility:
+      motion: subtle
+      reduced_motion_alternative: true
+      notes: "Press transitions are short; the note keeps the static pressed state and removes transitions under reduced motion."
+    source_paths:
+      - astryx:packages/themes/y2k/src/y2kTheme.ts
+    knowledge_doc: knowledge/design-styles/neo-brutalism.md
+    related: [astryx-theme-token-system]
+    notes: "The only local reference (astryx y2k theme) is a partial match: it has dark outlines and zero radii but soft shadows."
+
+  - id: style-maximalism
+    title: "Maximalism"
+    category: design-style
+    summary: "More-is-more design from layered collage, pattern, clashing colour and mixed type at extreme scales, held together by a hidden grid, rest areas and a clear reading path."
+    provenance: mixed
+    tags: [maximalism, maximalist, collage, pattern, clash, ornament, dense]
+    source_ids: [fancy]
+    frameworks: [css, react, motion]
+    dependencies: []
+    implementation_status: reference_only
+    use_cases: ["fashion and streetwear drops", "music and festival sites", "creative studios and illustrator portfolios", "launch microsites"]
+    performance:
+      gpu_intensity: low
+      fallback_required: false
+      notes: "Cost comes mainly from image weight and stacked animated layers."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "Tickers, parallax and wiggles stop under reduced motion; loops need a pause control. Text over pattern needs solid labels."
+    source_paths:
+      - fancy:src/fancy/components/blocks/simple-marquee.tsx
+      - fancy:src/fancy/components/blocks/media-between-text.tsx
+      - fancy:src/fancy/components/image/parallax-floating.tsx
+    knowledge_doc: knowledge/design-styles/maximalism.md
+    related: [fancy-simple-marquee]
+
+  - id: style-high-fashion-luxury
+    title: "High-fashion and luxury"
+    category: design-style
+    summary: "Exclusivity through restraint: art-directed full-bleed imagery, high-contrast serifs or light grotesques, wide-tracked small caps, muted metals and slow motion. Avoids the black-and-gold cliche."
+    provenance: mixed
+    tags: [luxury, high-fashion, premium, serif, cinematic, editorial, minimal-nav]
+    source_ids: [lenis, taste-skill]
+    frameworks: [css, react]
+    dependencies: []
+    implementation_status: reference_only
+    use_cases: ["fashion houses and jewellery", "hotels, hospitality and premium property", "watches, fragrance and automotive launches", "galleries"]
+    performance:
+      gpu_intensity: low
+      fallback_required: false
+      notes: "Cost is image and video weight; use posters and compressed media."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "Slow reveals and smooth scroll; note replaces them with instant states or short fades and poster frames under reduced motion."
+    source_paths:
+      - lenis:README.md
+      - lenis:packages/core/src/lenis.ts
+      - taste-skill:skills/soft-skill/SKILL.md
+    knowledge_doc: knowledge/design-styles/high-fashion-luxury.md
+    related: [smooth-scroll-lenis]
+
+  - id: style-retro-vintage
+    title: "Retro and vintage"
+    category: design-style
+    summary: "Nostalgia from print and analogue production logic: spot-colour palettes on paper, era-specific type, badges and stamps, halftone and grain, mechanical motion. Commit to one era."
+    provenance: mixed
+    tags: [retro, vintage, print, halftone, risograph, letterpress, analog, badge]
+    source_ids: [react-bits, taste-skill]
+    frameworks: [css]
+    dependencies: []
+    implementation_status: reference_only
+    use_cases: ["food, drink and hospitality brands", "record labels, venues and events", "publications and heritage brands", "retro games"]
+    performance:
+      gpu_intensity: low
+      fallback_required: false
+      notes: "Textures and optional CRT effects; keep texture tiles small."
+    accessibility:
+      motion: subtle
+      reduced_motion_alternative: true
+      notes: "Mechanical and slow; flicker and scanline roll are switched off under reduced motion. Do not put grain over body text."
+    source_paths:
+      - react-bits:src/content/Animations/Noise/Noise.jsx
+      - react-bits:src/content/Backgrounds/CRTWarp/CRTWarp.jsx
+      - react-bits:src/tools/texture-lab/types.js
+      - taste-skill:skills/brutalist-skill/SKILL.md
+    knowledge_doc: knowledge/design-styles/retro-vintage.md
+    related: [webgl-effect-fallback-and-reduced-motion]
+
+  - id: style-y2k
+    title: "Y2K"
+    category: design-style
+    summary: "Late-1990s and early-2000s digital optimism: candy plastics, chrome, bubbles, holographic foils and pastel bases, with controlled contrast and pausable decoration."
+    provenance: mixed
+    tags: [y2k, chrome, holographic, glossy, bubble, pastel, millennium, iridescent]
+    source_ids: [astryx, react-bits]
+    frameworks: [css, react, webgl]
+    dependencies: []
+    implementation_status: reference_only
+    use_cases: ["music and fashion for younger audiences", "nostalgia campaigns and creator merch", "playful consumer apps", "events"]
+    performance:
+      gpu_intensity: low
+      fallback_required: false
+      notes: "CSS gloss is cheap; optional WebGL foils need a static gradient fallback."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "Glints, sparkles and tickers are removed under reduced motion. Pastel-on-pastel text is the main contrast risk."
+    source_paths:
+      - astryx:packages/themes/y2k/README.md
+      - astryx:packages/themes/y2k/src/y2kTheme.ts
+      - react-bits:src/content/Components/HoloCard/HoloCard.jsx
+      - react-bits:src/content/Backgrounds/Iridescence/Iridescence.jsx
+    knowledge_doc: knowledge/design-styles/y2k.md
+    related: [astryx-theme-presets, react-bits-ogl-shader-backgrounds]
+
+  - id: style-futurism
+    title: "Futurism (digital sci-fi)"
+    category: design-style
+    summary: "Contemporary future-tech look: cool dark stage, luminous accents used as light, HUD framing, spatial depth and exact motion. One-canvas budgets, DOM text over WebGL and a static poster fallback."
+    provenance: mixed
+    tags: [futurism, sci-fi, hud, future-tech, dark, glow, spatial, tech]
+    source_ids: [react-bits, react-three-fiber, vengeance-ui]
+    frameworks: [react, three, r3f, webgl, css]
+    dependencies: []
+    implementation_status: reference_only
+    use_cases: ["AI, robotics and aerospace products", "hardware and mobility launches", "games and esports", "research labs and conferences"]
+    performance:
+      gpu_intensity: medium
+      fallback_required: true
+      notes: "Needs a poster and no-WebGL fallback; one canvas, paused off-screen."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "Static poster and no parallax under reduced motion; limit camera amplitude. Meaningful text must live in the DOM."
+    source_paths:
+      - react-three-fiber:docs/API/canvas.mdx
+      - react-three-fiber:docs/advanced/scaling-performance.mdx
+      - vengeance-ui:src/components/ui/liquid-ocean.tsx
+      - react-bits:src/content/Backgrounds/Galaxy/Galaxy.jsx
+      - react-bits:src/content/Backgrounds/Hyperspeed/Hyperspeed.jsx
+    knowledge_doc: knowledge/design-styles/futurism.md
+    related: [r3f-on-demand-rendering, r3f-lazy-canvas-webgl-fallback, react-bits-three-r3f-backgrounds]
+
+  - id: style-cyberpunk
+    title: "Cyberpunk"
+    category: design-style
+    summary: "Neon dystopian tech: purple-black grounds, magenta, cyan and acid-yellow accents, glitch, CRT and terminal motifs. Effects are short bursts with clean text underneath and photosensitivity limits."
+    provenance: mixed
+    tags: [cyberpunk, neon, glitch, crt, terminal, scanlines, dystopian, hud]
+    source_ids: [fancy, react-bits, vengeance-ui]
+    frameworks: [css, react, webgl]
+    dependencies: []
+    implementation_status: reference_only
+    use_cases: ["games and esports", "nightlife and music", "hacker and security events", "sci-fi promotion and art projects"]
+    performance:
+      gpu_intensity: medium
+      fallback_required: true
+      notes: "CSS-only glitch is cheap; CRT or terminal shaders need a static fallback."
+    accessibility:
+      motion: intense
+      reduced_motion_alternative: true
+      notes: "Glitch, scramble, flicker and scanline roll are disabled under reduced motion; keep flashes under three per second. Scrambled DOM text needs a stable accessible copy."
+    source_paths:
+      - fancy:src/fancy/components/text/scramble-hover.tsx
+      - vengeance-ui:src/components/ui/cyber-glitch-text.tsx
+      - react-bits:src/content/Backgrounds/FaultyTerminal/FaultyTerminal.jsx
+      - react-bits:src/content/Backgrounds/CRTWarp/CRTWarp.jsx
+      - react-bits:src/content/TextAnimations/GlitchText/GlitchText.css
+    knowledge_doc: knowledge/design-styles/cyberpunk.md
+    related: [fancy-scramble-text, vengeance-ui-kinetic-text-effects]
+
+  - id: style-glassmorphism
+    title: "Glassmorphism"
+    category: design-style
+    summary: "Translucent blurred panels over rich backdrops, from CSS backdrop-filter to SVG displacement and WebGL refraction. Requires contrast checks against the worst backdrop region, scrims and opaque fallbacks."
+    provenance: mixed
+    tags: [glass, glassmorphism, frosted, blur, translucent, backdrop-filter, liquid-glass]
+    source_ids: [design-md, liquid-glass-js, react-bits, vengeance-ui]
+    frameworks: [css, react, javascript, webgl]
+    dependencies: []
+    implementation_status: reference_only
+    use_cases: ["overlays above rich imagery or gradients", "navigation bars, docks and media widgets", "hero cards and dashboards", "modals"]
+    performance:
+      gpu_intensity: medium
+      fallback_required: true
+      notes: "backdrop-filter over large areas is costly; WebGL refraction creates a context per element. Provide an opaque fallback with @supports."
+    accessibility:
+      motion: subtle
+      reduced_motion_alternative: true
+      notes: "Parallax and morphing are removed under reduced motion. Text contrast is measured against the worst backdrop region; add a scrim."
+    source_paths:
+      - liquid-glass-js:container.js
+      - liquid-glass-js:glass.css
+      - react-bits:src/content/Components/GlassSurface/GlassSurface.jsx
+      - react-bits:src/content/Components/GlassSurface/GlassSurface.css
+      - design-md:examples/atmospheric-glass/DESIGN.md
+      - vengeance-ui:src/components/ui/music-player.tsx
+    knowledge_doc: knowledge/design-styles/glassmorphism.md
+    related: [liquid-glass-container, liquid-glass-button, liquid-glass-css-fallback, react-bits-glass-surfaces]
+
+  - id: style-neumorphism
+    title: "Neumorphism"
+    category: design-style
+    summary: "Soft UI of paired light and dark shadows on a single-colour surface. It fails boundary contrast by default, so use it for a few hardware-like controls with borders and explicit state indicators."
+    provenance: mixed
+    tags: [neumorphism, soft-ui, skeuomorphic, shadow, extruded, monochrome, dial]
+    source_ids: [astryx]
+    frameworks: [css]
+    dependencies: []
+    implementation_status: reference_only
+    use_cases: ["audio and smart-home control panels", "calculators and dial showpieces", "concept work with few large controls"]
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: "Box-shadow only; avoid animating many shadows at once."
+    accessibility:
+      motion: subtle
+      reduced_motion_alternative: true
+      notes: "State swaps are instant under reduced motion. Shadow-defined boundaries fail 3:1 and vanish in forced-colors mode; add borders."
+    source_paths:
+      - astryx:docs/design/elevation-hierarchy.md
+    knowledge_doc: knowledge/design-styles/neumorphism.md
+    notes: "No neumorphic implementation exists in the local sources; the note contains original CSS."
+
+  - id: style-bento-layouts
+    title: "Bento layouts"
+    category: design-style
+    summary: "Modular grid of rounded tiles of varied sizes, each holding one idea, where size signals priority. Covers responsive collapse, container queries, reading order and motion-safe tiles."
+    provenance: mixed
+    tags: [bento, grid, tiles, cards, dashboard, feature-grid, modular]
+    source_ids: [react-bits, taste-skill, vengeance-ui]
+    frameworks: [css, react, tailwind]
+    dependencies: []
+    implementation_status: reference_only
+    use_cases: ["product feature overviews", "dashboard summaries", "portfolio and case-study indexes", "about pages"]
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: "CSS Grid; in-tile effects add cost only if present."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "Spotlight, tilt and particle effects and autoplay stop under reduced motion; MagicBento exposes disableAnimations but does not read the media query."
+    source_paths:
+      - react-bits:src/content/Components/MagicBento/MagicBento.jsx
+      - react-bits:src/content/Components/MagicBento/MagicBento.css
+      - vengeance-ui:src/components/ui/research-bento-grid.tsx
+      - vengeance-ui:src/components/ui/why-us-bento.tsx
+      - taste-skill:skills/soft-skill/SKILL.md
+    knowledge_doc: knowledge/design-styles/bento-layouts.md
+    related: [react-bits-bento-and-card-grids, vengeance-ui-bento-grids, astryx-card-and-grid-collections]
+
+  - id: style-kinetic-typography
+    title: "Kinetic typography"
+    category: design-style
+    summary: "Type as moving material: staggered reveals, variable-font morphing, scramble, cursor proximity, scroll-linked and path-bound text. Requires real DOM text, short animated units and a static reduced-motion state."
+    provenance: mixed
+    tags: [kinetic, kinetic-type, text-animation, variable-font, scramble, split-text, marquee, typography]
+    source_ids: [fancy]
+    frameworks: [react, motion, css]
+    dependencies: []
+    implementation_status: reference_only
+    use_cases: ["hero statements and brand moments", "section openers and loaders", "campaign and event microsites", "portfolios"]
+    performance:
+      gpu_intensity: low
+      fallback_required: false
+      notes: "DOM transforms; per-glyph layout reads can be costly on long strings."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "Required: render final text without stagger, scramble or morph; replace tickers with static text. Expose the final string to assistive tech and hide split fragments."
+    source_paths:
+      - fancy:src/fancy/components/text/variable-font-cursor-proximity.tsx
+      - fancy:src/fancy/components/text/scramble-hover.tsx
+      - fancy:src/fancy/components/text/vertical-cut-reveal.tsx
+      - fancy:src/fancy/components/text/text-along-path.tsx
+      - fancy:src/fancy/components/text/breathing-text.tsx
+    knowledge_doc: knowledge/design-styles/kinetic-typography.md
+    related: [fancy-variable-font-text, fancy-cursor-proximity-text, fancy-vertical-cut-reveal, fancy-scramble-text, gsap-split-text-reveal, react-bits-gsap-text-reveals, vengeance-ui-kinetic-text-effects]
+
+  - id: style-generative-design
+    title: "Generative design"
+    category: design-style
+    summary: "Rule- and seed-based visuals: noise fields, contours, cells, particles, dithering and procedural geometry. Palettes as data, reproducible seeds, frame budgets and static posters."
+    provenance: mixed
+    tags: [generative, procedural, noise, algorithmic, creative-coding, dither, particles, seed]
+    source_ids: [fancy, img2threejs, liquid-logo, react-bits]
+    frameworks: [javascript, react, webgl, glsl]
+    dependencies: []
+    implementation_status: reference_only
+    use_cases: ["identities that vary per item", "report covers and data art", "lab and studio backgrounds", "loaders"]
+    performance:
+      gpu_intensity: medium
+      fallback_required: true
+      notes: "Canvas or WebGL loops need pause, capped pixel ratio and a seeded static poster."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "Render one fixed-time frame under reduced motion and disable pointer influence. Output must be seeded to avoid hydration mismatches."
+    source_paths:
+      - liquid-logo:fragment-shader.glsl
+      - liquid-logo:presets.js
+      - fancy:src/fancy/components/background/animated-gradient-with-svg.tsx
+      - img2threejs:README.md
+    knowledge_doc: knowledge/design-styles/generative-design.md
+    related: [glsl-background-fundamentals, fancy-animated-gradient-svg, react-bits-ogl-shader-backgrounds]
+
+  - id: style-experimental-3d
+    title: "Experimental 3D"
+    category: design-style
+    summary: "Real-time 3D scenes as the primary experience with three.js and React Three Fiber: art direction, one-canvas budgets, DOM text over WebGL, keyboard-accessible viewers, fallbacks and reduced motion."
+    provenance: mixed
+    tags: [3d, webgl, three, r3f, immersive, product-stage, scroll-camera, experimental]
+    source_ids: [img2threejs, react-three-fiber, vengeance-ui]
+    frameworks: [react, three, r3f, webgl]
+    dependencies: []
+    implementation_status: reference_only
+    use_cases: ["product launches and configurators", "immersive portfolios and exhibitions", "3D explainers", "data landscapes"]
+    performance:
+      gpu_intensity: high
+      fallback_required: true
+      notes: "Needs a poster, a no-WebGL fallback, a lite mode for weak devices and on-demand rendering."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "No auto-rotation or camera drift under reduced motion; show a fixed pose with manual controls. Canvas content must have DOM equivalents and keyboard operation."
+    source_paths:
+      - react-three-fiber:docs/API/canvas.mdx
+      - react-three-fiber:docs/advanced/scaling-performance.mdx
+      - react-three-fiber:docs/advanced/pitfalls.mdx
+      - img2threejs:docs/materials/THREEJS_MATERIAL_REFERENCE.md
+      - vengeance-ui:src/components/ui/model-viewer.tsx
+    knowledge_doc: knowledge/design-styles/experimental-3d.md
+    related: [r3f-canvas-setup, r3f-lazy-canvas-webgl-fallback, r3f-on-demand-rendering, r3f-product-showcase-scene, vengeance-ui-three-js-scenes]
+
+  - id: style-liquid-materials
+    title: "Liquid materials"
+    category: design-style
+    summary: "Surfaces that flow like molten metal, oil, gel or water via shaders, PBR materials or SVG goo. Covers fragment-cost limits, poster and video fallbacks, and keeping text off the effect."
+    provenance: mixed
+    tags: [liquid, chrome, metal, iridescent, goo, shader, fluid, mercury]
+    source_ids: [fancy, img2threejs, liquid-logo, vengeance-ui]
+    frameworks: [webgl, glsl, react, css]
+    dependencies: []
+    implementation_status: reference_only
+    use_cases: ["logo and identity animation", "hero objects for launches", "loaders and posters", "brand moments"]
+    performance:
+      gpu_intensity: high
+      fallback_required: true
+      notes: "Fragment cost scales with pixels times iterations; cap pixel ratio, pause off-screen and ship a poster or exported video."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "Freeze the time uniform or show the poster under reduced motion; provide a pause control. Keep text outside the effect and check silhouette contrast."
+    source_paths:
+      - liquid-logo:fragment-shader.glsl
+      - liquid-logo:shaders.js
+      - liquid-logo:presets.js
+      - liquid-logo:README.MD
+      - fancy:src/fancy/components/filter/gooey-svg-filter.tsx
+      - img2threejs:docs/materials/THREEJS_MATERIAL_REFERENCE.md
+    knowledge_doc: knowledge/design-styles/liquid-materials.md
+    related: [liquid-metal-logo, vengeance-ui-liquid-metal-button, fancy-svg-filters, logo-video-export]
+
+  - id: style-motion-led-storytelling
+    title: "Motion-led storytelling"
+    category: design-style
+    summary: "Scroll-driven narrative where pacing, pinned scenes and reveals carry the story. Lenis and ScrollTrigger mapping with a mandatory static, reduced-motion version and no scroll-jacking."
+    provenance: mixed
+    tags: [scrollytelling, storytelling, scroll, parallax, pinning, narrative, chapters, motion]
+    source_ids: [astryx, fancy, lenis, vengeance-ui]
+    frameworks: [javascript, react, lenis, gsap, motion]
+    dependencies: []
+    implementation_status: reference_only
+    use_cases: ["product launches and campaigns", "annual reports and data stories", "long-form features", "case studies"]
+    performance:
+      gpu_intensity: low
+      fallback_required: false
+      notes: "DOM transforms mostly; video scrubbing or canvases raise cost."
+    accessibility:
+      motion: intense
+      reduced_motion_alternative: true
+      notes: "Required: static stacked chapters with final states, no pinning or scrubbing, poster instead of scrubbed video. Lenis already disables smoothing; content animation needs its own branch."
+    source_paths:
+      - lenis:README.md
+      - lenis:packages/core/src/lenis.ts
+      - astryx:docs/design/motion.md
+      - fancy:src/fancy/components/blocks/stacking-cards.tsx
+      - vengeance-ui:src/components/ui/smooth-scroll.tsx
+    knowledge_doc: knowledge/design-styles/motion-led-storytelling.md
+    related: [smooth-scroll-lenis, lenis-gsap-scrolltrigger-sync, gsap-scrolltrigger-pin-scrub, gsap-match-media-reduced-motion, motion-principles, fancy-stacking-cards]
+
+  - id: style-organic-tactile
+    title: "Organic and tactile"
+    category: design-style
+    summary: "Soft, natural, hand-made interfaces: earthy palettes, humanist type, blob shapes and bounded spring micro-interactions. Watch contrast on muted palettes and replace bounce under reduced motion."
+    provenance: mixed
+    tags: [organic, tactile, earthy, soft, spring, wellness, hand-made, warm]
+    source_ids: [astryx, fancy]
+    frameworks: [css, react, motion]
+    dependencies: []
+    implementation_status: reference_only
+    use_cases: ["food, wellness and parenting products", "education and craft marketplaces", "gentle consumer apps"]
+    performance:
+      gpu_intensity: low
+      fallback_required: false
+      notes: "DOM and CSS springs; physics demos add CPU cost."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "Springs become short fades under reduced motion; wobble loops and physics play are removed. Muted sage and peach text often fails 4.5:1."
+    source_paths:
+      - astryx:packages/themes/matcha/README.md
+      - astryx:packages/themes/stone/README.md
+      - astryx:packages/themes/chocolate/README.md
+      - fancy:src/fancy/components/physics/gravity.tsx
+      - fancy:src/fancy/components/filter/gooey-svg-filter.tsx
+    knowledge_doc: knowledge/design-styles/organic-tactile.md
+    related: [astryx-theme-presets, fancy-matter-gravity, fancy-svg-filters, react-bits-micro-spring-controls]
+
+  - id: style-product-led-saas
+    title: "Product-led SaaS"
+    category: design-style
+    summary: "Marketing and product sites where the real interface is the hero: a clear promise, proof, hairline structure and restrained polish. Page anatomy, tokens and avoiding the generic AI landing page."
+    provenance: mixed
+    tags: [saas, landing-page, product, startup, marketing, hero, pricing, b2b]
+    source_ids: [design-md, taste-skill, vengeance-ui]
+    frameworks: [css, react, nextjs, tailwind]
+    dependencies: []
+    implementation_status: reference_only
+    use_cases: ["B2B and B2C software sites", "developer tools and AI products", "pricing and feature pages"]
+    performance:
+      gpu_intensity: low
+      fallback_required: false
+      notes: "Mostly static layout; autoplay product demos should pause off-screen."
+    accessibility:
+      motion: subtle
+      reduced_motion_alternative: true
+      notes: "Reveals are removed and demos start paused under reduced motion. Autoplay loops over five seconds need a pause control."
+    source_paths:
+      - vengeance-ui:src/components/landing/hero.tsx
+      - vengeance-ui:src/components/landing/features.tsx
+      - vengeance-ui:src/components/landing/cta.tsx
+      - design-md:examples/paws-and-paths/DESIGN.md
+      - taste-skill:skills/taste-skill/SKILL.md
+    knowledge_doc: knowledge/design-styles/product-led-saas.md
+    related: [vengeance-ui-landing-navbars, vengeance-ui-animated-cta-buttons, taste-skill-anti-generic-ui-checklist]
+
+  - id: style-dark-technical-developer-tools
+    title: "Dark technical / developer tools"
+    category: design-style
+    summary: "Dark-first, dense, keyboard-centric UI for developers: cool near-black surfaces, alpha borders, monospace for code, paired syntax themes and quiet fast motion. Measure muted text and focus rings in dark."
+    provenance: mixed
+    tags: [dark, developer-tools, devtools, terminal, monospace, dashboard, command-palette, dark-mode]
+    source_ids: [astryx, taste-skill, vengeance-ui]
+    frameworks: [css, react]
+    dependencies: []
+    implementation_status: reference_only
+    use_cases: ["developer tools and infrastructure sites", "observability and API documentation", "security consoles", "CLI product pages"]
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: "CSS only; decorative terminal effects add small cost."
+    accessibility:
+      motion: subtle
+      reduced_motion_alternative: true
+      notes: "Typing demos and caret blink stop under reduced motion. Grey-on-near-black text and invisible dark focus rings are the main failures."
+    source_paths:
+      - astryx:packages/themes/gothic/src/gothicTheme.ts
+      - vengeance-ui:src/components/ui/kbd.tsx
+      - vengeance-ui:src/components/ui/command.tsx
+      - vengeance-ui:src/components/ui/code-block.tsx
+      - taste-skill:skills/brutalist-skill/SKILL.md
+    knowledge_doc: knowledge/design-styles/dark-technical-developer-tools.md
+    related: [astryx-theme-token-system]
+
+  - id: style-claymorphism
+    title: "Claymorphism"
+    category: design-style
+    summary: "Inflated matte clay-like shapes with large radii, soft outer shadows and paired inner highlights in friendly pastels. Pastel fills need dark text; press feedback is a short squish."
+    provenance: mixed
+    tags: [claymorphism, clay, soft-3d, pastel, inflated, playful, rounded]
+    source_ids: [vengeance-ui]
+    frameworks: [css]
+    dependencies: []
+    implementation_status: reference_only
+    use_cases: ["children's and education products", "onboarding and playful consumer apps", "illustrated marketing sections"]
+    performance:
+      gpu_intensity: low
+      fallback_required: false
+      notes: "Animate transform only; repainting many large shadows is costly."
+    accessibility:
+      motion: subtle
+      reduced_motion_alternative: true
+      notes: "Idle float and spring removed under reduced motion; pastel-on-pastel contrast and forced-colors borders are the main cautions."
+    source_paths:
+      - vengeance-ui:src/components/ui/candy-button.tsx
+    knowledge_doc: knowledge/design-styles/claymorphism.md
+    related: [vengeance-ui-animated-cta-buttons]
+    notes: "The local reference is a glossier cousin of clay, not a pure example; the note contains original CSS."
+
+  - id: style-aurora-gradient-mesh
+    title: "Aurora and gradient mesh"
+    category: design-style
+    summary: "Soft multi-colour gradients that drift like light, from static CSS to blurred shapes to WebGL shaders. Palette discipline, grain against banding, text-safe layouts and freeze-frame fallbacks."
+    provenance: mixed
+    tags: [aurora, gradient, mesh-gradient, background, blur, ambient, shader-gradient]
+    source_ids: [fancy, react-bits, shadergradient, vengeance-ui]
+    frameworks: [css, react, three, webgl]
+    dependencies: []
+    implementation_status: reference_only
+    use_cases: ["hero backgrounds behind short headlines", "AI and software launches", "wellness and event pages", "section transitions"]
+    performance:
+      gpu_intensity: medium
+      fallback_required: true
+      notes: "CSS version is cheap; WebGL needs lazy mounting, capped pixel ratio, pause off-screen and a static CSS gradient fallback."
+    accessibility:
+      motion: subtle
+      reduced_motion_alternative: true
+      notes: "Freeze the animation (shadergradient animate off) or swap in a static gradient under reduced motion. Text contrast must hold at the lightest and most saturated region."
+    source_paths:
+      - shadergradient:packages/shadergradient/src/ShaderGradientCanvas.tsx
+      - shadergradient:packages/shadergradient/src/ShaderGradient/Mesh/Materials.tsx
+      - shadergradient:packages/shadergradient/src/types.ts
+      - react-bits:src/content/Backgrounds/Aurora/Aurora.jsx
+      - fancy:src/fancy/components/background/animated-gradient-with-svg.tsx
+      - vengeance-ui:src/components/ui/aurora-hero.tsx
+    knowledge_doc: knowledge/design-styles/aurora-gradient-mesh.md
+    related: [shader-gradient-background, shader-gradient-react, fancy-animated-gradient-svg, vengeance-ui-aurora-hero-backgrounds, react-bits-ogl-shader-backgrounds]
+
+  - id: style-skeuomorphism
+    title: "Skeuomorphism"
+    category: design-style
+    summary: "Interfaces imitating real materials and objects, lit consistently and behaving physically. Suits instruments and audio tools; custom controls need real ARIA semantics and keyboard support."
+    provenance: mixed
+    tags: [skeuomorphism, skeuomorphic, realistic, texture, knob, hardware, material, tactile]
+    source_ids: [img2threejs, vengeance-ui]
+    frameworks: [css, svg, three]
+    dependencies: []
+    implementation_status: reference_only
+    use_cases: ["audio and music tools", "instruments and calculators", "hardware companion apps", "tactile brand moments"]
+    performance:
+      gpu_intensity: low
+      fallback_required: false
+      notes: "CSS and SVG are cheap; real 3D materials need the experimental-3d guidance."
+    accessibility:
+      motion: subtle
+      reduced_motion_alternative: true
+      notes: "Inertia and needle sweeps removed under reduced motion. Textures lower text contrast; knobs need slider semantics."
+    source_paths:
+      - vengeance-ui:src/components/ui/interactive-keyboard.tsx
+      - img2threejs:docs/materials/THREEJS_MATERIAL_REFERENCE.md
+    knowledge_doc: knowledge/design-styles/skeuomorphism.md
+    notes: "No full skeuomorphic UI kit exists in the local sources."
+
+  - id: style-art-deco
+    title: "Art Deco"
+    category: design-style
+    summary: "1920s-30s geometric glamour: symmetry, sunbursts, stepped forms, gold on black, navy or emerald, tall lettering and ornamental borders. Gold fails on white, so use bronze or ink there."
+    provenance: original
+    tags: [art-deco, deco, gold, symmetry, sunburst, geometric, ornament, gatsby]
+    source_ids: []
+    frameworks: [css, svg]
+    dependencies: []
+    implementation_status: reference_only
+    use_cases: ["bars, hotels, galas and weddings", "jewellery and premium spirits", "film and theatre promotion", "heritage boutiques"]
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: "CSS and SVG only."
+    accessibility:
+      motion: subtle
+      reduced_motion_alternative: true
+      notes: "Line-draw and shimmer are skipped under reduced motion. Thin gold lines are decoration; text needs its own contrast."
+    source_paths: []
+    knowledge_doc: knowledge/design-styles/art-deco.md
+    notes: "Fully original guidance; no local source files exist for this style."
+
+  - id: style-vaporwave
+    title: "Vaporwave"
+    category: design-style
+    summary: "Ironic 1980s-90s digital nostalgia: pastel pink, cyan and purple, perspective grids, sunsets, retro-OS windows and VHS artefacts. Keep assets original and pause background motion."
+    provenance: original
+    tags: [vaporwave, synthwave, retro-futurism, pastel, grid, 80s, 90s, glitch]
+    source_ids: []
+    frameworks: [css]
+    dependencies: []
+    implementation_status: reference_only
+    use_cases: ["music and art projects", "indie games", "merch drops and event posters", "ironic brand campaigns"]
+    performance:
+      gpu_intensity: low
+      fallback_required: false
+      notes: "CSS 3D grid is cheap; avoid heavy filter stacks and large PNG collages."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "Grid scroll, gradients and glitch bursts stop under reduced motion; flashes stay under three per second. Pastel-on-pastel text fails."
+    source_paths: []
+    knowledge_doc: knowledge/design-styles/vaporwave.md
+    notes: "Fully original guidance; no local source files exist for this style."
+
+  - id: style-grain-and-texture
+    title: "Grain and texture"
+    category: design-style
+    summary: "Film grain, paper, halftone and dither as a finishing layer that adds warmth and removes banding. Keep opacity low, text above the texture, overlays fixed and non-interactive, and freeze under reduced motion."
+    provenance: mixed
+    tags: [grain, noise, texture, film-grain, halftone, dither, paper, overlay]
+    source_ids: [react-bits, shadergradient, taste-skill]
+    frameworks: [css, react, webgl]
+    dependencies: []
+    implementation_status: reference_only
+    use_cases: ["editorial and luxury finishing", "gradient banding removal", "retro and print looks", "photography and portfolio sites"]
+    performance:
+      gpu_intensity: low
+      fallback_required: false
+      notes: "Large full-viewport blend layers can cause repaint jank; use fixed tiles and low frame rates."
+    accessibility:
+      motion: subtle
+      reduced_motion_alternative: true
+      notes: "Animated grain stops under reduced motion and keeps the static tile. Grain over text lowers contrast; measure with the texture visible."
+    source_paths:
+      - react-bits:src/content/Animations/Noise/Noise.jsx
+      - react-bits:src/content/Backgrounds/Grainient/Grainient.jsx
+      - react-bits:src/tools/texture-lab/types.js
+      - shadergradient:packages/shadergradient/src/types.ts
+      - taste-skill:skills/soft-skill/SKILL.md
+    knowledge_doc: knowledge/design-styles/grain-and-texture.md
+    related: [react-bits-self-pausing-shader-backgrounds]
+
+  - id: reference-refero-styles
+    title: "Refero Styles reference"
+    category: workflow
+    summary: "Link-only reference to Refero Styles, a library of real website styles with AI-readable DESIGN.md files. Not fetched or stored because its robots.txt disallows AI crawlers; open it in your own browser and follow its terms."
+    provenance: upstream
+    tags: [refero, style-library, design-md, inspiration, reference]
+    source_ids: [refero-styles]
+    frameworks: []
+    dependencies: []
+    implementation_status: reference_only
+    use_cases: ["website styles", "inspiration browsing"]
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+    accessibility:
+      motion: none
+      reduced_motion_alternative: false
+    source_paths: []
+    knowledge_doc: knowledge/website-references/refero-styles.md
+
+  - id: reference-uxplanet-design-styles
+    title: "UX Planet design styles article reference"
+    category: workflow
+    summary: "Link-only reference to a UX Planet article on design styles for better prompting. Inspection was blocked and nothing was read or copied; the project's style taxonomy is independent writing."
+    provenance: upstream
+    tags: [uxplanet, design-styles, taxonomy, prompting, reference]
+    source_ids: [uxplanet-50-design-styles]
+    frameworks: []
+    dependencies: []
+    implementation_status: reference_only
+    use_cases: ["style vocabulary", "prompt briefing"]
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+    accessibility:
+      motion: none
+      reduced_motion_alternative: false
+    source_paths: []
+    knowledge_doc: knowledge/website-references/uxplanet-50-design-styles.md
+
+  - id: reference-animmaster-lib
+    title: "Animmaster Lib reference"
+    category: workflow
+    summary: "Link-only reference to Animmaster Lib, a paid animated component library whose terms prohibit resale and redistribution. Only its public category list is recorded; no component code is used or copied."
+    provenance: upstream
+    tags: [animmaster, paid-library, components, scroll-animations, reference]
+    source_ids: [animmaster-lib]
+    frameworks: []
+    dependencies: []
+    implementation_status: reference_only
+    use_cases: ["effect category checklist", "commercial library evaluation"]
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+    accessibility:
+      motion: none
+      reduced_motion_alternative: false
+    source_paths: []
+    knowledge_doc: knowledge/website-references/animmaster-lib.md

@@ -1,0 +1,140 @@
+/* Tidewater glass hero - an original example for Design Sensei.
+   Pattern: frosted glass over a slow gradient, with a solid fallback when
+   backdrop-filter is unavailable and a static state for reduced motion.
+   No JavaScript, no dependencies, no images. */
+
+:root {
+  --ink: #f6f8fb;
+  --ink-soft: #d3dbe8;
+  --night: #0b1020;
+  --night-2: #17204a;
+  --teal: #2dd4bf;
+  --coral: #fb7185;
+  --amber: #fbbf24;
+  --glass-fill: rgba(255, 255, 255, 0.10);
+  --glass-scrim: rgba(8, 12, 28, 0.42);   /* keeps text contrast independent of what is behind the glass */
+  --glass-edge: rgba(255, 255, 255, 0.28);
+  --focus: #ffe08a;
+  --radius: 1.5rem;
+  --space: clamp(1rem, 2.5vw, 2rem);
+  --display: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --text: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html { color-scheme: dark; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: linear-gradient(160deg, var(--night), var(--night-2));
+  color: var(--ink);
+  font-family: var(--text);
+  line-height: 1.55;
+  overflow-x: hidden;
+}
+
+/* ---- backdrop: three blurred blobs that drift slowly (transform only) ---- */
+.backdrop { position: fixed; inset: 0; z-index: -1; overflow: hidden; }
+.blob {
+  position: absolute;
+  width: min(60vw, 34rem);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: 0.55;
+  animation: drift 26s ease-in-out infinite alternate;
+}
+.blob--teal  { background: var(--teal);  top: -12%;  left: -8%; }
+.blob--coral { background: var(--coral); top: 28%;   right: -12%; animation-duration: 32s; animation-delay: -9s; }
+.blob--amber { background: var(--amber); bottom: -18%; left: 24%; opacity: 0.38; animation-duration: 38s; animation-delay: -17s; }
+
+@keyframes drift {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to   { transform: translate3d(6vw, 4vh, 0) scale(1.12); }
+}
+
+/* ---- layout ---- */
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: var(--space);
+}
+.wordmark { margin: 0; font-family: var(--display); font-size: 1.5rem; letter-spacing: 0.02em; }
+.site-header ul { display: flex; gap: clamp(1rem, 3vw, 2rem); margin: 0; padding: 0; list-style: none; }
+.site-header a { color: var(--ink-soft); text-decoration: none; padding-block: 0.25rem; border-bottom: 1px solid transparent; }
+.site-header a:hover { color: var(--ink); border-bottom-color: currentColor; }
+
+.hero {
+  display: grid;
+  gap: var(--space);
+  padding: var(--space);
+  max-width: 72rem;
+  margin-inline: auto;
+}
+@media (min-width: 52rem) {
+  .hero { grid-template-columns: 1.4fr 1fr; align-items: end; padding-block: 6vh; }
+}
+
+/* ---- glass surface ---- */
+.glass {
+  position: relative;
+  background: linear-gradient(135deg, var(--glass-fill), rgba(255, 255, 255, 0.04)), var(--glass-scrim);
+  border: 1px solid var(--glass-edge);
+  border-radius: var(--radius);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 24px 60px -24px rgba(0, 0, 0, 0.6);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  backdrop-filter: blur(18px) saturate(140%);
+}
+/* No backdrop-filter support: fall back to a more opaque, still legible surface. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass { background: rgba(18, 26, 58, 0.92); }
+}
+/* Windows high-contrast and similar modes: drop decoration, keep structure. */
+@media (forced-colors: active) {
+  .glass { background: Canvas; border-color: CanvasText; box-shadow: none; backdrop-filter: none; }
+}
+
+.panel { padding: clamp(1.5rem, 4vw, 3rem); }
+.eyebrow { margin: 0 0 0.75rem; font-size: 0.8rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-soft); }
+h1 { margin: 0 0 1rem; font-family: var(--display); font-weight: 600; font-size: clamp(2.1rem, 6vw, 4rem); line-height: 1.05; text-wrap: balance; }
+.lede { margin: 0 0 1.75rem; max-width: 36rem; font-size: clamp(1rem, 1.6vw, 1.2rem); color: var(--ink-soft); }
+.actions { display: flex; flex-wrap: wrap; gap: 0.75rem 1.25rem; align-items: center; margin: 0; }
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;               /* comfortable touch target */
+  padding: 0.6rem 1.4rem;
+  border-radius: 999px;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--ink);
+  transition: transform 180ms ease, background-color 180ms ease, border-color 180ms ease;
+}
+.button--glass { background: rgba(255, 255, 255, 0.16); border: 1px solid var(--glass-edge); }
+.button--glass:hover { background: rgba(255, 255, 255, 0.26); transform: translateY(-1px); }
+.button--text { padding-inline: 0.25rem; border-bottom: 1px solid var(--glass-edge); border-radius: 0; }
+.button--text:hover { border-bottom-color: var(--ink); }
+
+a:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: 0.4rem; }
+
+.skip-link { position: absolute; left: 1rem; top: -4rem; padding: 0.5rem 1rem; background: var(--ink); color: var(--night); border-radius: 0.5rem; z-index: 10; }
+.skip-link:focus { top: 1rem; }
+
+.stats { display: grid; gap: 0.75rem; margin: 0; padding: 0; list-style: none; }
+.tile { display: flex; align-items: baseline; gap: 0.9rem; padding: 1rem 1.25rem; }
+.tile strong { font-family: var(--display); font-size: clamp(1.5rem, 3vw, 2rem); min-width: 4.75rem; }
+.tile span { color: var(--ink-soft); }
+
+/* ---- reduced motion: a still frame of the same composition ---- */
+@media (prefers-reduced-motion: reduce) {
+  .blob { animation: none; }
+  .button { transition: none; }
+  .button--glass:hover { transform: none; }
+}

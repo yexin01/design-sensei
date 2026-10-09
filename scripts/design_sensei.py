@@ -83,7 +83,7 @@ def cmd_setup(layout: Layout, args: argparse.Namespace) -> int:
     print("  design-sensei doctor")
     print("  design-sensei search \"liquid glass button\"")
     if not args.full and not args.sources:
-        print("  design-sensei setup --full          (optional: download every source, about 600 MB)")
+        print("  design-sensei setup --full          (optional: download every source, about 300 MB)")
     return code
 
 
@@ -119,7 +119,7 @@ def build_parser() -> argparse.ArgumentParser:
     p = sub.add_parser("setup", help="prepare the local library (light by default, --full downloads every source)",
                        description="Create the local library, validate the catalog, optionally download sources and build the file index.")
     group = p.add_mutually_exclusive_group()
-    group.add_argument("--full", action="store_true", help="download every downloadable source (about 600 MB)")
+    group.add_argument("--full", action="store_true", help="download every downloadable source (about 300 MB)")
     group.add_argument("--sources", metavar="ID,ID", help="download only these sources")
     p.add_argument("--offline", action="store_true", help="never use the network")
     p.add_argument("--jobs", type=int, default=4, metavar="N")

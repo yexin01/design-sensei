@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tidewater - glass hero example</title>
+  <meta name="description" content="Example hero section: frosted glass over a slow gradient, with a static fallback.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="backdrop" aria-hidden="true">
+    <span class="blob blob--teal"></span>
+    <span class="blob blob--coral"></span>
+    <span class="blob blob--amber"></span>
+  </div>
+
+  <header class="site-header">
+    <p class="wordmark">Tidewater</p>
+    <nav aria-label="Primary">
+      <ul>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#studio">Studio</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="glass panel">
+        <p class="eyebrow">Coastal data studio</p>
+        <h1 id="hero-title">Maps that move at the speed of tides.</h1>
+        <p class="lede">We turn slow environmental data into interfaces people can read at a glance and trust at a second look.</p>
+        <p class="actions">
+          <a class="button button--glass" href="#work">See the work</a>
+          <a class="button button--text" href="#contact">Talk to us</a>
+        </p>
+      </div>
+
+      <ul class="stats" aria-label="Studio facts">
+        <li class="glass tile"><strong>14</strong><span>harbours monitored</span></li>
+        <li class="glass tile"><strong>9 yrs</strong><span>of tide records</span></li>
+        <li class="glass tile"><strong>3</strong><span>open-source tools</span></li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

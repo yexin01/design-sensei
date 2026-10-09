@@ -1,0 +1,350 @@
+# yaml-language-server: $schema=../schemas/patterns.schema.json
+#
+# Patterns derived from Astryx (https://github.com/facebook/astryx, MIT, Meta Platforms).
+# Every source_paths entry was read in the pinned sparse checkout (sources/astryx).
+# Astryx is 0.6.x and README-labelled beta; charts, lab and richtext ship only under the npm @canary tag.
+schema_version: 1
+patterns:
+  - id: astryx-design-system-react
+    title: Astryx design system (React 19, StyleX, prebuilt CSS)
+    category: design-system
+    summary: "A React 19 component library with semantic tokens, themes, dark mode and an agent-oriented CLI, delivered as typed components plus one prebuilt layered stylesheet so no build plugin is needed; suited to application UI that wants a coherent, themeable kit."
+    provenance: upstream
+    tags: [design-system, component-library, react, stylex, themeable, dark-mode, css-layers]
+    source_ids: [astryx]
+    frameworks: [react, nextjs, vite, typescript, tailwind, stylex, css]
+    dependencies: ["@astryxdesign/core", "@astryxdesign/theme-neutral", "@stylexjs/stylex", "react", "react-dom"]
+    implementation_status: recipe_available
+    use_cases: [application UI, dashboards and internal tools, settings and form pages, themeable product UI]
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: "The prebuilt path loads one global stylesheet; an unbuilt theme injects style elements at runtime; theme fonts.css files import Google Fonts unless self-hosted. A source build via @astryxdesign/build exists but its package is not in the checkout."
+    accessibility:
+      motion: subtle
+      reduced_motion_alternative: true
+      notes: "Components guard transitions with prefers-reduced-motion (Button, Dialog, Toast, Skeleton). Accessibility is tested per ARIA pattern with recorded known failures; see the accessibility guide. Version 0.6.x, beta."
+    source_paths:
+      - astryx:README.md
+      - astryx:packages/core/README.md
+      - astryx:packages/core/package.json
+      - astryx:docs/architecture/component-style-authoring.md
+    knowledge_doc: knowledge/components/astryx.md
+    recipe: knowledge/implementation-recipes/astryx-theme-tokens-in-existing-app.md
+    related: [astryx-theme-token-system, astryx-agent-ready-workflow, astryx-accessibility-spec-contracts]
+    notes: "Core is MIT, Copyright (c) 2026 Meta Platforms, Inc. Stale text exists in READMEs and blog examples; prefer .doc.mjs files and source."
+
+  - id: astryx-theme-token-system
+    title: Astryx semantic tokens, defineTheme and Theme provider
+    category: design-system
+    summary: "A vocabulary of 188 core tokens (colour with light-dark(), spacing, size, radius, shadow, motion, type, focus ring) plus defineTheme and a Theme provider that compile to scoped, layered CSS, with theme extension, per-component overrides, mode-aware surfaces and ordered adaptations."
+    provenance: upstream
+    tags: [design-tokens, theming, dark-mode, css-custom-properties, light-dark, define-theme, css-layers]
+    source_ids: [astryx]
+    frameworks: [react, typescript, css, stylex, tailwind]
+    dependencies: ["@astryxdesign/core", "@stylexjs/stylex"]
+    implementation_status: recipe_available
+    use_cases: [brand theming, light and dark modes, token bridge to Tailwind or CSS modules, per-component restyling]
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: "Build a known theme ahead of time for first paint and SSR; runtime defineTheme compiles CSS in the browser and injects it after hydration."
+    accessibility:
+      motion: subtle
+      reduced_motion_alternative: true
+      notes: "color generation targets 4.5:1 text and 3:1 emphasised borders (asserted in tests per the source header). Adaptation rules can key on prefers-reduced-motion, prefers-contrast and pointer coarse. The root provider writes data-theme on html."
+    source_paths:
+      - astryx:packages/core/src/theme/tokens.stylex.ts
+      - astryx:packages/core/src/theme/defineTheme.ts
+      - astryx:packages/core/src/theme/Theme.tsx
+      - astryx:docs/architecture/theme-tokens.md
+    knowledge_doc: knowledge/components/astryx-themes-and-tokens.md
+    recipe: knowledge/implementation-recipes/astryx-theme-tokens-in-existing-app.md
+    related: [astryx-theme-presets, astryx-typography-scale, astryx-design-system-react]
+    notes: "Several docs/design records on shape, elevation, motion and colour emphasis are drafts, not policy."
+
+  - id: astryx-theme-presets
+    title: Astryx shipped themes (neutral, butter, chocolate, gothic, matcha, stone, y2k)
+    category: design-style
+    summary: "Seven theme packages restyle the same components through tokens and a few component overrides: grayscale, warm and earthy palettes, a dark-only gothic look and a square-cornered pop look, each with its own font pairing, radius, spacing density and motion tempo."
+    provenance: upstream
+    tags: [theme, palette, font-pairing, display-type, dark-only, sharp-corners, density]
+    source_ids: [astryx]
+    frameworks: [react, typescript, css]
+    dependencies: ["@astryxdesign/core", "@astryxdesign/theme-neutral", "@astryxdesign/theme-butter", "@astryxdesign/theme-chocolate", "@astryxdesign/theme-gothic", "@astryxdesign/theme-matcha", "@astryxdesign/theme-stone", "@astryxdesign/theme-y2k"]
+    implementation_status: recipe_available
+    use_cases: [pick a starting palette and type pairing, extend a preset into a brand theme, compare shape and density options]
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: "Each package ships theme.css and a fonts.css that imports Google Fonts; fonts are named, never bundled, and the system stack is the documented fallback."
+    accessibility:
+      motion: subtle
+      reduced_motion_alternative: true
+      notes: "Contrast of each preset was not measured here. Gothic is dark-only and ignores the system preference. Motion tempos range from 100/250/600 ms (y2k) to 150/350/800 ms (gothic)."
+    source_paths:
+      - astryx:packages/themes/neutral/src/neutralTheme.ts
+      - astryx:packages/themes/gothic/src/gothicTheme.ts
+      - astryx:packages/themes/y2k/src/y2kTheme.ts
+      - astryx:packages/themes/butter/src/butterTheme.ts
+    knowledge_doc: knowledge/components/astryx-themes-and-tokens.md
+    recipe: knowledge/implementation-recipes/astryx-theme-tokens-in-existing-app.md
+    related: [astryx-theme-token-system, astryx-typography-scale]
+    notes: "Theme README snippets still show XDSTheme; the exported provider is Theme. Palettes and exact values are in each src/<name>Theme.ts."
+
+  - id: astryx-typography-scale
+    title: Astryx geometric type scale and semantic text roles
+    category: typography
+    summary: "A base size and ratio expand into 12 raw sizes and semantic roles (heading 1-6, body, large, label, supporting, code, display 1-3) with 4px-snapped leading; themes pair body, heading and display faces, and a 16px mobile base applies under coarse pointers."
+    provenance: upstream
+    tags: [type-scale, typography-tokens, font-pairing, display-type, semantic-text, mobile-typography]
+    source_ids: [astryx]
+    frameworks: [react, typescript, css]
+    dependencies: ["@astryxdesign/core"]
+    implementation_status: recipe_available
+    use_cases: [dense dashboard type, editorial or airy type, display face for hero text, consistent heading hierarchy]
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: "Fonts are the consumer's job to load; unloaded families fall through to the declared fallbacks."
+    accessibility:
+      motion: none
+      reduced_motion_alternative: false
+      notes: "Keep heading levels in order and use Heading, not Text, for headings. The current mobile-typography record raises the mobile base to 16px; text controls floor at 16px on iOS Safari."
+    source_paths:
+      - astryx:packages/core/src/theme/expandTypeScale.ts
+      - astryx:packages/core/src/Text/Text.doc.mjs
+      - astryx:docs/design/mobile-typography.md
+      - astryx:packages/themes/gothic/src/gothicTheme.ts
+    knowledge_doc: knowledge/components/astryx-themes-and-tokens.md
+    recipe: knowledge/implementation-recipes/astryx-theme-tokens-in-existing-app.md
+    related: [astryx-theme-token-system, astryx-theme-presets]
+    notes: "Suggested starting scales in the source: dense 12/1.125, default 14/1.2, airy 16/1.25. docs/design/typography-hierarchy.md is a draft."
+
+  - id: astryx-responsive-layout-primitives
+    title: Astryx layout primitives and regions (Stack, Grid, Layout, Section)
+    category: responsive-layout
+    summary: "Stack, HStack, VStack, Grid and Center arrange content with one numeric spacing scale; Grid gives intrinsic responsive columns, Layout a five-slot page topology, Section a page region, and theme width points sm to 2xl drive adaptive rules and the AppShell breakpoint."
+    provenance: upstream
+    tags: [layout, stack, grid, spacing-scale, responsive, slots, container-padding, logical-properties]
+    source_ids: [astryx]
+    frameworks: [react, typescript, css]
+    dependencies: ["@astryxdesign/core"]
+    implementation_status: reference_only
+    use_cases: [page and dashboard layouts, auto-fill card grids, header content footer panels, settings and form regions]
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: "Layout is CSS flex and grid; the family sets no automatic region swapping, so narrow-width composition is the caller's job."
+    accessibility:
+      motion: none
+      reduced_motion_alternative: false
+      notes: "Layout regions infer no landmark roles; callers supply role and label. Start and end are logical, so layouts mirror under RTL. Spacing props take numbers only (0, 0.5, 1, 1.5, 2, 3, 4, 5, 6, 8, 10)."
+    source_paths:
+      - astryx:docs/families/layout-primitives.md
+      - astryx:docs/families/layout-regions.md
+      - astryx:packages/core/src/Grid/Grid.doc.mjs
+      - astryx:packages/core/src/theme/themeAdaptations.ts
+    knowledge_doc: knowledge/components/astryx.md
+    related: [astryx-app-shell-navigation, astryx-card-and-grid-collections]
+    notes: "The charts recipe shows Grid columns={{minWidth, max}} with Card tiles. docs/families records are current but list verification gaps."
+
+  - id: astryx-app-shell-navigation
+    title: Astryx app shell with side, top and mobile navigation
+    category: navigation
+    summary: "AppShell frames an application with a skip link, banner and main landmarks, a TopNav, and a SideNav that moves into a MobileNav drawer below a theme breakpoint, with Breadcrumbs and TabList for in-page navigation and one shared URL-safety rule for every destination."
+    provenance: upstream
+    tags: [app-shell, sidebar, top-nav, mobile-nav, breadcrumbs, tabs, skip-link, landmarks]
+    source_ids: [astryx]
+    frameworks: [react, nextjs, typescript]
+    dependencies: ["@astryxdesign/core"]
+    implementation_status: reference_only
+    use_cases: [dashboards, admin consoles, multi-page web apps, documentation sites]
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: "The mobile drawer is generated from the nav slots below the breakpoint (default md, resolved through the nearest Theme); height fill gives internal scroll containers, auto grows with content."
+    accessibility:
+      motion: subtle
+      reduced_motion_alternative: false
+      notes: "AppShell owns the skip link and main landmark; give every nav slot a label. The drawer is a modal dialog that traps focus and returns it to the toggle. TabList is a nav strip unless role=tablist and panelId are set."
+    source_paths:
+      - astryx:packages/core/src/AppShell/AppShell.doc.mjs
+      - astryx:packages/core/src/SideNav/SideNav.doc.mjs
+      - astryx:packages/core/src/TabList/TabList.tsx
+      - astryx:docs/families/navigation-destinations.md
+    knowledge_doc: knowledge/components/astryx.md
+    related: [astryx-responsive-layout-primitives, astryx-accessibility-spec-contracts]
+    notes: "Use LinkProvider to route links through next/link or a router. Do not nest AppShell or add a second main element."
+
+  - id: astryx-card-and-grid-collections
+    title: Astryx cards in responsive grids
+    category: card-grid
+    summary: "Card for discrete items, ClickableCard for navigation targets and SelectableCard for pick-one or pick-many options, laid out with Grid intrinsic columns; the docs advise against cards as default grouping, nested cards and identical icon-heading-text grids."
+    provenance: upstream
+    tags: [card, grid, collection, clickable-card, selectable-card, auto-fill, kpi]
+    source_ids: [astryx]
+    frameworks: [react, typescript, css]
+    dependencies: ["@astryxdesign/core"]
+    implementation_status: recipe_available
+    use_cases: [product or profile galleries, plan pickers, option grids, metric tiles]
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: "A card shrinks to its track and clips content that cannot wrap, so truncate long IDs with Text maxLines and give wide content its own scroll region."
+    accessibility:
+      motion: subtle
+      reduced_motion_alternative: false
+      notes: "ClickableCard lets nested buttons and links work independently; SelectableCard toggles with Space or Enter. The 0.6.6 changelog fixes disabled ClickableCard links keeping an activatable destination."
+    source_paths:
+      - astryx:packages/core/src/Card/Card.doc.mjs
+      - astryx:packages/core/src/ClickableCard/ClickableCard.doc.mjs
+      - astryx:packages/core/src/SelectableCard/SelectableCard.doc.mjs
+      - astryx:packages/core/src/Grid/Grid.doc.mjs
+    knowledge_doc: knowledge/components/astryx.md
+    recipe: knowledge/implementation-recipes/astryx-charts-dashboard-section.md
+    related: [astryx-responsive-layout-primitives, astryx-kpi-stat-row]
+    notes: "Use Section, not Card, for page regions such as settings groups."
+
+  - id: astryx-button-family
+    title: Astryx button family (Button, IconButton, ToggleButton, ButtonGroup)
+    category: button
+    summary: "Button, IconButton, ToggleButton, ButtonGroup and ToggleButtonGroup share one surface contract: required accessible label, sm, md and lg sizes, four variants, loading and async click actions, optional elevation and link mode through href."
+    provenance: upstream
+    tags: [button, icon-button, toggle-button, button-group, loading-state, async-action, elevation]
+    source_ids: [astryx]
+    frameworks: [react, typescript, css]
+    dependencies: ["@astryxdesign/core"]
+    implementation_status: reference_only
+    use_cases: [primary and secondary actions, icon-only toolbars, persistent toggles, connected action groups]
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: "Pressed feedback uses a delegated touch press model under coarse pointers and :active under a mouse (0.6.6 changelog)."
+    accessibility:
+      motion: subtle
+      reduced_motion_alternative: true
+      notes: "Button transitions drop to 0s under prefers-reduced-motion. Known failure: a pending clickAction makes Button natively disabled, which removes keyboard focus; isInterruptible keeps it clickable. Icon-only buttons need a label and a tooltip."
+    source_paths:
+      - astryx:docs/families/buttons.md
+      - astryx:packages/core/src/Button/Button.doc.mjs
+      - astryx:packages/core/src/Button/Button.tsx
+      - astryx:packages/core/src/ToggleButton/ToggleButton.doc.mjs
+    knowledge_doc: knowledge/components/astryx-accessibility-spec.md
+    related: [astryx-accessibility-spec-contracts, astryx-design-system-react]
+    notes: "One primary button per view; confirm destructive actions; use a link for navigation unless the Button href mode is intended."
+
+  - id: astryx-charts-config-model
+    title: Astryx charts (config-model SVG charts on d3, canary)
+    category: data-visualization
+    summary: "A canary-only React chart library on d3 where marks (bar, line, area, dot, band, candlestick, error bar, reference line) are config objects drawn against one shared scale, with theme-aware colours, axes, grid, legend, tooltip, a named image role and a hidden data table."
+    provenance: upstream
+    tags: [charts, d3, svg, data-visualization, canary, accessible-charts, theme-aware]
+    source_ids: [astryx]
+    frameworks: [react, typescript, stylex]
+    dependencies: ["@astryxdesign/charts", "@astryxdesign/core", "@stylexjs/stylex"]
+    implementation_status: recipe_available
+    use_cases: [revenue and trend charts, dashboards, bar and line combinations, themed light and dark charts]
+    performance:
+      gpu_intensity: low
+      fallback_required: false
+      notes: "SVG marks are CPU-drawn and a ResizeObserver measures each chart; until width is known only an empty box of the requested height renders. WebGL marks exist, but the package's readiness audit lists dotGLInteractive and heatmapGL as needing work."
+    accessibility:
+      motion: subtle
+      reduced_motion_alternative: true
+      notes: "SVG has role=img and a name; a hidden table is rendered for up to 100 data cells; the tooltip is pointer-only. Axis tick motion has no reduced-motion guard in source (use animated=false). Default purple categorical colour is below 3:1 on the default dark surface (computed)."
+    source_paths:
+      - astryx:packages/charts/src/Chart.tsx
+      - astryx:packages/charts/src/Chart.doc.mjs
+      - astryx:packages/charts/src/getChartColors.ts
+      - astryx:packages/charts/README.md
+    knowledge_doc: knowledge/components/astryx.md
+    recipe: knowledge/implementation-recipes/astryx-charts-dashboard-section.md
+    related: [astryx-kpi-stat-row, astryx-card-and-grid-collections, astryx-theme-token-system]
+    notes: "Published only under the npm @canary tag; peer-pins @astryxdesign/core to 0.6.6. Mark objects are single-use per Chart. Lab has an older composable Chart API with a different shape."
+
+  - id: astryx-kpi-stat-row
+    title: Astryx KPI tile row (Grid and Card, or lab Stat)
+    category: data-visualization
+    summary: "A row of metric tiles built from Grid and Card, or the experimental lab Stat, showing a metric name, tabular-number value, sentiment-aware delta and an optional sparkline slot; Stat does not format numbers and ships only under the canary tag."
+    provenance: upstream
+    tags: [kpi, stat, metric, dashboard, delta, tabular-numbers, sparkline]
+    source_ids: [astryx]
+    frameworks: [react, typescript]
+    dependencies: ["@astryxdesign/core", "@astryxdesign/lab"]
+    implementation_status: recipe_available
+    use_cases: [dashboard summary rows, report headers, admin overview pages]
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: "Pass pre-formatted strings; keep the media slot for a compact sparkline, not a full chart. Grid columns={{minWidth: 240, max: 4}} reflows the row."
+    accessibility:
+      motion: none
+      reduced_motion_alternative: false
+      notes: "Stat docs say delta meaning is carried by a direction glyph and screen-reader text as well as colour. Set sentiment explicitly for inverted metrics such as error rate."
+    source_paths:
+      - astryx:packages/lab/src/Stat/Stat.doc.mjs
+      - astryx:packages/lab/src/Stat/Stat.tsx
+      - astryx:packages/core/src/Grid/Grid.doc.mjs
+      - astryx:packages/core/src/Text/Text.doc.mjs
+    knowledge_doc: knowledge/components/astryx.md
+    recipe: knowledge/implementation-recipes/astryx-charts-dashboard-section.md
+    related: [astryx-charts-config-model, astryx-card-and-grid-collections]
+    notes: "The recipe builds the tiles from core components only, so it works without installing the lab package."
+
+  - id: astryx-accessibility-spec-contracts
+    title: Accessibility as sourced contracts (Astryx a11y-spec method)
+    category: workflow
+    summary: "Each ARIA pattern becomes data: sourced expectations (WCAG 2.2, APG) with evidence layers, 29 completeness dimensions, exact known-failure records and jsdom and Chromium lanes, a method for testing components without a score; the package itself is internal."
+    provenance: upstream
+    tags: [accessibility, wcag, aria, testing, contracts, playwright, evidence-layers]
+    source_ids: [astryx]
+    frameworks: [typescript, react]
+    dependencies: []
+    implementation_status: reference_only
+    use_cases: [design a component accessibility test plan, review a custom component, record known accessibility debt]
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: "@astryxdesign/a11y-spec is private and not installable; the Chromium lane needs a built Storybook and Playwright."
+    accessibility:
+      motion: none
+      reduced_motion_alternative: true
+      notes: "The guide's checklist includes reduced-motion, forced-colors, IME and RTL checks and how to emulate reduced motion in Playwright. The harness reports no screen reader output."
+    source_paths:
+      - astryx:internal/a11y-spec/README.md
+      - astryx:internal/a11y-spec/src/contract.ts
+      - astryx:internal/a11y-spec/src/checklist.ts
+      - astryx:internal/a11y-spec/src/patterns/button.ts
+    knowledge_doc: knowledge/components/astryx-accessibility-spec.md
+    related: [astryx-button-family, astryx-app-shell-navigation]
+    notes: "14 patterns, 192 expectations at the pinned commit. The README still mentions two listbox failures although the known-failure list is empty."
+
+  - id: astryx-agent-ready-workflow
+    title: Agent-ready design system workflow (AGENTS.md, doc files, CLI, MCP)
+    category: workflow
+    summary: "Make an AI coding agent build with a design system by reading its docs: a canonical AGENTS.md, per-component .doc.mjs files with do and do-not lists, a non-interactive CLI, llms.txt and an MCP route, paired with project rules and a small checker script."
+    provenance: upstream
+    tags: [agents, agents-md, claude-md, cli, mcp, llms-txt, documentation, design-system]
+    source_ids: [astryx]
+    frameworks: [javascript, typescript, react]
+    dependencies: ["@astryxdesign/cli"]
+    implementation_status: recipe_available
+    use_cases: [onboard a coding agent to a design system, reduce hallucinated props, enforce conventions in CI]
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: "Commands are deterministic and offline per the project. packages/cli is not in the checkout, so CLI behaviour is as documented, not read from code."
+    accessibility:
+      motion: none
+      reduced_motion_alternative: false
+      notes: "Rules should also require keyboard, focus, dark mode and reduced-motion checks in review; the checker covers only mechanical prop mistakes."
+    source_paths:
+      - astryx:AGENTS.md
+      - astryx:packages/core/scripts/agent-doc-state.mjs
+      - astryx:apps/docsite/src/app/mcp/route.ts
+      - astryx:apps/docsite/src/app/llms.txt/route.ts
+    knowledge_doc: knowledge/components/astryx.md
+    recipe: knowledge/implementation-recipes/astryx-agent-conventions.md
+    related: [astryx-design-system-react, astryx-button-family]
+    notes: "Use the scoped name npx @astryxdesign/cli; bare npx astryx resolves to an unrelated package until the CLI is installed. Vibe-test scores in the blog are self-reported."

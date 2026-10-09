@@ -1,0 +1,399 @@
+# yaml-language-server: $schema=../schemas/patterns.schema.json
+#
+# Motion and scroll patterns: Lenis (smooth scroll, MIT) and GSAP (custom no-charge licence),
+# plus one original guidance pattern. Every source_paths entry was read in the pinned checkouts
+# (lenis bc152f9, gsap 13e2b79). GSAP code is never copied; recipes call its public npm API.
+schema_version: 1
+patterns:
+  - id: smooth-scroll-lenis
+    title: Smooth scroll with Lenis
+    category: scroll
+    summary: "Wheel-driven smooth scrolling that keeps the browser's native scroll position, so sticky, anchors and keyboard scrolling keep working; includes a reduced-motion policy and cleanup."
+    provenance: upstream
+    tags: [smooth-scroll, inertia, lerp, native-scroll, scroll-feel]
+    source_ids: [lenis]
+    frameworks: [javascript, typescript, lenis]
+    dependencies: [lenis]
+    implementation_status: recipe_available
+    use_cases: [marketing sites, portfolio pages, editorial long reads, scroll-synced canvases]
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: "Writes the scroll position every frame while a smooth scroll runs and registers non-passive wheel and touch listeners, so keep scroll callbacks light. The README documents a 60 fps cap on Safari."
+    accessibility:
+      motion: subtle
+      reduced_motion_alternative: true
+      notes: "respectReducedMotion is on by default (smoothing off, programmatic scrolls instant). The recipe also shows not constructing Lenis while prefers-reduced-motion is reduce. Touch scrolling stays native unless syncTouch is enabled."
+    source_paths:
+      - lenis:packages/core/src/lenis.ts
+      - lenis:packages/core/src/animate.ts
+      - lenis:packages/core/src/virtual-scroll.ts
+      - lenis:packages/core/lenis.css
+      - lenis:README.md
+    knowledge_doc: knowledge/animations/lenis.md
+    recipe: knowledge/implementation-recipes/lenis-smooth-scroll-setup.md
+    related: [lenis-react-provider, lenis-nested-scroll-and-modals, lenis-scroll-snap, lenis-gsap-scrolltrigger-sync]
+    notes: "Version 1.3.26 in the cloned source. Lenis 2 exists only as a roadmap (V2-ROADMAP.md) with renamed options and flipped defaults, so pin the version."
+
+  - id: lenis-react-provider
+    title: Lenis React provider and hooks
+    category: scroll
+    summary: "ReactLenis component plus the useLenis hook from lenis/react, in root, asChild or wrapper mode, with the instance shared through context and a module-level store."
+    provenance: upstream
+    tags: [react, nextjs, hooks, context, smooth-scroll]
+    source_ids: [lenis]
+    frameworks: [react, nextjs, typescript, lenis]
+    dependencies: [lenis, react]
+    implementation_status: recipe_available
+    use_cases: [Next.js marketing sites, React single-page apps, scroll-driven React components]
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: "The instance is created in an effect, so useLenis returns undefined on the first render. Memoise useLenis callbacks and write CSS variables instead of React state on every frame."
+    accessibility:
+      motion: subtle
+      reduced_motion_alternative: true
+      notes: "The recipe renders ReactLenis only while prefers-reduced-motion is not reduce, or you can rely on the built-in respectReducedMotion option."
+    source_paths:
+      - lenis:packages/react/src/provider.tsx
+      - lenis:packages/react/src/use-lenis.ts
+      - lenis:packages/react/src/types.ts
+      - lenis:packages/react/README.md
+    knowledge_doc: knowledge/animations/lenis.md
+    recipe: knowledge/implementation-recipes/lenis-smooth-scroll-setup.md
+    related: [smooth-scroll-lenis, lenis-gsap-scrolltrigger-sync]
+    notes: "Options are compared through JSON, so function-valued options such as easing or prevent do not recreate the instance when they change. import { Lenis } from lenis/react is the component, not the core class."
+
+  - id: lenis-vue-nuxt-module
+    title: Lenis for Vue and Nuxt
+    category: scroll
+    summary: "VueLenis component, useLenis composable, a global plugin and a Nuxt module (lenis/nuxt) that registers the component and auto-imports the composable."
+    provenance: upstream
+    tags: [vue, nuxt, composable, smooth-scroll]
+    source_ids: [lenis]
+    frameworks: [vue, nuxt, typescript, lenis]
+    dependencies: [lenis, vue]
+    implementation_status: reference_only
+    use_cases: [Nuxt marketing sites, Vue single-page apps]
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: "Options are deep-watched and any change recreates the instance. The wrapper imports onWatcherCleanup and the repository develops against Vue 3.5, so assume Vue 3.5 or newer."
+    accessibility:
+      motion: subtle
+      reduced_motion_alternative: true
+      notes: "Same built-in respectReducedMotion behaviour as the core; knowledge/animations/lenis.md defines the policy. No Vue-specific recipe exists yet."
+    source_paths:
+      - lenis:packages/vue/src/provider.ts
+      - lenis:packages/vue/src/use-lenis.ts
+      - lenis:packages/vue/nuxt/module.ts
+      - lenis:packages/vue/README.md
+    knowledge_doc: knowledge/animations/lenis.md
+    related: [smooth-scroll-lenis, lenis-gsap-scrolltrigger-sync]
+    notes: "The README contains a Vue GSAP ticker example and playground/nuxt/app.vue implements it."
+
+  - id: lenis-scroll-snap
+    title: Section snapping with lenis/snap
+    category: scroll
+    summary: "Proximity, mandatory or lock-style snapping to pixel offsets or element edges on top of Lenis, driven by virtual-scroll events because Lenis does not support CSS scroll-snap."
+    provenance: upstream
+    tags: [scroll-snap, sections, slideshow, snapping]
+    source_ids: [lenis]
+    frameworks: [javascript, typescript, lenis]
+    dependencies: [lenis]
+    implementation_status: recipe_available
+    use_cases: [full-height section pages, slideshow-style sections, step-by-step product tours]
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: "Debounced (500 ms by default) and triggered by wheel and touch input only, so keyboard scrolling is not snapped. Tear down with snap.destroy(); per-element unsubscribe functions do not disconnect observers."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "Snapping takes scroll control from the visitor. The recipe skips Snap while prefers-reduced-motion is reduce. Use align start and end for sections taller than the viewport."
+    source_paths:
+      - lenis:packages/snap/src/snap.ts
+      - lenis:packages/snap/src/element.ts
+      - lenis:packages/snap/src/types.ts
+      - lenis:packages/snap/README.md
+    knowledge_doc: knowledge/animations/lenis.md
+    recipe: knowledge/implementation-recipes/lenis-smooth-scroll-setup.md
+    related: [smooth-scroll-lenis]
+    notes: "The README calls it partial support for CSS scroll snap. Do not combine with ScrollTrigger snap over the same range."
+
+  - id: lenis-nested-scroll-and-modals
+    title: Modal scroll lock and nested scrollers in Lenis
+    category: scroll
+    summary: "Stop and start Lenis for modals and route changes, and keep nested scrollable areas native with data-lenis-prevent attributes, the prevent option or allowNestedScroll."
+    provenance: upstream
+    tags: [modal, scroll-lock, nested-scroll, data-attributes, overflow]
+    source_ids: [lenis]
+    frameworks: [javascript, react, lenis]
+    dependencies: [lenis]
+    implementation_status: recipe_available
+    use_cases: [modals and drawers, chat panels and code boxes, route transitions]
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: "allowNestedScroll inspects the DOM on every wheel or touch event (cached per node for 2 s); prefer data-lenis-prevent on known containers."
+    accessibility:
+      motion: none
+      reduced_motion_alternative: false
+      notes: "No visual motion of its own. Focus trapping and Escape handling still belong to the dialog implementation. The recipe falls back to overflow hidden when Lenis is not running."
+    source_paths:
+      - lenis:packages/core/src/lenis.ts
+      - lenis:packages/core/lenis.css
+      - lenis:README.md
+      - lenis:playground/core/test.ts
+    knowledge_doc: knowledge/animations/lenis.md
+    recipe: knowledge/implementation-recipes/lenis-smooth-scroll-setup.md
+    related: [smooth-scroll-lenis, page-transition-gsap]
+    notes: "While stopped, Lenis cancels wheel and touch defaults, which also blocks a modal's own scrolling unless the modal is marked data-lenis-prevent. Needs lenis.css."
+
+  - id: lenis-gsap-scrolltrigger-sync
+    title: Lenis and GSAP ScrollTrigger sync
+    category: scroll
+    summary: "One shared clock and one scroll position: GSAP's ticker drives Lenis, Lenis scroll events call ScrollTrigger.update, and lag smoothing is disabled so scrubbed and pinned animation stays glued to the page."
+    provenance: mixed
+    tags: [scrolltrigger, gsap-ticker, sync, scrub, pin]
+    source_ids: [lenis, gsap]
+    frameworks: [javascript, typescript, react, vue, gsap, lenis]
+    dependencies: [lenis, gsap]
+    implementation_status: recipe_available
+    use_cases: [scroll storytelling, pinned product sections, scroll-linked parallax]
+    performance:
+      gpu_intensity: low
+      fallback_required: false
+      notes: "Scrubbed transforms and opacity are cheap; the cost is two libraries listening to scroll. ScrollTrigger runs a 250 ms internal sync interval. Call lenis.resize() and ScrollTrigger.refresh() after layout changes."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "Lenis stops smoothing under reduced motion by default. The recipe wraps GSAP animation in gsap.matchMedia with the no-preference query so reduced-motion visitors keep static content."
+    source_paths:
+      - lenis:README.md
+      - lenis:packages/react/README.md
+      - lenis:playground/nuxt/app.vue
+      - gsap:types/scroll-trigger.d.ts
+      - gsap:types/gsap-core.d.ts
+    knowledge_doc: knowledge/animations/scroll-storytelling.md
+    recipe: knowledge/implementation-recipes/lenis-gsap-scrolltrigger-sync.md
+    related: [smooth-scroll-lenis, gsap-scrolltrigger-pin-scrub, gsap-match-media-reduced-motion]
+    notes: "GSAP is under a custom no-charge licence: the recipe installs the npm package and quotes nothing. lenis V2-ROADMAP.md questions whether this integration step stays necessary, so re-read the README on upgrades."
+
+  - id: gsap-timeline-choreography
+    title: GSAP timeline choreography
+    category: animation
+    summary: "Sequence an intro with a GSAP timeline using shared defaults, labels and relative position strings, so steps overlap deliberately instead of chaining end to end."
+    provenance: upstream
+    tags: [timeline, labels, sequencing, position-parameter, easing]
+    source_ids: [gsap]
+    frameworks: [javascript, typescript, gsap]
+    dependencies: [gsap]
+    implementation_status: recipe_available
+    use_cases: [hero intros, feature section entrances, multi-step UI sequences]
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: "Animate transforms and opacity only. The example hero timeline lasts about 1.3 s, which matches motion_intensity 5 to 6 in the budget table."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "The recipe returns early while prefers-reduced-motion is reduce, so content stays in its authored, visible state."
+    source_paths:
+      - gsap:types/timeline.d.ts
+      - gsap:types/gsap-core.d.ts
+      - gsap:types/tween.d.ts
+      - gsap:src/gsap-core.js
+    knowledge_doc: knowledge/animations/gsap.md
+    recipe: knowledge/implementation-recipes/gsap-text-reveal-and-stagger.md
+    related: [gsap-stagger-reveal, gsap-split-text-reveal, motion-principles]
+    notes: "Position strings were checked against _parsePosition in gsap-core.js: numbers are absolute, +=n and -=n offset from the end, < and > refer to the previous child, labels accept offsets."
+
+  - id: gsap-scrolltrigger-pin-scrub
+    title: ScrollTrigger pinned and scrubbed sequence
+    category: scroll
+    summary: "A section that pins in the viewport while a scrubbed timeline cross-fades several beats, with a stacked fallback for narrow, touch and reduced-motion visitors."
+    provenance: mixed
+    tags: [scrolltrigger, pin, scrub, scrollytelling, timeline]
+    source_ids: [gsap]
+    frameworks: [javascript, typescript, react, gsap]
+    dependencies: [gsap]
+    implementation_status: recipe_available
+    use_cases: [product walkthroughs, process explainers, case study sequences]
+    performance:
+      gpu_intensity: low
+      fallback_required: true
+      notes: "Scrub transforms and opacity only and keep pinned travel to a few viewport heights. The stacked layout is the required fallback for small screens, touch devices and reduced motion."
+    accessibility:
+      motion: intense
+      reduced_motion_alternative: true
+      notes: "The pinned layout applies only on wide, fine-pointer screens with motion allowed; everyone else gets stacked sections. Beats use opacity, not autoAlpha, so inactive steps stay in the accessibility tree."
+    source_paths:
+      - gsap:types/scroll-trigger.d.ts
+      - gsap:src/ScrollTrigger.js
+      - gsap:types/timeline.d.ts
+    knowledge_doc: knowledge/animations/scroll-storytelling.md
+    recipe: knowledge/implementation-recipes/gsap-pinned-section-sequence.md
+    related: [lenis-gsap-scrolltrigger-sync, gsap-match-media-reduced-motion, gsap-timeline-choreography]
+    notes: "Composition of ScrollTrigger features by this project; the recipe code is original. Needs the Lenis sync recipe when Lenis is used."
+
+  - id: gsap-stagger-reveal
+    title: Staggered scroll reveal with ScrollTrigger.batch
+    category: animation
+    summary: "Reveal rows of cards or list items in short staggered groups as they enter the viewport, using ScrollTrigger.batch with a capped stagger and a no-motion fallback."
+    provenance: upstream
+    tags: [stagger, batch, reveal-on-scroll, cards, scrolltrigger]
+    source_ids: [gsap]
+    frameworks: [javascript, typescript, react, gsap]
+    dependencies: [gsap]
+    implementation_status: recipe_available
+    use_cases: [feature grids, card lists, logo walls]
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: "Transforms and opacity only. batch creates one trigger per item, so avoid lists of hundreds of items. Cap the stagger spread near 400 to 600 ms."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "The hidden start state is applied only inside the (prefers-reduced-motion: no-preference) branch, so reduced-motion and no-script visitors see all content."
+    source_paths:
+      - gsap:types/scroll-trigger.d.ts
+      - gsap:types/gsap-utils.d.ts
+      - gsap:types/gsap-core.d.ts
+    knowledge_doc: knowledge/animations/gsap.md
+    recipe: knowledge/implementation-recipes/gsap-text-reveal-and-stagger.md
+    related: [gsap-timeline-choreography, gsap-split-text-reveal, motion-principles]
+
+  - id: gsap-split-text-reveal
+    title: SplitText masked line reveal
+    category: typography
+    summary: "Split a headline into masked lines with SplitText, animate them upward with a stagger, and let autoSplit re-split on resize and font load without restarting the animation."
+    provenance: upstream
+    tags: [split-text, mask, lines, headline, text-reveal]
+    source_ids: [gsap]
+    frameworks: [javascript, typescript, gsap]
+    dependencies: [gsap]
+    implementation_status: recipe_available
+    use_cases: [hero headlines, section titles, editorial intros]
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: "Splitting adds many elements and measures layout on every re-split. Keep it to short headings and request only the units you animate (lines, not chars)."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "With aria auto the text is placed in an aria-label on the split element while wrappers are aria-hidden; that is dependable on headings only. The recipe branches with gsap.matchMedia so reduced-motion visitors get the plain text."
+    source_paths:
+      - gsap:types/split-text.d.ts
+      - gsap:src/SplitText.ts
+      - gsap:esm/SplitText.js
+    knowledge_doc: knowledge/animations/gsap.md
+    recipe: knowledge/implementation-recipes/gsap-text-reveal-and-stagger.md
+    related: [gsap-stagger-reveal, gsap-timeline-choreography]
+    notes: "SplitText ships in the gsap package and the README lists it among the plugins available at no charge, under the same custom licence. Import with gsap/SplitText and register it."
+
+  - id: gsap-match-media-reduced-motion
+    title: gsap.matchMedia for responsive and reduced-motion branches
+    category: animation
+    summary: "Branch GSAP animation on media queries such as prefers-reduced-motion and viewport size with gsap.matchMedia, so each branch is reverted and rebuilt automatically when its query changes."
+    provenance: upstream
+    tags: [matchmedia, reduced-motion, responsive, cleanup, context]
+    source_ids: [gsap]
+    frameworks: [javascript, typescript, react, gsap]
+    dependencies: [gsap]
+    implementation_status: recipe_available
+    use_cases: [reduced-motion fallbacks, desktop-only pinned sections, mobile variants]
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: "Reverting restores inline styles and kills ScrollTriggers created inside the branch; ScrollTrigger refreshes after a switch. Create triggers inside the callback so they are recorded."
+    accessibility:
+      motion: subtle
+      reduced_motion_alternative: true
+      notes: "GSAP does not read prefers-reduced-motion itself (no reference in the core or main plugins); this pattern is how the catalog implements the alternative."
+    source_paths:
+      - gsap:types/gsap-core.d.ts
+      - gsap:src/gsap-core.js
+      - gsap:types/scroll-trigger.d.ts
+    knowledge_doc: knowledge/animations/gsap.md
+    recipe: knowledge/implementation-recipes/gsap-pinned-section-sequence.md
+    related: [gsap-scrolltrigger-pin-scrub, gsap-stagger-reveal, gsap-split-text-reveal]
+
+  - id: gsap-flip-layout-transition
+    title: Flip layout transitions
+    category: animation
+    summary: "Animate layout changes such as reordering, filtering or expanding cards by recording state with Flip.getState, changing the DOM, then animating from the old layout with Flip.from."
+    provenance: upstream
+    tags: [flip, layout-animation, reorder, filtering, shared-element]
+    source_ids: [gsap]
+    frameworks: [javascript, typescript, gsap]
+    dependencies: [gsap]
+    implementation_status: reference_only
+    use_cases: [filterable grids, expanding cards, reordering lists, view toggles]
+    performance:
+      gpu_intensity: low
+      fallback_required: false
+      notes: "Animates transforms but reads layout before and after the change, so limit the number of tracked elements."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "knowledge/animations/gsap.md defines the alternative: under reduce skip Flip.from and apply the DOM change immediately, or use a short opacity fade. Keep focus on the same logical element."
+    source_paths:
+      - gsap:types/flip.d.ts
+      - gsap:src/Flip.js
+      - gsap:esm/Flip.js
+    knowledge_doc: knowledge/animations/gsap.md
+    related: [gsap-timeline-choreography, page-transition-gsap]
+    notes: "No recipe has been written for this pattern yet; the API summary in gsap.md is read from the type declarations."
+
+  - id: page-transition-gsap
+    title: Curtain page transition with GSAP
+    category: page-transition
+    summary: "Original fetch-and-swap transition: a GSAP curtain covers the page, content is swapped and per-page animation rebuilt, then the curtain reveals, with focus, title, scroll reset and reduced motion handled."
+    provenance: mixed
+    tags: [page-transition, curtain, router, focus-management, gsap-context]
+    source_ids: [gsap, lenis]
+    frameworks: [javascript, typescript, gsap, lenis]
+    dependencies: [gsap]
+    implementation_status: recipe_available
+    use_cases: [multi-page marketing sites, portfolio navigation, small content sites]
+    performance:
+      gpu_intensity: low
+      fallback_required: false
+      notes: "A full-viewport transformed layer for about 0.6 s; avoid blur and large shadows on it. Any failure falls back to a normal navigation, so there is no required static variant."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "Reduced motion gives an instant swap with no curtain. Focus moves to the main landmark and the new title is announced through a live region."
+    source_paths:
+      - gsap:types/gsap-core.d.ts
+      - gsap:types/animation.d.ts
+      - lenis:packages/core/src/lenis.ts
+    knowledge_doc: knowledge/animations/gsap.md
+    recipe: knowledge/implementation-recipes/page-transition-with-gsap.md
+    related: [gsap-match-media-reduced-motion, lenis-nested-scroll-and-modals, gsap-flip-layout-transition]
+    notes: "Lenis is optional and used only for stop, start and the scroll reset. Scripts in fetched HTML do not run, so page code must hook into the mount function. Framework routers are not covered."
+
+  - id: motion-principles
+    title: Motion principles for interfaces
+    category: animation
+    summary: "Project-authored guidance on duration and easing bands, choreography, stagger rules, restraint, performance, a reduced-motion policy and a motion_intensity 1 to 10 budget table."
+    provenance: original
+    tags: [motion-design, easing, duration, stagger, reduced-motion, motion-intensity, budget]
+    source_ids: []
+    frameworks: [css, javascript, gsap]
+    dependencies: []
+    implementation_status: reference_only
+    use_cases: [setting motion budgets, reviewing animation choices, defining reduced-motion alternatives]
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: "Guidance only. It prefers transform and opacity and gives a no-dependency IntersectionObserver reveal for projects that forbid libraries."
+    accessibility:
+      motion: subtle
+      reduced_motion_alternative: true
+      notes: "Defines a reduced-motion alternative for each effect type and maps the reduced_motion configuration key (respect or static_first) onto it."
+    source_paths: []
+    knowledge_doc: knowledge/animations/motion-principles-for-ui.md
+    related: [gsap-match-media-reduced-motion, gsap-stagger-reveal, gsap-timeline-choreography]
+    notes: "Numeric bands are Design Sensei heuristics to tune by testing, not standards. Original writing; no upstream source."
