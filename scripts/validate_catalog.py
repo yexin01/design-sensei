@@ -319,6 +319,32 @@ def validate_docs(report: Report, layout: Layout, sources: Dict[str, Dict[str, A
     report.note("%d knowledge note(s); %d file citation(s) verified, %d not checkable" % (len(docs), cited, unchecked))
 
 
+def validate_skill_docs(report: Report, layout: Layout, sources: Dict[str, Dict[str, Any]], patterns: Dict[str, Dict[str, Any]]) -> None:
+    """Skill references and playbooks: [[pattern-id]] links, `source:path` citations and relative links must resolve."""
+    import re
+    base = layout.skill_dir
+    count = 0
+    for sub in ("references", "patterns"):
+        folder = base / sub
+        if not folder.is_dir():
+            continue
+        for path in sorted(folder.glob("*.md")):
+            count += 1
+            rel = path.relative_to(layout.root).as_posix()
+            text = path.read_text(encoding="utf-8")
+            for pid in re.findall(r"\[\[([a-z0-9-]+)\]\]", text):
+                if pid not in patterns:
+                    report.error(rel, "[[%s]] is not a pattern id" % pid)
+            for sid, ref in knowledge.extract_citations(text, sources.keys()):
+                state, detail = check_path_reference(layout, sources, sid, ref)
+                if state in ("invalid", "missing"):
+                    report.error(rel, "citation `%s:%s`: %s" % (sid, ref, detail))
+            for target in re.findall(r"\]\((?!https?://|#|mailto:)([^)#\s]+)", text):
+                if not (path.parent / target).resolve().exists():
+                    report.error(rel, "broken relative link %s" % target)
+    report.note("%d skill reference/playbook file(s) checked" % count)
+
+
 def check_coverage(report: Report, sources: Dict[str, Dict[str, Any]], patterns: Dict[str, Dict[str, Any]], layout: Layout, strict: bool) -> None:
     used = set()  # type: Set[str]
     for pat in patterns.values():
@@ -347,6 +373,8 @@ def run_validation(layout: Layout, strict: bool = False, check_docs: bool = True
     patterns = validate_patterns(report, layout, merged, sources) if merged["patterns"] else {}
     if check_docs and sources:
         validate_docs(report, layout, sources, patterns)
+    if check_docs and sources and patterns:
+        validate_skill_docs(report, layout, sources, patterns)
     if sources and patterns:
         check_coverage(report, sources, patterns, layout, strict)
     if require_sources:

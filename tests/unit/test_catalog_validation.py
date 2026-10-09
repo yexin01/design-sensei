@@ -256,3 +256,47 @@ class CliTests(helpers.TempDirTest):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class SkillDocTests(helpers.TempDirTest):
+    def validate(self, text, relpath="skills/design-sensei/references/x.md", extra=None):
+        docs = {relpath: text}
+        docs.update(extra or {})
+        layout = helpers.make_toolkit(self.tmp, patterns=[make_pattern("known-pattern")], docs=docs)
+        return layout, vc.run_validation(layout).errors
+
+    def test_valid_links_pass(self):
+        _, errors = self.validate("# X\n\nUse [[known-pattern]] and [note](../../../knowledge/guides/n.md).\n",
+                                  extra={"knowledge/guides/n.md": "---\ntitle: \"Note\"\nkind: guide\nsummary: \"A summary that is long enough to pass.\"\nsource_ids: []\npattern_ids: []\nupdated: \"2026-10-09\"\n---\nbody\n"})
+        self.assertEqual(errors, [])
+
+    def test_unknown_pattern_id_and_broken_link_are_errors(self):
+        _, errors = self.validate("# X\n\n[[ghost-pattern]] and [gone](../../../knowledge/missing.md) and [ext](https://example.com) and [anchor](#a)\n")
+        self.assertTrue(any("[[ghost-pattern]]" in e for e in errors))
+        self.assertTrue(any("broken relative link ../../../knowledge/missing.md" in e for e in errors))
+        self.assertEqual(len(errors), 2)
+
+    def test_citations_in_skill_docs_are_checked(self):
+        layout, errors = self.validate("# X\n\nSee `alpha:src/real.js` and `alpha:src/fake.js`.\n", relpath="skills/design-sensei/patterns/p.md")
+        self.assertEqual(errors, [])
+        (layout.sources_dir / "alpha" / "src").mkdir(parents=True)
+        (layout.sources_dir / "alpha" / "src" / "real.js").write_text("x")
+        errors = vc.run_validation(layout).errors
+        self.assertEqual(len(errors), 1)
+        self.assertIn("fake.js", errors[0])
+
+
+class RealSkillTests(unittest.TestCase):
+    def test_skill_has_all_referenced_files_and_valid_front_matter(self):
+        from dslib import knowledge
+        skill = helpers.ROOT / "skills" / "design-sensei" / "SKILL.md"
+        meta, _, error = knowledge.parse_frontmatter(skill.read_text(encoding="utf-8"))
+        self.assertIsNone(error)
+        self.assertEqual(meta["name"], "design-sensei")
+        self.assertLess(len(meta["description"]), 1536)
+        self.assertLessEqual(len(skill.read_text(encoding="utf-8").splitlines()), 500)
+        refs = sorted(p.name for p in (skill.parent / "references").glob("*.md"))
+        self.assertEqual(refs, sorted(["art-direction.md", "design-principles.md", "typography.md", "color-systems.md", "layout-composition.md",
+                                       "component-selection.md", "motion-design.md", "shaders-and-webgl.md", "three-dimensional-design.md",
+                                       "responsive-design.md", "accessibility.md", "performance.md", "design-qa.md", "source-usage.md"]))
+        self.assertEqual(len(list((skill.parent / "patterns").glob("*.md"))), 15)
