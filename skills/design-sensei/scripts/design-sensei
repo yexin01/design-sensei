@@ -6,7 +6,9 @@ skill is installed, then runs the command line. Lookup order:
   1. $DESIGN_SENSEI_ROOT
   2. the directory three levels above this file (plugin install and git checkout;
      symlinked skill folders are resolved first)
-  3. ~/.design-sensei/toolkit
+  3. <skill folder>/toolkit (portable bundle: `design-sensei package-skill`, then copy
+     the folder anywhere, for example ~/.claude/skills/design-sensei)
+  4. ~/.design-sensei/toolkit
 """
 import os
 import sys
@@ -17,6 +19,7 @@ def find_root():
     candidates = [
         os.environ.get("DESIGN_SENSEI_ROOT"),
         os.path.normpath(os.path.join(here, "..", "..", "..")),
+        os.path.normpath(os.path.join(here, "..", "toolkit")),
         os.path.join(os.path.expanduser("~"), ".design-sensei", "toolkit"),
     ]
     for root in candidates:

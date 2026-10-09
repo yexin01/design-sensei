@@ -1,0 +1,98 @@
+[
+  {
+    "query": "our marketing site at src/app/(marketing)/page.tsx looks like every other b2b saas template out there. we sell payroll software to restaurant groups and the founder hates how bland the hero and pricing section feel. can you redesign those two sections? next 14 + tailwind",
+    "should_trigger": true
+  },
+  {
+    "query": "add smooth scrolling w/ lenis to the about page and a gsap scrolltrigger pinned section where the 3 team photos parallax past as you scroll. vite + react, gsap already in package.json",
+    "should_trigger": true
+  },
+  {
+    "query": "i want the sticky navbar to have that apple liquid glass look, refraction + blur, sitting over a looping video background. react + tailwind, needs to still be readable",
+    "should_trigger": true
+  },
+  {
+    "query": "put an animated shader behind the hero in index.html, something like a slow aurora / noise gradient. has to run ok on mid-range android phones",
+    "should_trigger": true
+  },
+  {
+    "query": "need a 3d product viewer for our headphones. glb is at public/models/cans.glb, we use react-three-fiber + drei already. orbit with inertia, soft studio lighting, maybe a little auto-rotate when idle",
+    "should_trigger": true
+  },
+  {
+    "query": "make the homepage headline do a kinetic type thing - letters split and stagger in on load, then react to the cursor a little. no clue what lib to use, we have framer-motion installed",
+    "should_trigger": true
+  },
+  {
+    "query": "this dashboard looks like every shadcn template ever lol. can u make it look less generic? apps/web/src/routes/dashboard.tsx, dont change the data fetching",
+    "should_trigger": true
+  },
+  {
+    "query": "polish the visual design of our analytics dashboard - spacing is inconsistent, hierarchy is flat, the charts look like default recharts. keep the stack, just make it feel considered",
+    "should_trigger": true
+  },
+  {
+    "query": "launching a site for a small natural wine bar in lisbon (3 people, tiny budget). what visual style should we go for? i was thinking warm + editorial but not sure. once we pick one can you build the home page",
+    "should_trigger": true
+  },
+  {
+    "query": "add route transitions to my next app router site - like a curtain wipe or a shared element morph between the project grid and the project page. keep it from feeling janky",
+    "should_trigger": true
+  },
+  {
+    "query": "we're building a scroll-driven page for our annual impact report. sections fade in, big numbers count up, a sticky map that changes as you scroll. wants a cinematic feel, not a boring pdf-on-the-web",
+    "should_trigger": true
+  },
+  {
+    "query": "portfolio hero feels flat n boring. wanna add a webgl water ripple distortion on the hero image when you hover, which open source libs could i use and are they ok for a commercial client project licence-wise?",
+    "should_trigger": true
+  },
+  {
+    "query": "add pagination and rate limiting to GET /api/orders in services/orders/handler.ts. express + postgres, cursor should be opaque base64, and 429s need a Retry-After header",
+    "should_trigger": false
+  },
+  {
+    "query": "the submit button in components/CheckoutModal.vue is unclickable on iphone, pretty sure some overlay with a bad z-index is eating taps, and scrolling inside the modal also scrolls the page behind it. can you fix",
+    "should_trigger": false
+  },
+  {
+    "query": "the airflow dag dags/clickstream_daily.py that loads events into bigquery is double counting sessions after the backfill. dedupe on (user_id, session_start) and add a test",
+    "should_trigger": false
+  },
+  {
+    "query": "refactor utils/geo.py - it has a pile of module level globals. turn it into a class with type hints and add pytest tests for haversine + bounding box",
+    "should_trigger": false
+  },
+  {
+    "query": "write a README for packages/tokens (our design tokens package) - how to install it, how to add a new token, and how the style-dictionary build publishes to npm",
+    "should_trigger": false
+  },
+  {
+    "query": "can you explain how gsap scrolltrigger actually works under the hood? like what does scrub do and how is pin different from position: sticky. just curious for an interview, not building anything",
+    "should_trigger": false
+  },
+  {
+    "query": "i have ~40 icons in a figma file. whats the best way to export them as optimized svgs and wrap them in a react icon package with svgr? need tree-shaking friendly output",
+    "should_trigger": false
+  },
+  {
+    "query": "audit the alt text, link text and error message wording in content/en/*.json for screen reader clarity and plain language. only the copy, dont touch any components",
+    "should_trigger": false
+  },
+  {
+    "query": "jest test for the useDebounce hook in src/hooks/useDebounce.test.ts is flaky, fails like 1 in 5 CI runs with fake timers. find out why",
+    "should_trigger": false
+  },
+  {
+    "query": "my three.js + cannon-es physics sim leaks memory, the heap grows every time I reset the scene and remove the bodies. here's the heap snapshot summary, can you find the leak in src/sim/World.ts",
+    "should_trigger": false
+  },
+  {
+    "query": "our next.js app has a 4.8s LCP on the product page. bundle analyzer shows moment.js and all of lodash in the main chunk, help me cut the bundle size and fix the hydration waterfall",
+    "should_trigger": false
+  },
+  {
+    "query": "rewrite the headline and subhead on the pricing page, they sound too corporate: 'Enterprise-grade solutions for modern teams'. give me 5 options in a friendlier tone, plain text only",
+    "should_trigger": false
+  }
+]

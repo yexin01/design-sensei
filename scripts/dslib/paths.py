@@ -12,9 +12,16 @@ Three places matter and they are deliberately separate:
 Library home resolution, first match wins:
   1. ``--home PATH`` on the command line
   2. ``DESIGN_SENSEI_HOME`` environment variable
-  3. the toolkit root itself when it is a git checkout (contributor workflow;
+  3. ``~/.design-sensei`` when the toolkit is the ``toolkit/`` folder of a portable skill
+     bundle (it carries a ``bundle.json`` marker; the library never lives inside a skill
+     folder, which can be read-only and is replaced on update)
+  4. the toolkit root itself when it is a git checkout (contributor workflow;
      ``sources/`` and ``.state/`` are git-ignored there)
-  4. ``~/.design-sensei``
+  5. ``~/.design-sensei``
+
+In a portable bundle the skill folder is the parent of the toolkit root: SKILL.md,
+references/, patterns/ and config/ sit next to ``toolkit/`` instead of under
+``skills/design-sensei/`` (see ``scripts/build_portable_skill.py``).
 """
 
 from __future__ import annotations
@@ -27,6 +34,7 @@ ENV_ROOT = "DESIGN_SENSEI_ROOT"
 ENV_HOME = "DESIGN_SENSEI_HOME"
 STATE_DIRNAME = ".state"
 SOURCES_DIRNAME = "sources"
+BUNDLE_MARKER = "bundle.json"  # present in toolkit/ of a portable skill bundle only
 
 
 class LayoutError(RuntimeError):
@@ -79,6 +87,8 @@ class Layout(object):
 
     @property
     def skill_dir(self) -> Path:
+        if self.is_bundle():
+            return self.root.parent
         return self.root / "skills" / "design-sensei"
 
     @property
@@ -113,6 +123,10 @@ class Layout(object):
     def is_dev_checkout(self) -> bool:
         return (self.root / ".git").exists()
 
+    def is_bundle(self) -> bool:
+        """True when the toolkit root is ``toolkit/`` inside a portable skill bundle."""
+        return (self.root / BUNDLE_MARKER).is_file()
+
 
 def default_root() -> Path:
     # scripts/dslib/paths.py -> scripts/dslib -> scripts -> <root>
@@ -136,6 +150,8 @@ def resolve_layout(
         home_path, reason = Path(home).expanduser(), "--home option"
     elif env.get(ENV_HOME):
         home_path, reason = Path(env[ENV_HOME]).expanduser(), "%s environment variable" % ENV_HOME
+    elif (root_path / BUNDLE_MARKER).is_file():
+        home_path, reason = Path.home() / ".design-sensei", "portable skill bundle: the library stays outside the skill folder"
     elif (root_path / ".git").exists():
         home_path, reason = root_path, "development checkout (sources/ inside the repository, git-ignored)"
     else:

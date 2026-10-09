@@ -1,0 +1,85 @@
+{
+  "skill_name": "design-sensei",
+  "description": "Behavioural evals for the design-sensei skill, in skill-creator's evals.json format. Authored but not yet run. Each eval is a realistic task prompt plus verifiable expectations; grade them against the transcript and outputs of a with-skill run, and compare with a baseline run of the same prompt without the skill. Input file paths are relative to the repository root.",
+  "evals": [
+    {
+      "id": 1,
+      "name": "greenfield-handmade-landing-page",
+      "prompt": "I run a tiny ceramics studio in Bristol called Tidepool Clay and we sell Saturday wheel-throwing workshops (12 people max, 85 GBP). I need a one-page site, plain HTML/CSS/JS, saved to ./out/index.html. No brand yet, no logo. I really don't want it to look like a SaaS landing page, it should feel handmade. Most of our visitors are on phones.",
+      "expected_output": "A single-page site in ./out/ that follows a written art-direction brief, uses a deliberate style from the catalog rather than a default template look, is usable at 375 px, and reports honestly how it was checked.",
+      "files": [],
+      "expectations": [
+        "Writes an art-direction brief (audience and emotion, style, typography, colour, layout, motion) with a one-line reason per decision before it writes any HTML or CSS",
+        "Runs `design-sensei search` or `design-sensei recommend` (or reads the pattern index or catalog directly if the command is unavailable) to pick a style or pattern instead of choosing from memory",
+        "Names one primary style direction and does not combine more than one supporting influence",
+        "Avoids the generic tells: no default indigo-to-violet gradient, no centred hero over three identical icon cards, no single typeface used for everything",
+        "Provides a prefers-reduced-motion path for any animation it adds",
+        "Says explicitly what it could not verify (for example real devices, screen readers, other browsers) or shows evidence of what it did check (for example screenshots at 375 px)",
+        "Does not add a dependency or build step that the request did not need"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "scroll-storytelling-with-licence-question",
+      "prompt": "In my Vite + React + TypeScript app (src/components/ProductStory.tsx, gsap is already in package.json) I want a pinned scroll-driven story: 4 steps, the phone mockup rotates and the copy swaps as you scroll. Use the best open-source implementation you can find rather than inventing something, but this is for a paying client so I need to know whether I'm actually allowed to reuse it.",
+      "expected_output": "A scroll-driven component adapted from a traced catalog pattern, with the pattern's source id and licence class stated, plus a reduced-motion alternative.",
+      "files": [],
+      "expectations": [
+        "Searches the pattern catalog (for example `design-sensei search scroll ...`) and reads the matching pattern or recipe before implementing",
+        "Names the catalog pattern id and the upstream source id for every borrowed idea",
+        "States the licence class (reuse class) of each borrowed pattern, such as copy_with_attribution, license_review_required or reimplement_only, in plain words",
+        "Does not copy code from a source whose reuse class forbids copying (reference_only, reimplement_only, verify_first); it re-implements the idea instead",
+        "Keeps one animation system by using the GSAP already installed rather than adding Motion or a second scroll library without justification",
+        "Gives a prefers-reduced-motion alternative that still shows all four steps of content",
+        "Lists any new dependency in its summary, or says that none were added"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "shader-hero-with-fallbacks",
+      "prompt": "Take examples/glass-hero/index.html and put a slow, subtle animated shader gradient behind the glass panel instead of the CSS blobs. I want it to feel like moving ink in water. It has to run fine on a mid-range Android phone and the page must still look good if WebGL is unavailable.",
+      "expected_output": "A WebGL fragment-shader background wired into the existing page, with a static fallback, reduced-motion handling and cleanup, built within the existing CSS token system.",
+      "files": ["examples/glass-hero/index.html", "examples/glass-hero/styles.css"],
+      "expectations": [
+        "Inspects the existing index.html and styles.css and extends them instead of rewriting the page from scratch",
+        "Provides a static fallback (CSS gradient or the existing blobs) that is used when WebGL is unavailable or the context is lost",
+        "Honours prefers-reduced-motion by not animating, or by rendering a single still frame",
+        "Limits GPU cost for mobile (for example capped device pixel ratio, low-resolution render target, or a small number of noise octaves) and says what it chose",
+        "Pauses rendering when the canvas is offscreen or the tab is hidden, and cleans up its animation frame and GPU resources",
+        "Marks the canvas as decorative (aria-hidden) and keeps text contrast over the shader acceptable",
+        "States which checks it ran (for example `design-sensei eval`, a screenshot) and which it could not run"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "r3f-viewer-without-browser-tool",
+      "prompt": "Add a 3D product viewer to my Next.js 14 app router project for our wireless headphones. The model is at public/models/cans.glb, react-three-fiber and drei are already installed. Orbit with inertia, soft studio lighting, and a gentle idle rotation. Heads up: this machine has no browser and no GPU, so you can only run the build and lint.",
+      "expected_output": "A client-only R3F viewer component with sensible performance and fallback behaviour, and a summary that is candid about what could not be verified without a browser.",
+      "files": [],
+      "expectations": [
+        "States plainly in the final summary that the viewer was not visually inspected and lists what could not be verified (rendering, frame rate, touch behaviour, WebGL fallback)",
+        "Does not claim the result looks good or performs well without evidence",
+        "Loads the 3D code client-side only and lazily (for example dynamic import with ssr disabled or Suspense), so it does not bloat the initial bundle",
+        "Provides a static poster image or fallback when WebGL is unavailable, and a reduced-motion setting that disables the idle rotation",
+        "Reuses the installed react-three-fiber and drei rather than adding a competing 3D library",
+        "Runs the project's own build or lint as the only checks that were available and reports their result",
+        "Writes a short art-direction note (lighting mood, background, motion tempo) before the code"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "restrained-polish-no-new-effects",
+      "prompt": "Our docs site header (site/Header.astro) looks a bit dated next to the rest of the page. Please modernise it, but keep it quiet: it's developer documentation, people are here to read. No WebGL, no animation libraries, no new dependencies, and please keep our existing CSS variables.",
+      "expected_output": "A restrained refresh of the header that respects the stated constraints and shows judgement about how much design ambition the context calls for.",
+      "files": [],
+      "expectations": [
+        "Inspects the existing header and CSS variables before changing anything and states which tokens it will reuse",
+        "Adds no WebGL, canvas, 3D or animation library and no new dependency",
+        "Sets a low motion and low experimental ambition in its art-direction note, with a reason tied to the documentation audience",
+        "Keeps the change small and readable: the diff touches the header and its styles, not the whole site",
+        "Preserves or improves accessibility: visible focus styles, sufficient contrast, keyboard-operable navigation",
+        "Does not use glass, glow or gradient effects as decoration unless it justifies them for this audience"
+      ]
+    }
+  ]
+}

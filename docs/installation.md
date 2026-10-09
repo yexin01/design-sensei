@@ -47,7 +47,49 @@ ln -s ~/src/design-sensei/skills/design-sensei ~/.claude/skills/design-sensei   
 # or, for one project:  ln -s ~/src/design-sensei/skills/design-sensei <project>/.claude/skills/design-sensei
 ```
 
-The launcher `skills/design-sensei/scripts/design-sensei` follows the symlink back to the clone, so catalog, knowledge notes and scripts are found. A skill folder that is *copied* instead of linked cannot find them; set `DESIGN_SENSEI_ROOT=~/src/design-sensei` (or clone to `~/.design-sensei/toolkit`) and the launcher uses that. Without either it exits with code 4 and tells you so.
+The launcher `skills/design-sensei/scripts/design-sensei` follows the symlink back to the clone, so catalog, knowledge notes and scripts are found. A skill folder that is *copied* instead of linked cannot find them, because they live outside `skills/design-sensei/`. Three ways out: build a self-contained copy ([Option B2](#option-b2---portable-bundle-copy-it-no-clone-needed), recommended when you want to copy), set `DESIGN_SENSEI_ROOT=~/src/design-sensei`, or clone to `~/.design-sensei/toolkit`. With none of them the launcher exits with code 4 and tells you so.
+
+## Option B2 - portable bundle (copy it, no clone needed)
+
+A bundle is the skill plus a private copy of everything it needs, in one folder. Copy or unzip it to `~/.claude/skills/` (or `<project>/.claude/skills/`) and it works, from any location, with nothing else installed except Python 3.9+.
+
+```bash
+# build it (from a clone), or download design-sensei-skill-<version>.zip from a GitHub release
+design-sensei package-skill --zip        # -> dist/design-sensei/ and dist/design-sensei-skill-<version>.zip (+ .sha256)
+cp -R dist/design-sensei ~/.claude/skills/               # personal skill, all projects
+# or:  unzip design-sensei-skill-<version>.zip -d ~/.claude/skills/
+# or, for one project:  cp -R dist/design-sensei <project>/.claude/skills/
+
+~/.claude/skills/design-sensei/scripts/design-sensei doctor --brief      # toolkit: .../design-sensei/toolkit
+```
+
+`package-skill [--out DIR] [--zip]` writes `DIR/design-sensei/` (default `DIR` is `dist/` in the checkout, which is git-ignored) and, with `--zip`, `DIR/design-sensei-skill-<version>.zip` plus its `.sha256`. It is also available as `python3 scripts/build_portable_skill.py`. Run it from a clone or plugin checkout, not from a bundle.
+
+What the folder contains (about 190 files, 2.2 MB; the zip is about 0.8 MB):
+
+```
+design-sensei/
+  SKILL.md  references/  patterns/  config/  scripts/design-sensei    the skill, exactly as in skills/design-sensei/
+  toolkit/
+    bundle.json           marks this toolkit as a bundle (see "Where the library lives")
+    catalog/  knowledge/  registry, schemas, pattern catalog, notes, generated pattern index
+    scripts/              every Python module of the command line (standard library only)
+    docs/  examples/glass-hero/   user documentation and the original example
+    LICENSE  ATTRIBUTION.md  NOTICE  CONTRIBUTING.md  SECURITY.md
+```
+
+What it never contains: the upstream source clones (`sources/`), local state (`.state/`), git data, tests, plugin manifests, secrets, caches, and anything the repository's `.gitignore` matches. If a stray secret-like or ignored file sits inside an included folder, the build **stops with an error** instead of quietly skipping it, and nothing is written. Upstream code is downloaded on demand into `~/.design-sensei/sources/`, as with every other install.
+
+How it works:
+
+* **Finding the toolkit.** The launcher tries, in order: `$DESIGN_SENSEI_ROOT`, the repository layout (three levels above the launcher: git checkout and plugin install), `<skill folder>/toolkit`, `~/.design-sensei/toolkit`. A symlinked bundle is resolved to its real folder first.
+* **Where the library lives.** A bundle keeps the source library and state in `~/.design-sensei/` (or `$DESIGN_SENSEI_HOME`, or `--home`), never inside the skill folder, which may be read-only and is replaced when you update. `doctor` prints "portable skill bundle" as the reason. The folder is never written to while it runs.
+* **One mechanical change to the Markdown.** In the repository the skill folder sits two levels below the root, so skill files reach notes with paths such as `../../../knowledge/...` (in `references/` and `patterns/`) or `${CLAUDE_SKILL_DIR}/../../catalog/...` (in `SKILL.md`). Those paths cannot work from a copied folder, so the build rewrites every relative path that climbs out of the skill folder to a top-level repository item (`catalog`, `knowledge`, `docs`, `examples`, `scripts`, `ATTRIBUTION.md`, `LICENSE`) so that it points into the bundled toolkit: `../../../knowledge/x.md` in `patterns/` becomes `../toolkit/knowledge/x.md`, and `${CLAUDE_SKILL_DIR}/../../catalog/patterns.yaml` becomes `${CLAUDE_SKILL_DIR}/toolkit/catalog/patterns.yaml`. Nothing else is changed in any file, the sources in the repository are never touched, and the build fails if a relative Markdown link in the skill or the knowledge notes does not resolve (a dead link in the bundled `docs/` only prints a warning). Everything the launcher and `${CLAUDE_SKILL_DIR}/scripts/design-sensei` do is unchanged.
+* **Reproducible.** Entries are sorted, timestamps are fixed (1980-01-01), permissions are normalised (0644, the launcher 0755). The same checkout gives a byte-identical zip with the same Python and zlib; compare the `.sha256`.
+
+Verify a copy: `design-sensei doctor --brief`, `design-sensei catalog validate --strict` and `design-sensei search "liquid glass"` all work from the installed folder with `DESIGN_SENSEI_ROOT` unset.
+
+Limits: a bundle is a skill, not a plugin. It does not put `design-sensei` on the Bash tool's `PATH` (the skill calls `${CLAUDE_SKILL_DIR}/scripts/design-sensei`) and carries none of the plugin's other components. It is a snapshot: update it by building or downloading a newer bundle and replacing the folder (your library in `~/.design-sensei/` is untouched). Tools that unpack zips without Unix permissions (some GUI archivers, Python's `zipfile.extractall`) drop the launcher's executable bit; `doctor` reports it, and `chmod +x ~/.claude/skills/design-sensei/scripts/design-sensei` fixes it. Untested so far on Linux and Windows, like the rest of the project.
 
 ## Option C - command line only
 
@@ -79,9 +121,9 @@ Where the library lives (first match wins):
 | 1 | `--home DIR` | explicit |
 | 2 | `$DESIGN_SENSEI_HOME` | environment variable |
 | 3 | `<repository>/sources/` | you are working in a git checkout (contributors; git-ignored) |
-| 4 | `~/.design-sensei/sources/` | installed plugin or any copy without `.git` |
+| 4 | `~/.design-sensei/sources/` | installed plugin, [portable bundle](#option-b2---portable-bundle-copy-it-no-clone-needed) (always, because it carries a `toolkit/bundle.json` marker) or any copy without `.git` |
 
-`design-sensei doctor` prints the location it chose and why. The library is deliberately **not** inside the plugin directory, because Claude Code replaces that directory on every update.
+`design-sensei doctor` prints the location it chose and why. The library is deliberately **not** inside the plugin directory or a skill folder, because Claude Code replaces plugin directories on every update and a skill folder can be read-only.
 
 Sources are cloned shallow (`--depth 1`) at the exact commit pinned in `catalog/sources.yaml`; large repositories use a sparse checkout. Three sources are websites or articles and are never downloaded. See [source-management.md](source-management.md).
 
@@ -106,5 +148,6 @@ Set `source_acquisition_mode` in `~/.design-sensei/config.yaml` (user) or the pr
 ```bash
 claude plugin uninstall design-sensei@design-sensei
 claude plugin marketplace remove design-sensei
+rm -rf ~/.claude/skills/design-sensei   # a portable bundle or a skill symlink
 rm -rf ~/.design-sensei          # the downloaded sources and state (your choice; it is a cache)
 ```

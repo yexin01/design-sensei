@@ -25,6 +25,7 @@ __pycache__/
 *.egg-info/
 .eggs/
 build/
+dist/
 .venv/
 venv/
 .pytest_cache/

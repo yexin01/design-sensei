@@ -101,6 +101,51 @@ def _frontmatter(path: Path) -> Tuple[Optional[Dict[str, Any]], Optional[str]]:
     return meta, error
 
 
+def _check_skill(layout: Layout) -> List[Check]:
+    """SKILL.md front matter, size and links into references/, patterns/ and config/."""
+    out = []  # type: List[Check]
+    skill = layout.skill_dir / "SKILL.md"
+    if not skill.is_file():
+        out.append(Check(FAIL, "skill", "SKILL.md missing in %s" % layout.skill_dir))
+    else:
+        meta, error = _frontmatter(skill)
+        if error or meta is None:
+            out.append(Check(FAIL, "skill", "SKILL.md front matter: %s" % error))
+        else:
+            if meta.get("name") != "design-sensei":
+                out.append(Check(FAIL, "skill", "SKILL.md name should be design-sensei, got %r" % meta.get("name")))
+            desc = str(meta.get("description", ""))
+            if not desc:
+                out.append(Check(FAIL, "skill", "SKILL.md has no description"))
+            elif len(desc) + len(str(meta.get("when_to_use", ""))) > SKILL_DESCRIPTION_LIMIT:
+                out.append(Check(WARN, "skill", "description is longer than %d characters and will be cut in the skill listing" % SKILL_DESCRIPTION_LIMIT))
+            lines = len(skill.read_text(encoding="utf-8").splitlines())
+            if lines > 500:
+                out.append(Check(WARN, "skill", "SKILL.md has %d lines; keep it under 500 and move detail into references/" % lines))
+        for ref in re.findall(r"\]\((references/[^)#]+|patterns/[^)#]+|config/[^)#]+)", skill.read_text(encoding="utf-8")):
+            if not (layout.skill_dir / ref).exists():
+                out.append(Check(FAIL, "skill", "SKILL.md links to missing file %s" % ref))
+    return out
+
+
+def check_bundle(layout: Layout) -> List[Check]:
+    """Portable skill bundle: the toolkit is <skill folder>/toolkit and there is no plugin manifest."""
+    out = []  # type: List[Check]
+    try:
+        info = json.loads((layout.root / "bundle.json").read_text(encoding="utf-8"))
+    except (OSError, ValueError) as exc:
+        return [Check(FAIL, "bundle", "toolkit/bundle.json is unreadable: %s" % exc, "rebuild the bundle: design-sensei package-skill")]
+    out.extend(_check_skill(layout))
+    launcher = layout.skill_dir / "scripts" / "design-sensei"
+    if not launcher.is_file():
+        out.append(Check(FAIL, "launcher", "scripts/design-sensei missing from the skill folder"))
+    elif not os.access(str(launcher), os.X_OK):
+        out.append(Check(FAIL, "launcher", "scripts/design-sensei is not executable", "chmod +x %s" % launcher))
+    if not out:
+        out.append(Check(OK, "bundle", "portable skill bundle v%s at %s" % (info.get("version"), layout.skill_dir)))
+    return out
+
+
 def check_plugin(layout: Layout) -> List[Check]:
     out = []  # type: List[Check]
     plugin_json = layout.root / ".claude-plugin" / "plugin.json"
@@ -124,27 +169,7 @@ def check_plugin(layout: Layout) -> List[Check]:
                 out.append(Check(FAIL, "marketplace", "marketplace.json does not list plugin %r" % manifest.get("name")))
         except ValueError as exc:
             out.append(Check(FAIL, "marketplace", "marketplace.json is not valid JSON: %s" % exc))
-    skill = layout.skill_dir / "SKILL.md"
-    if not skill.is_file():
-        out.append(Check(FAIL, "skill", "skills/design-sensei/SKILL.md missing"))
-    else:
-        meta, error = _frontmatter(skill)
-        if error or meta is None:
-            out.append(Check(FAIL, "skill", "SKILL.md front matter: %s" % error))
-        else:
-            if meta.get("name") != "design-sensei":
-                out.append(Check(FAIL, "skill", "SKILL.md name should be design-sensei, got %r" % meta.get("name")))
-            desc = str(meta.get("description", ""))
-            if not desc:
-                out.append(Check(FAIL, "skill", "SKILL.md has no description"))
-            elif len(desc) + len(str(meta.get("when_to_use", ""))) > SKILL_DESCRIPTION_LIMIT:
-                out.append(Check(WARN, "skill", "description is longer than %d characters and will be cut in the skill listing" % SKILL_DESCRIPTION_LIMIT))
-            lines = len(skill.read_text(encoding="utf-8").splitlines())
-            if lines > 500:
-                out.append(Check(WARN, "skill", "SKILL.md has %d lines; keep it under 500 and move detail into references/" % lines))
-        for ref in re.findall(r"\]\((references/[^)#]+|patterns/[^)#]+|config/[^)#]+)", skill.read_text(encoding="utf-8")):
-            if not (layout.skill_dir / ref).exists():
-                out.append(Check(FAIL, "skill", "SKILL.md links to missing file %s" % ref))
+    out.extend(_check_skill(layout))
     shim = layout.skill_dir / "scripts" / "design-sensei"
     for path in (shim, layout.root / "bin" / "design-sensei"):
         if not path.is_file():
@@ -220,7 +245,7 @@ def run_doctor(layout: Layout, online: bool = False) -> Tuple[List[Check], Dict[
     checks += check_git(online)
     checks += check_layout(layout)
     checks += check_catalog(layout)
-    checks += check_plugin(layout)
+    checks += check_bundle(layout) if layout.is_bundle() else check_plugin(layout)
     source_checks, present, downloadable = check_sources(layout)
     checks += source_checks
     checks += check_index(layout, present)

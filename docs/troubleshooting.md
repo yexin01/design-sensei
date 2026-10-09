@@ -5,7 +5,7 @@ Start with `design-sensei doctor`. It checks Python, git, the toolkit, the catal
 | Symptom | Cause | Fix |
 | --- | --- | --- |
 | `design-sensei: command not found` | the plugin is not enabled in this session, or `bin/` is not on `PATH` | run `claude plugin list`; or call `${CLAUDE_SKILL_DIR}/scripts/design-sensei`; or `./bin/design-sensei` from a clone |
-| `cannot find the toolkit (catalog/ and scripts/)`, exit 4 | the skill folder was copied on its own | install as a plugin, symlink the skill folder from a clone, or set `DESIGN_SENSEI_ROOT` |
+| `cannot find the toolkit (catalog/ and scripts/)`, exit 4 | the skill folder was copied on its own | install as a plugin, symlink the skill folder from a clone, copy a [portable bundle](installation.md#option-b2---portable-bundle-copy-it-no-clone-needed) instead (`design-sensei package-skill`), or set `DESIGN_SENSEI_ROOT` |
 | `cannot find the Design Sensei catalog under ...` | `DESIGN_SENSEI_ROOT` points at the wrong directory | point it at the directory that contains `catalog/sources.yaml` |
 | `sources sync` exits 4 | git is missing, or `--offline` / `source_acquisition_mode: offline` and the source is not downloaded yet | install git, or sync without `--offline`, or pass `--online` once |
 | `sources sync` exits 3 | some sources failed (network, disk, blocked checkout) | read the printed reasons; rerun for just those ids, one failing source never stops the others |

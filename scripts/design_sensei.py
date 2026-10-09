@@ -5,6 +5,7 @@ Typical use:
   design-sensei doctor                      check the installation
   design-sensei setup [--full]              prepare the local source library
   design-sensei search "liquid glass"       find patterns, notes and real files
+  design-sensei recommend "liquid glass hero for a fintech"   one-call style + pattern recommendation
   design-sensei sources sync lenis          download one upstream source
   design-sensei eval ./my-site              static design evaluation of a project
 
@@ -25,9 +26,11 @@ from typing import Optional, Sequence
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import build_index
+import build_portable_skill
 import check_licenses
 import design_eval
 import doctor
+import recommend
 import search_patterns
 import sync_sources
 import validate_catalog
@@ -139,6 +142,8 @@ def build_parser() -> argparse.ArgumentParser:
 
     search_patterns.add_arguments(sub.add_parser("search", help="search patterns, knowledge notes and source files", description=search_patterns.__doc__, formatter_class=argparse.RawDescriptionHelpFormatter))
 
+    recommend.add_arguments(sub.add_parser("recommend", help="one-call recommendation: style, implementation patterns, licence gate, fallback, next steps", description=recommend.__doc__, formatter_class=argparse.RawDescriptionHelpFormatter))
+
     cp = sub.add_parser("catalog", help="validate catalog files and knowledge notes", description="Catalog tools.")
     csub = cp.add_subparsers(dest="subcommand", metavar="COMMAND")
     csub.required = True
@@ -166,6 +171,7 @@ def build_parser() -> argparse.ArgumentParser:
     q.set_defaults(func=lambda a: run_with_layout(a, cmd_config_init))
 
     design_eval.add_arguments(sub.add_parser("eval", help="static design evaluation of a project or file", description=design_eval.__doc__, formatter_class=argparse.RawDescriptionHelpFormatter))
+    build_portable_skill.add_arguments(sub.add_parser("package-skill", help="assemble a self-contained skill folder (and zip) that can be copied anywhere", description=build_portable_skill.__doc__, formatter_class=argparse.RawDescriptionHelpFormatter))
     return parser
 
 

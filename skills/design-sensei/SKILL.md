@@ -1,16 +1,21 @@
 ---
 name: design-sensei
 description: >-
-  Design intelligence for building distinctive, production-quality interfaces. Use when asked to design,
-  redesign, polish or art-direct a website, landing page, app UI or component, or to add animation, scroll
-  storytelling, shaders, WebGL or 3D scenes, liquid glass, animated gradients, kinetic typography or other
-  advanced visual effects. Runs an inspect, art-direct, search, implement, verify workflow backed by a local
-  catalog of design styles and implementation patterns that point to real open-source code (React Three Fiber,
-  GSAP, Lenis, shader and component libraries), with licence guidance for every source.
+  Use this skill whenever the task is to make a web interface look, feel or move better, especially anything
+  involving motion or graphics code. Trigger for: designing, redesigning or art-directing a site, landing
+  page, dashboard or component so it feels distinctive rather than templated; and for implementing visual or
+  interactive effects such as page and route transitions, shared-element morphs, GSAP/ScrollTrigger and Lenis
+  smooth scrolling, parallax and pinned scroll sections, animated shader or gradient backgrounds, WebGL,
+  Three.js / React Three Fiber scenes, 3D product viewers (GLB models, orbit controls, lighting), liquid
+  glass, cursor effects and kinetic typography. Includes performance-conscious tuning of these effects on
+  mobile. Provides an inspect, art-direct, search, implement, verify workflow with a catalog of styles and
+  open-source code patterns, plus licence guidance. Skip for backend, tests, copywriting, non-visual refactors
+  and generic performance debugging.
 license: MIT
 compatibility: Claude Code. Needs python3 3.9+; git only when downloading upstream sources; a browser tool is optional for visual checks.
 allowed-tools:
   - Bash(${CLAUDE_SKILL_DIR}/scripts/design-sensei search *)
+  - Bash(${CLAUDE_SKILL_DIR}/scripts/design-sensei recommend *)
   - Bash(${CLAUDE_SKILL_DIR}/scripts/design-sensei doctor *)
   - Bash(${CLAUDE_SKILL_DIR}/scripts/design-sensei sources list *)
   - Bash(${CLAUDE_SKILL_DIR}/scripts/design-sensei sources show *)
@@ -91,7 +96,14 @@ direction as the default, change one major decision deliberately.
 
 ## 3. Discover source material
 
-Search the catalog (patterns carry source ids, licence status, reuse class and real file paths):
+Start with one call: `${CLAUDE_SKILL_DIR}/scripts/design-sensei recommend "<mood and goal words>" --project .` (add
+`--framework react|nextjs|vue`, `--max-gpu low`, `--reduced-motion-safe`, `--no-webgl`, `--allowed-deps gsap,lenis`,
+`--limit 5`, `--json` as needed). It applies `.design-sensei.yaml` and returns a primary style (plus at most one supporting
+style) with its note path and pairs-well-with / avoid hints, up to three implementation patterns (reuse class, licence
+status, GPU cost, dependencies, reduced-motion alternative, doc, recipe, first three source files with downloaded state),
+a LICENSE GATE line, a FALLBACK line when the top pattern is GPU-heavy or needs dependencies outside
+`allowed_dependencies`, and NEXT STEPS. Honour the gate and the fallback. Use `search` to dig deeper (patterns carry source
+ids, licence status, reuse class and real file paths):
 
 ```bash
 ${CLAUDE_SKILL_DIR}/scripts/design-sensei search "liquid glass button"
@@ -166,12 +178,14 @@ Pattern playbooks (condensed how-tos with pattern ids): [hero sections](patterns
 1. Run the project's own build, type-check, lint and tests; fix what you broke.
 2. Static check: `${CLAUDE_SKILL_DIR}/scripts/design-sensei eval <project-dir>` (heuristic lint for accessibility, motion,
    performance, responsiveness, typography and provenance; it cannot judge taste).
-3. Look at it. With a browser tool (Playwright, Chrome DevTools, a headless browser skill) load the page and:
+3. For a scored second opinion, delegate to the `design-reviewer` agent (read-only; give it screenshot paths and the
+   art-direction brief) or run `/design-sensei:review`.
+4. Look at it. With a browser tool (Playwright, Chrome DevTools, a headless browser skill) load the page and:
    screenshot at 375, 768, 1280 and 1920 px; read the console and network for errors and failed assets;
    emulate `prefers-reduced-motion: reduce`; tab through with the keyboard; check WebGL fallback by disabling WebGL if
    possible; measure LCP/CLS/JS size if tooling exists. Compare against the art-direction brief and fix issues.
-4. If no browser tool is available, **say so explicitly** and list what could not be verified.
-5. Score the result with the rubric in [references/design-qa.md](references/design-qa.md): art direction, differentiation,
+5. If no browser tool is available, **say so explicitly** and list what could not be verified.
+6. Score the result with the rubric in [references/design-qa.md](references/design-qa.md): art direction, differentiation,
    typography and hierarchy, layout consistency, responsive behaviour, motion quality, accessibility, performance,
    provenance, technical correctness. Report evidence, not superlatives.
 
@@ -193,12 +207,18 @@ Pattern playbooks (condensed how-tos with pattern ids): [hero sections](patterns
 | `design-sensei doctor [--brief] [--online]` | diagnose installation, catalog, library, config |
 | `design-sensei setup [--full \| --sources a,b]` | prepare the local library (light by default) |
 | `design-sensei sources list \| show <id> \| status \| sync <id...>` | inspect and download upstream sources (pinned commits) |
+| `design-sensei recommend <brief> [filters]` | one call: style, patterns, licence gate, fallback, next steps |
 | `design-sensei search <words> [filters]` | find patterns, notes (`--scope docs`) and files (`--scope files`) |
 | `design-sensei index build [--docs]` | rebuild the file index (and the browsable pattern index) |
 | `design-sensei catalog validate [--strict]` | validate catalog, notes and file references |
 | `design-sensei licenses check \| scan \| report` | licence inspection and attribution report |
 | `design-sensei config show \| init` | effective settings / create `.design-sensei.yaml` |
 | `design-sensei eval <path>` | static design evaluation |
+| `design-sensei package-skill [--out DIR] [--zip]` | build a self-contained, copyable skill bundle |
+
+Plugin entry points (plugin install only): `/design-sensei:brief` (art-direction brief, no code), `/design-sensei:style`
+(2-3 style options with a recommendation), `/design-sensei:review` (scored review), `/design-sensei:sources` (download and
+licence state), and the `design-reviewer` agent.
 
 Exit codes: 0 ok, 1 failure, 2 usage error, 3 partial success, 4 required tool or network unavailable.
 Full documentation: `docs/` in the Design Sensei repository (installation, source management, licensing).

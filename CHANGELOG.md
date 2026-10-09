@@ -4,6 +4,16 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+### Added
+- 12 design-style notes: flat design, material design, Bauhaus, Memphis, isometric and 3D illustration, hand-drawn and doodle, collage and cutout, pixel art and 8-bit, glitch, line art and outline, duotone and monochrome, Japanese minimalism (40 styles in total).
+- `design-sensei recommend`: one call returns a primary and supporting style, up to three patterns, a licence gate, a fallback and next steps.
+- Plugin entry points: `/design-sensei:brief`, `:style`, `:review`, `:sources` and a read-only `design-reviewer` agent.
+- `design-sensei package-skill [--zip]`: self-contained skill bundle that works when copied, with a launcher that finds `<skill>/toolkit` and a library kept under `~/.design-sensei`.
+- `evals/`: trigger query set (24 queries), authored behavioural evals and results.
+
+### Changed
+- Skill description rewritten after a trigger evaluation: should-trigger queries fired in 29 of 36 runs (was 13 of 36), with no false triggers on near-miss queries. See `evals/results-trigger.md` for caveats.
+
 ## [0.1.0] - 2026-10-09
 
 ### Added

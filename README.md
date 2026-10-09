@@ -46,15 +46,29 @@ Installing the plugin does **not** download the library. `design-sensei setup` c
 design-sensei setup [--full | --sources a,b] [--offline]   prepare the local library (light by default)
 design-sensei sources list | show <id> | status | sync <id...|--all> [--update --write-pins] [--offline] [--dry-run]
 design-sensei index build [--docs] [--check]                 file index of sources; browsable pattern index
+design-sensei recommend <brief> [filters] [--json]              style + patterns + licence gate + fallback in one call
 design-sensei search <words> [filters] [--scope patterns|docs|files|all] [--json]
 design-sensei catalog validate [--strict] [--require-sources]
 design-sensei licenses check | scan [--write] | report [--check]
 design-sensei doctor [--brief] [--online]
 design-sensei config show | init
 design-sensei eval <project-dir|file>                        static design evaluation (heuristic)
+design-sensei package-skill [--out DIR] [--zip]               self-contained skill bundle (works when copied)
 ```
 
 `design-sensei <command> --help` documents every option. Exit codes: `0` ok, `1` failure or validation errors, `2` usage error, `3` partial success, `4` required tool or network unavailable.
+
+### Recommending
+
+```bash
+design-sensei recommend "liquid glass hero for a fintech" --framework react --max-gpu medium
+```
+
+Returns a primary style (and at most one supporting style), up to three implementation patterns with their licence class, a licence gate line, a lower-GPU fallback when needed, and next steps. Use `search` to dig deeper.
+
+### Plugin entry points
+
+With the plugin installed: `/design-sensei:brief <goal>` writes an art-direction brief before any code, `/design-sensei:style <mood>` compares style options, `/design-sensei:review` scores the result with the QA rubric (via the read-only `design-reviewer` agent), and `/design-sensei:sources` shows what is downloaded and under which licence. See [docs/plugin-entrypoints.md](docs/plugin-entrypoints.md).
 
 ### Searching
 

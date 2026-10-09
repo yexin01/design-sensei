@@ -11,8 +11,8 @@ from tests.helpers import make_pattern, make_source, run_cli
 
 COMMANDS = [
     [], ["setup"], ["sources"], ["sources", "list"], ["sources", "sync"], ["sources", "status"], ["sources", "show"], ["index"], ["index", "build"],
-    ["search"], ["catalog"], ["catalog", "validate"], ["licenses"], ["licenses", "check"], ["licenses", "scan"], ["licenses", "report"],
-    ["doctor"], ["config"], ["config", "show"], ["config", "init"], ["eval"],
+    ["search"], ["recommend"], ["catalog"], ["catalog", "validate"], ["licenses"], ["licenses", "check"], ["licenses", "scan"], ["licenses", "report"],
+    ["doctor"], ["config"], ["config", "show"], ["config", "init"], ["eval"], ["package-skill"],
 ]
 
 
@@ -45,7 +45,7 @@ class HelpTests(unittest.TestCase):
         import re
         text = readme.read_text(encoding="utf-8")
         known = {" ".join(c) for c in COMMANDS if c}
-        for line in re.findall(r"^\s*(?:\$ )?(?:\./bin/)?design-sensei ((?:[a-z]+)(?: (?:list|sync|status|show|build|validate|check|scan|report|init))?)", text, re.MULTILINE):
+        for line in re.findall(r"^\s*(?:\$ )?(?:\./bin/)?design-sensei ((?:[a-z]+(?:-[a-z]+)?)(?: (?:list|sync|status|show|build|validate|check|scan|report|init))?)", text, re.MULTILINE):
             self.assertIn(line.strip(), known, "README mentions an unknown command: %s" % line)
 
 

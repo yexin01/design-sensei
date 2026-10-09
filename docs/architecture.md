@@ -43,7 +43,7 @@ Provenance is machine-checked. A pattern lists `source_ids` and `source_paths` (
 
 ## Layer 3 - plugin and skill
 
-`.claude-plugin/plugin.json` and `marketplace.json` package the repository root as one plugin. The skill is `skills/design-sensei/SKILL.md`: a short workflow (inspect, art-direct, discover, implement, verify) that loads `references/*.md` and `patterns/*.md` only when needed. It reaches the toolkit through `${CLAUDE_SKILL_DIR}/scripts/design-sensei`, a launcher that locates the toolkit relative to itself, so it works from a plugin install, a symlinked skill folder or a checkout without assuming a working directory. `bin/design-sensei` puts the same command on the Bash tool's `PATH` while the plugin is enabled.
+`.claude-plugin/plugin.json` and `marketplace.json` package the repository root as one plugin. The skill is `skills/design-sensei/SKILL.md`: a short workflow (inspect, art-direct, discover, implement, verify) that loads `references/*.md` and `patterns/*.md` only when needed. It reaches the toolkit through `${CLAUDE_SKILL_DIR}/scripts/design-sensei`, a launcher that locates the toolkit relative to itself, so it works from a plugin install, a symlinked skill folder, a checkout or a copied portable bundle (`<skill folder>/toolkit`) without assuming a working directory. `bin/design-sensei` puts the same command on the Bash tool's `PATH` while the plugin is enabled.
 
 ## Layer 4 - tooling (`scripts/`)
 
@@ -54,10 +54,12 @@ Provenance is machine-checked. A pattern lists `source_ids` and `source_paths` (
 | `index_sources.py` | deterministic file-level index of downloaded sources |
 | `build_index.py` | pattern index documents (Markdown + JSON) and `index build` |
 | `search_patterns.py` | ranked search over patterns, notes and files, with filters |
+| `recommend.py` | one-call brief to recommendation: primary and supporting style, top patterns, licence gate, fallback, next steps (reuses the search ranking, honours the project configuration) |
 | `validate_catalog.py` | schemas, cross references, license rules, file references |
 | `check_licenses.py` | license detection, ledger, attribution report |
 | `doctor.py` | environment and installation diagnostics |
 | `design_eval.py` | static design lint against the evaluation rubric |
+| `build_portable_skill.py` | `package-skill`: self-contained skill folder with a private `toolkit/` (and a deterministic zip) that works when copied anywhere, see [installation.md](installation.md#option-b2---portable-bundle-copy-it-no-clone-needed) |
 | `dslib/` | `yamlite` (YAML subset parser), `jsonschema_lite`, git wrapper, paths, catalog and config loaders |
 
 ### Design decisions
@@ -71,7 +73,7 @@ Provenance is machine-checked. A pattern lists `source_ids` and `source_paths` (
 ## Data flow of a typical task
 
 1. The skill runs `doctor --brief` and `config show` (library location, sources present, settings).
-2. After the art-direction brief it runs `search "<effect>" --framework … --reduced-motion-safe`. Results come from `patterns.yaml` + `patterns.d/` with license and reuse class derived from the sources.
+2. After the art-direction brief it runs `recommend "<mood and goal words>"` (or `search "<effect>" --framework … --reduced-motion-safe` for a single effect). Results come from `patterns.yaml` + `patterns.d/` with license and reuse class derived from the sources.
 3. It reads the printed `knowledge_doc`/`recipe` paths and, if present, the real files under the library; otherwise `sources sync <id>`.
 4. It implements in the user's project, then runs `eval` and a browser check.
 

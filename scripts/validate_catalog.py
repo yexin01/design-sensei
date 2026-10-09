@@ -330,7 +330,7 @@ def validate_skill_docs(report: Report, layout: Layout, sources: Dict[str, Dict[
             continue
         for path in sorted(folder.glob("*.md")):
             count += 1
-            rel = path.relative_to(layout.root).as_posix()
+            rel = path.relative_to(base if layout.is_bundle() else layout.root).as_posix()  # a bundle's skill folder is outside its toolkit root
             text = path.read_text(encoding="utf-8")
             for pid in re.findall(r"\[\[([a-z0-9-]+)\]\]", text):
                 if pid not in patterns:
