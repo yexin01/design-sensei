@@ -73,6 +73,25 @@ def _check_format(fmt: str, value: str) -> Optional[str]:
     return None
 
 
+def check_schema(schema: Any, path: str = "$") -> List[str]:
+    """Walk a whole schema and report keywords this validator does not implement."""
+    problems = []  # type: List[str]
+    if schema is True or not isinstance(schema, dict):
+        return problems
+    for key, value in schema.items():
+        if key not in _ANNOTATIONS and key not in _VALIDATION:
+            problems.append("%s: unsupported keyword '%s'" % (path, key))
+        if key in ("properties", "patternProperties", "definitions", "$defs") and isinstance(value, dict):
+            for name, sub in value.items():
+                problems.extend(check_schema(sub, "%s.%s.%s" % (path, key, name)))
+        elif key in ("items", "additionalProperties") and isinstance(value, dict):
+            problems.extend(check_schema(value, "%s.%s" % (path, key)))
+        elif key in ("allOf", "anyOf", "oneOf") and isinstance(value, list):
+            for idx, sub in enumerate(value):
+                problems.extend(check_schema(sub, "%s.%s[%d]" % (path, key, idx)))
+    return problems
+
+
 def validate(instance: Any, schema: Dict[str, Any], root: Optional[Dict[str, Any]] = None, path: str = "$") -> List[str]:
     """Return a list of human-readable error strings (empty when valid)."""
     root = root if root is not None else schema

@@ -56,10 +56,17 @@ def load_sources(layout: Layout) -> List[Dict[str, Any]]:
 
 
 def load_patterns(layout: Layout) -> List[Dict[str, Any]]:
-    data = load_yaml(layout.patterns_yaml)
-    if not isinstance(data, dict) or not isinstance(data.get("patterns"), list):
-        raise CatalogError("%s must contain a 'patterns' list" % layout.patterns_yaml)
-    return [p for p in data["patterns"] if isinstance(p, dict)]
+    """All patterns from catalog/patterns.yaml and catalog/patterns.d/*.yaml, in file order."""
+    merged = []  # type: List[Dict[str, Any]]
+    files = layout.pattern_files()
+    if not files:
+        raise CatalogError("missing file: %s" % layout.patterns_yaml)
+    for path in files:
+        data = load_yaml(path)
+        if not isinstance(data, dict) or not isinstance(data.get("patterns"), list):
+            raise CatalogError("%s must contain a 'patterns' list" % path)
+        merged.extend(p for p in data["patterns"] if isinstance(p, dict))
+    return merged
 
 
 def load_licenses(layout: Layout) -> Dict[str, Any]:

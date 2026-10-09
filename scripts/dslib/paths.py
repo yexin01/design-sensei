@@ -59,6 +59,17 @@ class Layout(object):
         return self.catalog_dir / "patterns.yaml"
 
     @property
+    def patterns_d(self) -> Path:
+        return self.catalog_dir / "patterns.d"
+
+    def pattern_files(self) -> "list[Path]":
+        """patterns.yaml plus any drop-in catalog/patterns.d/*.yaml files (sorted)."""
+        files = [self.patterns_yaml] if self.patterns_yaml.exists() else []
+        if self.patterns_d.is_dir():
+            files.extend(sorted(self.patterns_d.glob("*.yaml")))
+        return files
+
+    @property
     def licenses_yaml(self) -> Path:
         return self.catalog_dir / "licenses.yaml"
 

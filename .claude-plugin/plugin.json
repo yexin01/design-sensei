@@ -1,0 +1,24 @@
+{
+  "name": "design-sensei",
+  "displayName": "Design Sensei",
+  "version": "0.1.0",
+  "description": "Design intelligence for Claude Code: art direction, a searchable pattern catalog and traceable open-source implementations (React, Three.js, GLSL shaders, GSAP, Lenis).",
+  "author": {
+    "name": "Design Sensei contributors"
+  },
+  "homepage": "https://github.com/yexin01/design-sensei",
+  "repository": "https://github.com/yexin01/design-sensei",
+  "license": "MIT",
+  "keywords": [
+    "design",
+    "frontend",
+    "art-direction",
+    "ui",
+    "webgl",
+    "three.js",
+    "shaders",
+    "animation",
+    "gsap",
+    "lenis"
+  ]
+}

@@ -1,0 +1,7 @@
+:root { --bg: #f4efe6; --ink: #1d1a16; --accent: #b4532a; --space: clamp(1rem, 2vw, 2rem); }
+@font-face { font-family: "Fraunces"; src: url(fraunces.woff2) format("woff2"); font-display: swap; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: "Fraunces", serif; padding: var(--space); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.card { transition: transform 200ms ease, opacity 200ms ease; }
+@media (prefers-reduced-motion: reduce) { .card { transition: none; } }
+@media (min-width: 48rem) { main { display: grid; grid-template-columns: 1fr 1fr; } }

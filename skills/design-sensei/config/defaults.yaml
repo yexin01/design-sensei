@@ -1,0 +1,15 @@
+# Design Sensei defaults. Lowest-priority layer; overridden by <library home>/config.yaml
+# and then by the project's .design-sensei.yaml (see config.example.yaml).
+design_variance: 6
+motion_intensity: 5
+visual_density: 5
+preferred_frameworks: []
+allowed_dependencies: minimal
+performance_budget:
+  initial_js_kb: 200
+  lcp_ms: 2500
+  cls: 0.1
+  max_webgl_canvases: 1
+webgl_enabled: true
+reduced_motion: respect
+source_acquisition_mode: on_demand

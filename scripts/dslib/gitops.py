@@ -181,7 +181,7 @@ def sparse_list(path: str) -> List[str]:
 
 def normalize_url(url: str) -> str:
     """Compare-friendly form of a git URL (case-insensitive host/path, no .git, no trailing slash)."""
-    u = url.strip().lower()
+    u = url.strip().lower().rstrip("/")
     if u.endswith(".git"):
         u = u[:-4]
     return u.rstrip("/")

@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=schemas/patterns.schema.json
+#
+# Core pattern catalog. Patterns are searchable implementation patterns and design
+# styles. Every pattern is traceable: source_ids point into catalog/sources.yaml
+# and source_paths name concrete files written as <source-id>:<path inside that
+# source>; paths are verified against the pinned commit whenever the source is
+# present in the local library.
+#
+# Topic files can also live in catalog/patterns.d/*.yaml; they are merged with
+# this file when the catalog is loaded (ids must be unique across all files).
+schema_version: 1
+patterns: []

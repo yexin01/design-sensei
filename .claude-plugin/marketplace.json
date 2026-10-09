@@ -1,0 +1,16 @@
+{
+  "name": "design-sensei",
+  "description": "Marketplace for the Design Sensei plugin.",
+  "owner": {
+    "name": "Design Sensei contributors"
+  },
+  "plugins": [
+    {
+      "name": "design-sensei",
+      "source": "./",
+      "description": "Design intelligence for Claude Code: art direction, a searchable pattern catalog and traceable open-source implementations.",
+      "category": "design",
+      "tags": ["design", "frontend", "webgl", "animation", "art-direction"]
+    }
+  ]
+}

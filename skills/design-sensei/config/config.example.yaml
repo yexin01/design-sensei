@@ -1,0 +1,47 @@
+# .design-sensei.yaml - optional per-project settings for the Design Sensei skill.
+# Put this file in the root of YOUR project. Every key is optional; delete what you
+# do not need. Created by:  design-sensei config init
+# Check the effective result with:  design-sensei config show
+
+# How far from conventional patterns the art direction may go.
+#   1-3  proven, familiar layouts   4-7  distinctive but usable   8-10  experimental
+design_variance: 6
+
+# How much motion the interface carries.
+#   1-3  almost static, hover states only
+#   4-7  purposeful transitions and a few scroll moments
+#   8-10 cinematic, motion-led storytelling (needs reduced-motion alternatives)
+motion_intensity: 5
+
+# How much is on screen at once.
+#   1-3  airy, one idea per screen   4-7  balanced   8-10  dense, information-rich
+visual_density: 5
+
+# Libraries to prefer when several fit, e.g. [react, tailwind, gsap]. Empty = follow
+# the project's existing stack.
+preferred_frameworks: []
+
+# New dependencies the skill may add:
+#   none     never add one          existing  only what is already installed
+#   minimal  add only when justified, report each one (default)
+#   any      no restriction         or an explicit list: [gsap, lenis]
+allowed_dependencies: minimal
+
+# Budgets the design evaluation checks against.
+performance_budget:
+  initial_js_kb: 200       # gzipped JavaScript needed for first render
+  lcp_ms: 2500             # largest contentful paint target
+  cls: 0.1                 # cumulative layout shift target
+  max_webgl_canvases: 1    # simultaneous WebGL canvases
+
+# false forbids WebGL / 3D effects entirely.
+webgl_enabled: true
+
+# respect       every non-essential motion has a prefers-reduced-motion alternative
+# static_first  the default experience is static; motion is opt-in
+reduced_motion: respect
+
+# on_demand  download a source the first time it is needed (default)
+# full       expect the whole library to be present (design-sensei setup --full)
+# offline    never touch the network; use only what is already downloaded
+source_acquisition_mode: on_demand

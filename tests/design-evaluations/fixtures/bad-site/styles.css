@@ -1,0 +1,9 @@
+button { outline: none; }
+.box { transition: all 0.3s; width: 100px; }
+.slide { transition: left 1s, width 1s; }
+@keyframes grow { from { width: 10px; } to { width: 200px; } }
+.pulse { animation: grow 2s infinite; will-change: transform; }
+.a { will-change: opacity; } .b { will-change: transform; } .c { will-change: top; }
+body { font-family: Roboto; } h1 { font-family: Poppins; } h2 { font-family: Lora; } h3 { font-family: Oswald; }
+@font-face { font-family: "Custom"; src: url(c.woff2); }
+.hero { height: 100vh; background: linear-gradient(#6366f1, #8b5cf6); border-color: #a855f7; color: #7c3aed; outline-color: #4f46e5; }

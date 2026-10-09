@@ -1,0 +1,43 @@
+#!/usr/bin/env python3
+"""Launcher used by the Design Sensei skill.
+
+Finds the Design Sensei toolkit (catalog/, knowledge/, scripts/) no matter where the
+skill is installed, then runs the command line. Lookup order:
+  1. $DESIGN_SENSEI_ROOT
+  2. the directory three levels above this file (plugin install and git checkout;
+     symlinked skill folders are resolved first)
+  3. ~/.design-sensei/toolkit
+"""
+import os
+import sys
+
+
+def find_root():
+    here = os.path.dirname(os.path.realpath(__file__))
+    candidates = [
+        os.environ.get("DESIGN_SENSEI_ROOT"),
+        os.path.normpath(os.path.join(here, "..", "..", "..")),
+        os.path.join(os.path.expanduser("~"), ".design-sensei", "toolkit"),
+    ]
+    for root in candidates:
+        if root and os.path.isfile(os.path.join(root, "catalog", "sources.yaml")) and os.path.isfile(os.path.join(root, "scripts", "design_sensei.py")):
+            return root
+    return None
+
+
+ROOT = find_root()
+if ROOT is None:
+    sys.stderr.write(
+        "design-sensei: cannot find the toolkit (catalog/ and scripts/).\n"
+        "This skill folder was probably copied on its own. Install Design Sensei as a plugin,\n"
+        "or clone the repository and set DESIGN_SENSEI_ROOT to the clone, see docs/installation.md.\n"
+    )
+    sys.exit(4)
+
+os.environ.setdefault("DESIGN_SENSEI_ROOT", ROOT)
+sys.path.insert(0, os.path.join(ROOT, "scripts"))
+
+from design_sensei import main  # noqa: E402
+
+if __name__ == "__main__":
+    sys.exit(main())
