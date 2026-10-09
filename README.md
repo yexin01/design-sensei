@@ -47,6 +47,8 @@ design-sensei setup [--full | --sources a,b] [--offline]   prepare the local lib
 design-sensei sources list | show <id> | status | sync <id...|--all> [--update --write-pins] [--offline] [--dry-run]
 design-sensei index build [--docs] [--check]                 file index of sources; browsable pattern index
 design-sensei recommend <brief> [filters] [--json]              style + patterns + licence gate + fallback in one call
+design-sensei read <target> [--toc|--section A,B|--full]           read part of a note, reference, recipe or source file
+design-sensei tokens [--budget-check]                        estimated token cost of the skill and its outputs
 design-sensei search <words> [filters] [--scope patterns|docs|files|all] [--json]
 design-sensei catalog validate [--strict] [--require-sources]
 design-sensei licenses check | scan [--write] | report [--check]
@@ -65,6 +67,10 @@ design-sensei recommend "liquid glass hero for a fintech" --framework react --ma
 ```
 
 Returns a primary style (and at most one supporting style), up to three implementation patterns with their licence class, a licence gate line, a lower-GPU fallback when needed, and next steps. Use `search` to dig deeper.
+
+### Token efficiency
+
+Quality first, tokens second: nothing is removed from the catalog; the tools just let Claude read the part it needs. `design-sensei read glassmorphism` prints a ~400-token card instead of the whole note (`--toc`, `--section "Colour"`, `--full` for more). `recommend` and `search` take `--detail brief|normal|full` (default `normal`). `design-sensei tokens` reports the estimated cost of every part of the skill and enforces budgets.
 
 ### Plugin entry points
 

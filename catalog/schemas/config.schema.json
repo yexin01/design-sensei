@@ -47,6 +47,10 @@
     "source_acquisition_mode": {
       "description": "on_demand = sync a source the first time it is needed; full = expect the whole library to be present; offline = never touch the network.",
       "enum": ["on_demand", "full", "offline"]
+    },
+    "output_detail": {
+      "description": "Size of the text output of `recommend` and `search`: brief = ids and one line each; normal = trimmed, relative paths (default); full = verbose, absolute paths. The --detail flag wins.",
+      "enum": ["brief", "normal", "full"]
     }
   }
 }

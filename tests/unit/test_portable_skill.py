@@ -137,7 +137,6 @@ class BundleContentTests(BundleTestCase):
         text = (self.bundle / "SKILL.md").read_text(encoding="utf-8")
         self.assertNotIn("${CLAUDE_SKILL_DIR}/../../", text)
         self.assertIn("${CLAUDE_SKILL_DIR}/toolkit/knowledge/pattern-index/by-category.md", text)
-        self.assertIn("${CLAUDE_SKILL_DIR}/toolkit/catalog/patterns.yaml", text)
         self.assertIn("${CLAUDE_SKILL_DIR}/scripts/design-sensei", text)  # the launcher path is unchanged
         reference = (self.bundle / "references" / "performance.md").read_text(encoding="utf-8")
         self.assertIn("](../toolkit/knowledge/animations/gsap.md)", reference)
@@ -215,7 +214,8 @@ class StandaloneRunTests(BundleTestCase):
         code, out, err = self.run_copy(skill, ["search", "liquid glass"])
         self.assertEqual(code, 0, err)
         self.assertIn("liquid-glass", out)
-        self.assertIn(str(skill.resolve() / "toolkit" / "knowledge"), out)  # notes are printed as real, readable paths
+        self.assertIn("root: %s" % (skill.resolve() / "toolkit"), out)  # one root line, every note path relative to it
+        self.assertIn("knowledge/shaders/liquid-glass.md", out)
         for argv in (["catalog", "validate", "--strict"], ["licenses", "report", "--check"], ["index", "build", "--check"], ["config", "show"]):
             code, out, err = self.run_copy(skill, argv)
             self.assertEqual(code, 0, "%s: %s%s" % (" ".join(argv), out, err))

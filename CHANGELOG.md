@@ -11,7 +11,12 @@ All notable changes to this project are documented here. The format follows [Kee
 - `design-sensei package-skill [--zip]`: self-contained skill bundle that works when copied, with a launcher that finds `<skill>/toolkit` and a library kept under `~/.design-sensei`.
 - `evals/`: trigger query set (24 queries), authored behavioural evals and results.
 
+- `design-sensei read`: quick cards (~400 tokens), `--toc`, `--section`, `--max-tokens`, `--lines` with a licence header, so notes, references and recipes are read in parts instead of whole.
+- `--detail brief|normal|full` and `output_detail` for `recommend` and `search`: relative paths, trimmed summaries, capped file lists (about 45% fewer tokens at `normal`, about 85% fewer at `brief`).
+- `design-sensei tokens [--budget-check]` and `catalog/token-budgets.yaml`: estimated token cost report with budgets enforced in tests.
+
 ### Changed
+- SKILL.md body trimmed from about 3,500 to about 2,300 tokens with no workflow step removed; `/design-sensei:brief` and `:style` read quick cards.
 - Skill description rewritten after a trigger evaluation: should-trigger queries fired in 29 of 36 runs (was 13 of 36), with no false triggers on near-miss queries. See `evals/results-trigger.md` for caveats.
 
 ## [0.1.0] - 2026-10-09

@@ -107,12 +107,24 @@ class OutputTests(RecommendBase):
     def test_text_output_has_every_section(self):
         code, out, err = self.run_cmd("glass hero button", "--allowed-deps", "any")
         self.assertEqual(code, 0, err)
-        for needle in ("RECOMMENDATION for \"glass hero button\"", "STYLE", "PRIMARY:", "style-glassmorphism", "PATTERNS (", "1. liquid-glass-button",
-                       "LICENSE GATE:", "NEXT STEPS", "sources: alpha (MIT)", "reuse: copy_with_attribution", "gpu: medium"):
+        for needle in ("RECOMMENDATION for \"glass hero button\"", "PRIMARY", "style-glassmorphism", "PATTERNS (", "1. liquid-glass-button",
+                       "LICENSE GATE:", "NEXT STEPS", "alpha MIT", "reuse copy_with_attribution", "gpu medium"):
+            self.assertIn(needle, out)
+        # normal detail: one root line, every path relative to it
+        self.assertTrue(out.splitlines()[0].startswith("root: %s" % self.layout.root))
+        self.assertIn("knowledge/design-styles/glassmorphism.md", out)
+        self.assertIn("knowledge/shaders/glass.md", out)
+        self.assertIn("knowledge/implementation-recipes/glass-recipe.md", out)
+        self.assertEqual(out.count(str(self.layout.root)), 1)  # the root line only; source files read @lib/sources/...
+        self.assertIn("@lib/sources/alpha/src/", out)
+
+    def test_full_detail_is_the_verbose_layout_with_absolute_paths(self):
+        _, out, _ = self.run_cmd("glass hero button", "--allowed-deps", "any", "--detail", "full")
+        for needle in ("STYLE", "PRIMARY:", "sources: alpha (MIT)", "reuse: copy_with_attribution", "gpu: medium"):
             self.assertIn(needle, out)
         self.assertIn(str(self.layout.root / "knowledge" / "design-styles" / "glassmorphism.md"), out)
         self.assertIn(str(self.layout.root / "knowledge" / "shaders" / "glass.md"), out)
-        self.assertIn(str(self.layout.root / "knowledge" / "implementation-recipes" / "glass-recipe.md"), out)
+        self.assertNotIn("root:", out)
 
     def test_json_schema(self):
         d = self.data("glass hero button")
@@ -144,9 +156,11 @@ class OutputTests(RecommendBase):
         # the source directory now exists, so the other files are missing from the download rather than "not downloaded"
         self.assertEqual([f["state"] for f in p["source_paths"]], ["downloaded", "path not found in download", "path not found in download"])
         self.assertTrue(p["source_paths"][0]["path"].endswith("glass.js"))
-        _, out, _ = self.run_cmd("glass hero button")
+        _, out, _ = self.run_cmd("glass hero button", "--detail", "full")
         self.assertIn("glass.js  (downloaded)", out)
         self.assertIn("glass.css  (path not found in download)", out)
+        _, out, _ = self.run_cmd("glass hero button")  # normal: shared directory once, state per file when mixed, cap of 3 with +N more
+        self.assertIn("glass.js (downloaded), glass.css (path not found in download), controls.js (path not found in download) +1 more", out)
 
     def test_limit_and_stable_output(self):
         self.assertEqual(len(self.ids("glass", "--limit", "1")), 1)
@@ -309,7 +323,10 @@ class FallbackTests(RecommendBase):
         self.assertIn("outside allowed_dependencies", d["fallback"]["line"])
         self.assertIn("lenis", d["fallback"]["line"])
         _, out, _ = self.run_cmd("scroll", "--framework", "react", "--allowed-deps", "gsap")
-        self.assertIn("(outside allowed: lenis)", out)
+        self.assertIn("deps lenis (all outside allowed)", out)
+        self.assertIn("FALLBACK: smooth-scroll needs deps outside allowed_dependencies", out)
+        _, full, _ = self.run_cmd("scroll", "--framework", "react", "--allowed-deps", "gsap", "--detail", "full")
+        self.assertIn("(outside allowed: lenis)", full)
 
     def test_allowed_dependency_means_no_fallback(self):
         d = self.data("scroll", "--framework", "react", "--allowed-deps", "lenis")

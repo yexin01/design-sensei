@@ -13,3 +13,4 @@ performance_budget:
 webgl_enabled: true
 reduced_motion: respect
 source_acquisition_mode: on_demand
+output_detail: normal

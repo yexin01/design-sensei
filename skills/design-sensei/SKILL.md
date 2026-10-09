@@ -16,6 +16,7 @@ compatibility: Claude Code. Needs python3 3.9+; git only when downloading upstre
 allowed-tools:
   - Bash(${CLAUDE_SKILL_DIR}/scripts/design-sensei search *)
   - Bash(${CLAUDE_SKILL_DIR}/scripts/design-sensei recommend *)
+  - Bash(${CLAUDE_SKILL_DIR}/scripts/design-sensei read *)
   - Bash(${CLAUDE_SKILL_DIR}/scripts/design-sensei doctor *)
   - Bash(${CLAUDE_SKILL_DIR}/scripts/design-sensei sources list *)
   - Bash(${CLAUDE_SKILL_DIR}/scripts/design-sensei sources show *)
@@ -29,196 +30,124 @@ metadata:
 
 # Design Sensei
 
-Make interfaces that look decided, not generated. Work in five steps: **inspect, art-direct, discover, implement,
-verify**. Do not skip step 2: generic output comes from jumping straight to code.
+Make interfaces that look decided, not generated. Five steps: **inspect, art-direct, discover, implement, verify**.
+Never skip step 2: generic output comes from jumping straight to code. Spend ambition on the design, not on reading:
+fetch only what the current decision needs (see Reading cheaply).
 
-In this file `design-sensei` means the command `${CLAUDE_SKILL_DIR}/scripts/design-sensei` (quote the path if it contains
-spaces). The Bash tool does not keep shell state between calls, so always write the full command.
-
-## 0. Check the toolkit (once per task)
-
-```bash
-${CLAUDE_SKILL_DIR}/scripts/design-sensei doctor --brief
-${CLAUDE_SKILL_DIR}/scripts/design-sensei config show --project .
-```
-
-- `doctor` reports where the catalog and the local source library live and how many upstream sources are downloaded.
-  The catalog (patterns, notes, licence data) is always available; upstream **source code** is optional and fetched on demand.
-- `config show` prints the effective settings: `design_variance`, `motion_intensity`, `visual_density`,
-  `preferred_frameworks`, `allowed_dependencies`, `performance_budget`, `webgl_enabled`, `reduced_motion`,
-  `source_acquisition_mode`. Defaults are sensible; never ask the user to fill in a questionnaire. Use
-  `design-sensei config init` only if the user wants a `.design-sensei.yaml`.
-- If the command is unavailable, read `${CLAUDE_SKILL_DIR}/../../knowledge/pattern-index/by-category.md` and
-  `${CLAUDE_SKILL_DIR}/../../catalog/patterns.yaml` directly and work from those.
-- If `source_acquisition_mode` is `offline`, never run `sources sync`; use only what is already downloaded.
+`design-sensei` below means `${CLAUDE_SKILL_DIR}/scripts/design-sensei` (quote it if the path has spaces; write the full
+command every call, Bash keeps no state). If it is missing, work from `${CLAUDE_SKILL_DIR}/../../knowledge/pattern-index/by-category.md`.
+If `source_acquisition_mode` is `offline`, never run `sources sync`. Settings come from `.design-sensei.yaml` (defaults are
+fine; never quiz the user): `design_variance`, `motion_intensity`, `visual_density`, `preferred_frameworks`,
+`allowed_dependencies`, `performance_budget`, `webgl_enabled`, `reduced_motion`, `output_detail`.
 
 ## 1. Inspect the project
 
-Look before designing. Record a short project brief (keep it in your notes, not in the repo):
-
-| Question | Where to look |
-| --- | --- |
-| Framework, runtime, router | `package.json`, framework config, `app/` or `pages/`, `index.html` |
-| Styling system | Tailwind config, CSS modules, StyleX, vanilla CSS, CSS-in-JS |
-| Design tokens / DESIGN.md | `tailwind.config.*`, `:root` custom properties, `theme`, `DESIGN.md` |
-| Existing components | `components/`, `ui/`, a shadcn `components.json`, a design system package |
-| Installed motion/3D libs | `gsap`, `lenis`, `motion`/`framer-motion`, `three`, `@react-three/fiber` |
-| Build, test, lint commands | `package.json` scripts, CI config |
-| Constraints | browser support, performance budget, SSR, CMS, accessibility requirements |
-
-Rules: extend the existing component and token system instead of adding a second one. Prefer libraries already installed.
-Respect `allowed_dependencies`. If the project already has a `DESIGN.md` or style guide, it outranks anything below.
+Record a short brief in your notes, not the repo: framework and router; styling system; tokens or `DESIGN.md`; existing
+components (`components/`, shadcn `components.json`); installed motion/3D libs (`gsap`, `lenis`, `motion`, `three`,
+`@react-three/fiber`); build/test/lint scripts; constraints (browsers, performance budget, SSR, accessibility).
+Extend the existing component and token system; never add a second one. Prefer installed libraries; respect
+`allowed_dependencies`. A project `DESIGN.md` or style guide outranks everything here.
 
 ## 2. Establish art direction before code
 
-Decide, in writing, with a one-line reason each (template in [references/art-direction.md](references/art-direction.md)):
+Decide in writing, one-line reason each (template: [references/art-direction.md](references/art-direction.md)):
+1. **Audience and emotion**: who, and what they feel in five seconds.
+2. **Style**: one primary, at most one supporting (from `recommend` below).
+3. **Typography**: display + text (+ mono), scale, weights, measure ([typography](references/typography.md)).
+4. **Colour**: background, surface, text, accent, state tokens, contrast checked ([colour](references/color-systems.md)).
+5. **Layout and spacing**: grid, scale, rhythm, hierarchy ([layout](references/layout-composition.md)).
+6. **Surfaces and imagery**: radius, borders, shadow or glass, image treatment.
+7. **Motion and interaction**: tempo, easing, what moves and why ([motion](references/motion-design.md)).
 
-1. **Audience and emotion**: who uses it, what they should feel in the first five seconds.
-2. **Style direction**: pick one primary style and at most one supporting influence.
-   `design-sensei search "<mood words>" --category design-style --scope patterns` then read the style note.
-3. **Typography**: display + text (+ mono) families, scale, weights, line length. See [references/typography.md](references/typography.md).
-4. **Colour**: tokens for background, surface, text, accent and states, with contrast checked. See [references/color-systems.md](references/color-systems.md).
-5. **Layout and spacing**: grid, spacing scale, rhythm, hierarchy. See [references/layout-composition.md](references/layout-composition.md).
-6. **Surfaces and imagery**: radius, borders, shadows or glass, image treatment.
-7. **Motion language** and **interaction patterns**: tempo, easing, what moves and why. See [references/motion-design.md](references/motion-design.md).
-
-Dial the ambition with the configuration (defaults 6 / 5 / 5):
-
-| Dial | 1-3 | 4-7 | 8-10 |
+| Dial (default) | 1-3 | 4-7 | 8-10 |
 | --- | --- | --- | --- |
-| `design_variance` | familiar layouts, proven patterns | distinctive but usable | experimental composition, unusual grids |
-| `motion_intensity` | hover/focus states only | purposeful transitions, a few scroll moments | cinematic, motion-led; every effect needs a reduced-motion alternative |
-| `visual_density` | airy, one idea per screen | balanced | dense, information-rich |
+| `design_variance` (6) | familiar, proven | distinctive but usable | experimental composition |
+| `motion_intensity` (5) | hover/focus only | purposeful, a few scroll moments | cinematic; every effect needs a reduced-motion path |
+| `visual_density` (5) | airy | balanced | dense |
 
-Avoid the generic tells: default indigo-to-violet gradients, one typeface everywhere, centered hero over three identical
-cards, glass or glow on everything, stock-icon rows, effects that do not serve the message. If you recognise your
-direction as the default, change one major decision deliberately.
+Generic tells to avoid: indigo-violet gradients, one typeface everywhere, centered hero over three identical cards,
+glass or glow on everything, stock-icon rows, effects that do not serve the message. If your direction is the default,
+change one major decision on purpose.
 
 ## 3. Discover source material
 
-Start with one call: `${CLAUDE_SKILL_DIR}/scripts/design-sensei recommend "<mood and goal words>" --project .` (add
-`--framework react|nextjs|vue`, `--max-gpu low`, `--reduced-motion-safe`, `--no-webgl`, `--allowed-deps gsap,lenis`,
-`--limit 5`, `--json` as needed). It applies `.design-sensei.yaml` and returns a primary style (plus at most one supporting
-style) with its note path and pairs-well-with / avoid hints, up to three implementation patterns (reuse class, licence
-status, GPU cost, dependencies, reduced-motion alternative, doc, recipe, first three source files with downloaded state),
-a LICENSE GATE line, a FALLBACK line when the top pattern is GPU-heavy or needs dependencies outside
-`allowed_dependencies`, and NEXT STEPS. Honour the gate and the fallback. Use `search` to dig deeper (patterns carry source
-ids, licence status, reuse class and real file paths):
+Start with one call: `design-sensei recommend "<mood and goal words>" --project .` (optional `--framework`, `--max-gpu low`,
+`--reduced-motion-safe`, `--no-webgl`, `--allowed-deps gsap,lenis`, `--limit 5`). It applies `.design-sensei.yaml` and
+returns a primary and supporting style, up to three patterns with reuse class, GPU cost, dependencies and files, a LICENSE
+GATE, a FALLBACK when the top pattern is heavy, and NEXT steps. Honour the gate and fallback. Dig deeper with
+`design-sensei search <words> [--category --tag --framework --source --max-gpu --reduced-motion-safe --webgl|--no-webgl
+--scope docs|files|all --content --facets]`.
 
-```bash
-${CLAUDE_SKILL_DIR}/scripts/design-sensei search "liquid glass button"
-${CLAUDE_SKILL_DIR}/scripts/design-sensei search scroll --framework react --max-gpu low --reduced-motion-safe
-${CLAUDE_SKILL_DIR}/scripts/design-sensei search "text reveal" --scope all --limit 5
-${CLAUDE_SKILL_DIR}/scripts/design-sensei search --facets      # vocabulary: categories, tags, frameworks, sources
-${CLAUDE_SKILL_DIR}/scripts/design-sensei search "uniform u_time" --content   # grep downloaded source files
-```
+`--detail brief|normal|full` (or `output_detail`): normal is default; brief (about 300 tokens) triages candidates;
+use full only when normal omits something you need (an absolute path, an untrimmed summary). `--json` ignores it.
 
-Filters: `--category`, `--tag`, `--framework`, `--source`, `--dependency`, `--use-case`, `--max-gpu none|low|medium|high`,
-`--reduced-motion-safe`, `--webgl` / `--no-webgl`, `--license-status`, `--redistribution`, `--status`.
+**Reading cheaply** (`read` instead of Read; nothing creative is cut, you just choose the part):
+- `design-sensei read <target>` prints a ~400-token card. `--toc` lists headings with token costs; `--section "Colour,Typography"`
+  fetches parts; `--max-tokens N` cuts at a section boundary; `--full` is the whole file, only when you truly need it.
+- Targets: a style (`glassmorphism`), a pattern id (`--recipe` for its recipe), `ref:typography`, `playbook:hero-sections`,
+  `recipe:<slug>`, `note:lenis`, or code as `<source>:<path> --lines 1:60` (its header shows the licence class first).
+- For the chosen style always add `--section "Common mistakes,Typical mistakes"` (the card omits them; they prevent generic output).
+- Take the card, then the sections the current decision needs: Colour before choosing a palette, Accessibility cautions
+  before shipping, the recipe before implementing. Ambiguous names list candidates (exit 2).
 
-Then:
+Then: compare two or three candidates against the art direction, stack, dependency and GPU cost, accessibility and
+licence; pick what serves the design, not what impresses. If a source is not downloaded and the mode allows, check
+`design-sensei sources show <id>` then `design-sensei sources sync <id>` (needs network, git; asks permission).
 
-1. Read the pattern's `knowledge_doc` and `recipe` (absolute paths are printed). Read the playbook for the pattern family
-   in [patterns/](patterns/) (table below).
-2. Open the real implementation files listed under `file:`. If a source is "not downloaded" and the mode allows it:
-   `${CLAUDE_SKILL_DIR}/scripts/design-sensei sources sync <id>` (needs network and git; asks permission). Check first with
-   `design-sensei sources show <id>`.
-3. Compare two or three candidates against the art direction, the project's stack, dependency cost, GPU cost, accessibility
-   and licence class. Choose the one that serves the design. Impressive is not a criterion.
-4. **Licence gate** (shown as `reuse` in results; details in [references/source-usage.md](references/source-usage.md)):
+**Licence gate** (`reuse` in results; details [references/source-usage.md](references/source-usage.md)):
 
 | reuse | Meaning |
 | --- | --- |
-| `copy_with_attribution` | permissive licence: adapt freely, keep copyright and licence notice in the project |
-| `license_review_required` | custom terms (for example react-bits, gsap): use as a dependency per its terms, never bundle or republish; read the review in `design-sensei sources show <id>` |
+| `copy_with_attribution` | permissive: adapt, keep copyright and licence notice |
+| `license_review_required` | custom terms (react-bits, gsap): use as a dependency per its terms, never bundle or republish; read `sources show <id>` |
 | `reimplement_only` | no licence granted: learn the idea, write your own code |
-| `reference_only` | links and descriptions only: do not copy anything |
-| `verify_first` | licence not verified: treat as reference only |
+| `reference_only` / `verify_first` | links only / unverified: copy nothing |
 | `original` | project-authored guidance: free to use |
 
 ## 4. Implement
 
-- Build the foundation first: tokens, type scale, layout grid, base components; then page sections; motion last.
-- Adapt a pattern instead of rewriting it, but integrate it into the project's component, styling and animation systems.
-  One animation system per project (for example do not mix GSAP, Motion and CSS keyframes for the same job).
-- Dependencies: follow `allowed_dependencies`; justify each new one and list it in your summary. Prefer a CSS or native
-  solution when it gives the same result.
-- Progressive enhancement: semantic static HTML first, enhancement second. Every WebGL effect gets a static fallback
-  and a `prefers-reduced-motion` path. Lazy-load heavy code, pause offscreen work, clean up listeners, animation frames and
-  GPU resources.
-- When adapting MIT or Apache code, keep the upstream notice and add the project to `THIRD_PARTY_NOTICES.md`. Never copy code
-  from sources whose reuse class forbids it.
-- Never run install scripts or other code from downloaded upstream repositories.
+- Foundation first: tokens, type scale, grid, base components; then sections; motion last.
+- Adapt a pattern into the project's component, styling and animation systems. One animation system per project.
+- New dependencies: within `allowed_dependencies`, justified, listed in your summary. Prefer CSS or native when equal.
+- Static semantic HTML first. Every WebGL effect gets a static fallback and a `prefers-reduced-motion` path. Lazy-load heavy
+  code, pause offscreen work, clean up listeners, frames and GPU resources.
+- Keep upstream MIT/Apache notices and add them to `THIRD_PARTY_NOTICES.md`. Never copy from sources whose class forbids it.
+- Never run install scripts or code from downloaded upstream repositories.
 
-Open the reference you need, not all of them:
-
-| Need | Read |
-| --- | --- |
-| Principles, hierarchy, spacing | [references/design-principles.md](references/design-principles.md) |
-| Choosing between libraries/components | [references/component-selection.md](references/component-selection.md) |
-| Animation, scroll, choreography | [references/motion-design.md](references/motion-design.md) |
-| Shaders, GLSL, WebGL backgrounds | [references/shaders-and-webgl.md](references/shaders-and-webgl.md) |
-| 3D scenes, React Three Fiber | [references/three-dimensional-design.md](references/three-dimensional-design.md) |
-| Breakpoints and fluid layouts | [references/responsive-design.md](references/responsive-design.md) |
-| Accessibility rules | [references/accessibility.md](references/accessibility.md) |
-| Performance budgets | [references/performance.md](references/performance.md) |
-| Review and QA protocol | [references/design-qa.md](references/design-qa.md) |
-
-Pattern playbooks (condensed how-tos with pattern ids): [hero sections](patterns/hero-sections.md),
-[navigation](patterns/navigation.md), [typography effects](patterns/typography-effects.md),
-[cards and grids](patterns/cards-and-grids.md), [microinteractions](patterns/microinteractions.md),
-[scroll storytelling](patterns/scroll-storytelling.md), [background shaders](patterns/background-shaders.md),
-[liquid glass](patterns/liquid-glass.md), [3D scenes](patterns/three-dimensional-scenes.md),
-[product showcases](patterns/product-showcases.md), [image to 3D](patterns/image-to-3d.md),
-[cursor interactions](patterns/cursor-interactions.md), [page transitions](patterns/page-transitions.md),
-[data visualization](patterns/data-visualization.md), [responsive layouts](patterns/responsive-layouts.md).
+Open only the reference you need (use `read ref:<name> --toc` first for the long ones): principles
+[design-principles](references/design-principles.md), library choice [component-selection](references/component-selection.md),
+[motion-design](references/motion-design.md), [shaders-and-webgl](references/shaders-and-webgl.md),
+[three-dimensional-design](references/three-dimensional-design.md), [responsive-design](references/responsive-design.md),
+[accessibility](references/accessibility.md), [performance](references/performance.md), [design-qa](references/design-qa.md).
+Playbooks in [patterns/](patterns/) (`read playbook:<name>`): hero-sections, navigation, typography-effects, cards-and-grids,
+microinteractions, scroll-storytelling, background-shaders, liquid-glass, three-dimensional-scenes, product-showcases,
+image-to-3d, cursor-interactions, page-transitions, data-visualization, responsive-layouts.
 
 ## 5. Verify before saying done
 
-1. Run the project's own build, type-check, lint and tests; fix what you broke.
-2. Static check: `${CLAUDE_SKILL_DIR}/scripts/design-sensei eval <project-dir>` (heuristic lint for accessibility, motion,
-   performance, responsiveness, typography and provenance; it cannot judge taste).
-3. For a scored second opinion, delegate to the `design-reviewer` agent (read-only; give it screenshot paths and the
-   art-direction brief) or run `/design-sensei:review`.
-4. Look at it. With a browser tool (Playwright, Chrome DevTools, a headless browser skill) load the page and:
-   screenshot at 375, 768, 1280 and 1920 px; read the console and network for errors and failed assets;
-   emulate `prefers-reduced-motion: reduce`; tab through with the keyboard; check WebGL fallback by disabling WebGL if
-   possible; measure LCP/CLS/JS size if tooling exists. Compare against the art-direction brief and fix issues.
-5. If no browser tool is available, **say so explicitly** and list what could not be verified.
-6. Score the result with the rubric in [references/design-qa.md](references/design-qa.md): art direction, differentiation,
-   typography and hierarchy, layout consistency, responsive behaviour, motion quality, accessibility, performance,
-   provenance, technical correctness. Report evidence, not superlatives.
+1. Run the project's build, type-check, lint, tests; fix what you broke.
+2. `design-sensei eval <project-dir>`: heuristic lint (accessibility, motion, performance, responsiveness, typography,
+   provenance); cannot judge taste.
+3. For a scored second opinion, delegate to the `design-reviewer` agent (read-only, separate context; pass screenshot paths
+   and the brief) or run `/design-sensei:review`.
+4. Look at it with a browser tool: screenshots at 375 and 1280 first, 768 and 1920 at the end; console and network errors;
+   `prefers-reduced-motion: reduce`; keyboard tab-through; WebGL fallback; LCP/CLS if tooling exists. Fix against the brief.
+5. No browser tool: **say so** and list what was not verified.
+6. Score with the rubric in [references/design-qa.md](references/design-qa.md); report evidence, not superlatives.
 
-### Completion checklist
-
-- [ ] Project inspected; existing system extended, no duplicate component or animation system
-- [ ] Art-direction brief written and visible in the result (tokens, type, colour, motion)
+- [ ] Project inspected; no duplicate component or animation system
+- [ ] Art-direction brief written and shown (tokens, type, colour, motion)
 - [ ] Every borrowed pattern traced to a source id; licence class respected; notices kept
-- [ ] New dependencies within `allowed_dependencies` and listed in the summary
-- [ ] Reduced-motion alternative and no-WebGL fallback for every animated or GPU effect
+- [ ] Dependencies within `allowed_dependencies` and listed
+- [ ] Reduced-motion path and no-WebGL fallback for every animated or GPU effect
 - [ ] Keyboard, focus, contrast, semantics, alt text checked
-- [ ] Build/tests pass; no console errors or failed assets; responsive widths inspected
-- [ ] Limitations stated (for example visual inspection unavailable, sources not downloaded)
+- [ ] Build/tests pass; no console errors or failed assets; widths inspected
+- [ ] Limitations stated
 
 ## Commands
 
-| Command | Purpose |
-| --- | --- |
-| `design-sensei doctor [--brief] [--online]` | diagnose installation, catalog, library, config |
-| `design-sensei setup [--full \| --sources a,b]` | prepare the local library (light by default) |
-| `design-sensei sources list \| show <id> \| status \| sync <id...>` | inspect and download upstream sources (pinned commits) |
-| `design-sensei recommend <brief> [filters]` | one call: style, patterns, licence gate, fallback, next steps |
-| `design-sensei search <words> [filters]` | find patterns, notes (`--scope docs`) and files (`--scope files`) |
-| `design-sensei index build [--docs]` | rebuild the file index (and the browsable pattern index) |
-| `design-sensei catalog validate [--strict]` | validate catalog, notes and file references |
-| `design-sensei licenses check \| scan \| report` | licence inspection and attribution report |
-| `design-sensei config show \| init` | effective settings / create `.design-sensei.yaml` |
-| `design-sensei eval <path>` | static design evaluation |
-| `design-sensei package-skill [--out DIR] [--zip]` | build a self-contained, copyable skill bundle |
-
-Plugin entry points (plugin install only): `/design-sensei:brief` (art-direction brief, no code), `/design-sensei:style`
-(2-3 style options with a recommendation), `/design-sensei:review` (scored review), `/design-sensei:sources` (download and
-licence state), and the `design-reviewer` agent.
-
-Exit codes: 0 ok, 1 failure, 2 usage error, 3 partial success, 4 required tool or network unavailable.
-Full documentation: `docs/` in the Design Sensei repository (installation, source management, licensing).
+`design-sensei <cmd> --help` documents all options. Main: `recommend`, `search`, `read`, `eval`, `sources list|show|status|sync`,
+`config show|init`, `doctor`, `setup`, `index build`, `catalog validate`, `licenses check|scan|report`, `tokens` (cost report),
+`package-skill` (portable bundle). Plugin extras: `/design-sensei:brief` (art-direction brief, no code), `:style` (2-3 style
+options), `:review` (scored review), `:sources`, and the `design-reviewer` agent. Exit codes: 0 ok, 1 failure, 2 usage,
+3 partial, 4 tool or network unavailable. Docs: `docs/` in the repository.

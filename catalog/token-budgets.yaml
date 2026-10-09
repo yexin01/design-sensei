@@ -1,0 +1,13 @@
+# Token budgets enforced by `design-sensei tokens --budget-check` (and tests/unit/test_token_report.py).
+# Values are ESTIMATED tokens (characters / 4). Lower a budget when you trim; raise one only on purpose.
+#
+# TARGETS still to reach by trimming (budget stays at today's level until then):
+#   skill_md_body     3000   (SKILL.md body that loads when the skill triggers)
+#   recommend_normal   700   (largest of the four canned briefs)
+skill_md_body: 3000
+recommend_normal: 1000
+recommend_brief: 350
+search_normal: 1000
+reference_max: 3900
+playbook_max: 2400
+style_note_max: 2800

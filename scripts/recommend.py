@@ -39,7 +39,7 @@ if __package__ in (None, ""):
 
 import search_patterns
 from dslib import EXIT_OK, EXIT_USAGE
-from dslib import catalog, config as ds_config, knowledge
+from dslib import catalog, compact, config as ds_config, knowledge
 from dslib.cli import add_global_options, csv_list, fail, print_json, run_with_layout
 from dslib.paths import Layout
 from dslib.textutil import tokenize, truncate
@@ -94,6 +94,9 @@ STYLE_NAME_BOOST = 1.5  # the brief names the style outright (all words of its s
 STYLE_RELATED_BOOST = 1.3  # implementation pattern listed in the primary style's `related`
 SUPPORTING_RELATED_BOOST = 1.15
 PREFERRED_FRAMEWORK_BOOST = 1.2
+CSS_ONLY_ACTION = ("no catalog alternative with gpu none/low and allowed dependencies matched, so build a CSS-only version "
+                   "(custom properties, transitions, transforms, gradients, SVG) from the project's own components, adding no packages")
+FALLBACK_BOILERPLATE = "ship the heavy version only as progressive enhancement with a static fallback and a prefers-reduced-motion path"
 
 
 # ---------------------------------------------------------------------------
@@ -406,7 +409,7 @@ def _pattern_view(layout: Layout, p: Mapping[str, Any], sources: Mapping[str, Ma
         "dependencies_outside_policy": policy.outside(deps), "frameworks": list(p.get("frameworks") or []),
         "implementation_status": p.get("implementation_status"), "knowledge_doc": p.get("knowledge_doc"),
         "knowledge_doc_path": p.get("knowledge_doc_path"), "recipe": p.get("recipe"), "recipe_path": p.get("recipe_path"),
-        "source_paths": files, "warnings": warnings,
+        "source_paths": files, "source_paths_total": len(p.get("files") or []), "warnings": warnings,
     }
 
 
@@ -518,10 +521,9 @@ def fallback_for(top: Optional[Mapping[str, Any]], pool: Sequence[Mapping[str, A
                        "knowledge_doc_path": best.get("knowledge_doc_path"), "recipe_path": best.get("recipe_path")}
         action = "use `%s` instead (gpu %s, %s, reuse %s)" % (best["id"], _gpu(best), "no dependencies" if not deps else "needs " + ", ".join(deps), best["reuse"])
     else:
-        action = ("no catalog alternative with gpu none/low and allowed dependencies matched, so build a CSS-only version "
-                  "(custom properties, transitions, transforms, gradients, SVG) from the project's own components, adding no packages")
+        action = CSS_ONLY_ACTION
     if top["gpu_intensity"] in GPU_HEAVY:
-        action += "; ship the heavy version only as progressive enhancement with a static fallback and a prefers-reduced-motion path"
+        action += "; " + FALLBACK_BOILERPLATE
     if top["dependencies_outside_policy"]:
         action += "; add %s only after the user agrees" % ", ".join(top["dependencies_outside_policy"])
     return {"reasons": reasons, "alternative": alternative, "line": "FALLBACK: %s. Suggestion: %s." % ("; ".join(reasons), action)}
@@ -606,7 +608,16 @@ def _style_lines(label: str, s: Mapping[str, Any]) -> List[str]:
             "      pairs well with: %s | avoid: %s" % (", ".join(s["pairs_well_with"]) or "-", ", ".join(s["avoid"]) or "-")]
 
 
-def render_text(rec: Mapping[str, Any]) -> str:
+def render_text(rec: Mapping[str, Any], detail: str = "full", root: Optional[Path] = None, home: Optional[Path] = None) -> str:
+    """Text rendering. ``full`` is the verbose legacy layout; ``normal`` and ``brief`` print paths relative to one ``root:`` line."""
+    if detail == "full" or root is None:
+        return _render_full(rec)
+    if detail == "brief":
+        return _render_brief(rec)
+    return _render_normal(rec, root, home)
+
+
+def _active_filters(rec: Mapping[str, Any], short: bool = False) -> List[str]:
     f = rec["filters"]
     active = []  # type: List[str]
     if f["framework"]:
@@ -619,7 +630,158 @@ def render_text(rec: Mapping[str, Any]) -> str:
         active.append("no-webgl" + (" (config)" if f["origins"]["no_webgl"] == "config" else ""))
     if f["reduced_motion_safe"]:
         active.append("reduced-motion-safe" + (" (config)" if f["origins"]["reduced_motion_safe"] == "config" else ""))
-    active.append("deps: " + rec["policy"])
+    active.append("deps: " + (rec["policy"].split(" (")[0] if short else rec["policy"]))
+    return active
+
+
+def _deps_text(p: Mapping[str, Any]) -> str:
+    deps = ", ".join(p["dependencies"]) or "-"
+    outside = p["dependencies_outside_policy"]
+    if outside and len(outside) == len(p["dependencies"]):
+        deps += " (all outside allowed)"
+    elif outside:
+        deps += " (outside allowed: %s)" % ", ".join(outside)
+    return deps
+
+
+def _non_read_steps(rec: Mapping[str, Any]) -> List[str]:
+    """Next steps that carry no file paths (sync hint, offline note, eval); the read steps are re-created cheaply."""
+    return [s.replace("(needs network and git; `design-sensei sources show <id>` first)", "(needs network + git; run `sources show <id>` first)")
+            for s in rec["next_steps"] if not s.startswith("Read ")]
+
+
+def _read_suggestion(rec: Mapping[str, Any], brief: bool) -> List[str]:
+    slugs = [s["slug"] for s in (rec["style"]["primary"], rec["style"]["supporting"]) if s]
+    ids = [p["id"] for p in rec["patterns"] if p.get("knowledge_doc") or p.get("recipe")]
+    alt = (rec["fallback"] or {}).get("alternative")
+    if alt and alt["id"] not in ids:
+        ids.append(alt["id"])
+    steps = []  # type: List[str]
+    if slugs:
+        steps.append("Read a style cheaply: " + " ; ".join(compact.read_style(sl) for sl in slugs[: 1 if brief else 2]))
+    if ids:
+        steps.append("Read a pattern section: %s" % compact.read_pattern("<id>") if not brief else "Then: %s for %s" % (compact.read_pattern("<id>"), ids[0]))
+    return steps
+
+
+def _render_brief(rec: Mapping[str, Any]) -> str:
+    style = rec["style"]
+    lines = ["RECOMMEND \"%s\" | deps: %s" % (rec["brief"], rec["policy"])]
+    if style["primary"]:
+        names = style["primary"]["slug"] + (" + " + style["supporting"]["slug"] if style["supporting"] else "")
+        lines.append("STYLE %s (%s, reuse %s, gpu %s)" % (names, style["primary"]["id"], style["primary"]["reuse"], style["primary"]["gpu_intensity"]))
+    else:
+        lines.append("STYLE none matched; try `design-sensei search --category design-style <words>`")
+    for i, p in enumerate(rec["patterns"], start=1):
+        lines.append("%d. %s | %s | reuse %s | gpu %s | deps %s" % (i, p["id"], p["title"], p["reuse"], p["gpu_intensity"], _deps_text(p)))
+    if not rec["patterns"]:
+        lines.append("PATTERNS none matched")
+    gate = rec["license_gate"]
+    lines.append("LICENSE GATE: strictest reuse class is %s (licence status %s)." % (gate["strictest_reuse"], gate["strictest_license_status"])
+                 + ("".join(" `design-sensei sources show %s` first." % sid for sid in gate["review_sources"][:1])))
+    fb = rec["fallback"]
+    if fb:
+        alt = fb["alternative"]
+        lines.append("FALLBACK: %s -> %s" % ("; ".join(fb["reasons"]), "use `%s` (gpu %s)" % (alt["id"], alt["gpu_intensity"]) if alt else "build a CSS-only version, no packages"))
+    steps = _read_suggestion(rec, brief=True)
+    lines.append("NEXT: " + " | ".join(steps) if steps else "NEXT: design-sensei search --facets")
+    lines += ["note: %s" % n for n in rec["notes"]]
+    return "\n".join(lines) + "\n"
+
+
+def _style_block(label: str, s: Mapping[str, Any], rel: Any, seen_pairs: Sequence[str], seen_avoid: Sequence[str]) -> List[str]:
+    head = "%s %s \"%s\" %.1f: %s" % (label, s["id"], s["title"], s["score"], compact.clip(s["summary"]))
+    pairs = [x for x in s["pairs_well_with"] if x not in seen_pairs]
+    avoid = [x for x in s["avoid"] if x not in seen_avoid]
+    tail = ["note: " + rel(s["note_path"])]
+    if pairs:
+        tail.append("pairs: " + ", ".join(pairs))
+    if avoid:
+        tail.append("avoid: " + ", ".join(avoid))
+    return [head, "   " + " | ".join(tail)]
+
+
+def _fallback_normal(rec: Mapping[str, Any]) -> str:
+    """The FALLBACK line without repeating the dependency list, the policy or boilerplate already shown elsewhere."""
+    fb = rec["fallback"]
+    top = rec["patterns"][0]
+    reasons = []  # type: List[str]
+    if top["gpu_intensity"] in GPU_HEAVY:
+        reasons.append("%s is gpu %s" % (top["id"], top["gpu_intensity"]))
+    if top["dependencies_outside_policy"]:
+        reasons.append("%s needs deps outside allowed_dependencies" % top["id"])
+    alt = fb["alternative"]
+    action = ("use `%s` instead (gpu %s, %s, reuse %s)" % (alt["id"], alt["gpu_intensity"], "no deps" if not alt["dependencies"] else "needs " + ", ".join(alt["dependencies"]), alt["reuse"])
+              if alt else CSS_ONLY_ACTION)
+    if top["gpu_intensity"] in GPU_HEAVY:
+        action += "; ship heavy only as progressive enhancement (static + reduced-motion fallback)"
+    if top["dependencies_outside_policy"]:
+        action += "; add the outside deps only after the user agrees"
+    return "FALLBACK: %s. Suggestion: %s." % ("; ".join(reasons), action)
+
+
+def _render_normal(rec: Mapping[str, Any], root: Path, home: Optional[Path] = None) -> str:
+    rel = lambda path: compact.rel_path(path, root, home)  # noqa: E731
+    lines = [compact.root_header(root, home), "RECOMMENDATION for \"%s\" | %s" % (rec["brief"], " | ".join(_active_filters(rec, short=True)))]
+    style = rec["style"]
+    if style["primary"]:
+        lines += _style_block("PRIMARY", style["primary"], rel, [], [])
+        if style["supporting"]:
+            lines += _style_block("SUPPORTING", style["supporting"], rel, style["primary"]["pairs_well_with"], style["primary"]["avoid"])
+        else:
+            lines.append("SUPPORTING: none")
+        if style["conflicts"]:
+            lines.append("also matched but not combined (the notes say avoid): %s" % ", ".join(style["conflicts"]))
+    else:
+        lines.append("no design style matched; try `design-sensei search --category design-style <words>`")
+    lines.append("PATTERNS (%d)" % len(rec["patterns"]) + ("" if rec["patterns"] else ": none matched"))
+    seen_docs = {}  # type: Dict[str, int]
+    for i, p in enumerate(rec["patterns"], start=1):
+        lines.append("%d. %s [%s] %.1f%s - %s" % (i, p["id"], p["category"], p["score"], "" if p["match"] == "query" else " (listed by the chosen style, no direct word match)", p["title"]))
+        lines.append("   " + compact.clip(p["summary"], 120))
+        srcs = ", ".join("%s %s" % (x["id"], x["license"]) for x in p["source_licenses"]) or "original"
+        status = "" if p["license_status"] in ("verified",) else " | license %s" % p["license_status"]
+        lines.append("   %s | reuse %s%s | gpu %s | motion %s%s | deps %s | %s" % (
+            srcs, p["reuse"], status, p["gpu_intensity"], p["motion"] or "?", " +reduced-motion alt" if p["reduced_motion_alternative"] else " (no reduced-motion alt)", _deps_text(p),
+            p["implementation_status"]))
+        shown = []  # type: List[str]
+        for key, path in (("doc", p["knowledge_doc_path"]), ("recipe", p["recipe_path"])):
+            if path:
+                shown.append("%s: %s" % (key, "same as #%d" % (seen_docs[path]) if path in seen_docs else rel(path)))
+                seen_docs.setdefault(path, i)
+        if shown:
+            lines.append("   " + " | ".join(shown))
+        files = p["source_paths"]
+        if files:
+            names = [rel(f["path"] or f["ref"]) for f in files]
+            prefix, names = compact.split_common_dir(names)
+            states = {f["state"] for f in files}
+            extra = compact.more(p.get("source_paths_total", len(files)), len(files))
+            if len(states) == 1:
+                lines.append("   files (%s) in %s: %s%s" % (files[0]["state"], prefix or "./", ", ".join(names), extra))
+            else:
+                lines.append("   files in %s: %s%s" % (prefix or "./", ", ".join("%s (%s)" % (n, f["state"]) for n, f in zip(names, files)), extra))
+        for w in p["warnings"]:
+            lines.append("   warning: %s" % w)
+    gate = rec["license_gate"]
+    gate_line = gate["line"]
+    cut = gate_line.find(" Per pattern:")
+    lines.append(gate_line[:cut] if cut > 0 else gate_line)  # each pattern already shows its own reuse class
+    if rec["fallback"]:
+        lines.append(_fallback_normal(rec))
+    steps = _read_suggestion(rec, brief=False) + _non_read_steps(rec)
+    if any(f["state"] == "downloaded" for p in rec["patterns"] for f in p["source_paths"]):
+        steps = [x for x in steps if not x.startswith("Open the files marked")]
+        steps = [x.replace("When done:", "Open the (downloaded) files above for the real code. When done:") for x in steps]
+    if steps:
+        lines.append("NEXT STEPS")
+        lines += ["%d. %s" % (i, step) for i, step in enumerate(steps, start=1)]
+    lines += ["note: %s" % n for n in rec["notes"]]
+    return "\n".join(lines) + "\n"
+
+
+def _render_full(rec: Mapping[str, Any]) -> str:
+    active = _active_filters(rec)
     lines = ["RECOMMENDATION for \"%s\"" % rec["brief"], "  filters: " + " | ".join(active), "", "STYLE"]
     style = rec["style"]
     if style["primary"]:
@@ -674,7 +836,8 @@ def cmd_recommend(layout: Layout, args: argparse.Namespace) -> int:
     if args.json:
         print_json(rec)
     else:
-        sys.stdout.write(render_text(rec))
+        detail = compact.resolve_detail(args.detail, layout, opts.project)
+        sys.stdout.write(render_text(rec, detail, layout.root, layout.home))
     return EXIT_OK
 
 
@@ -689,6 +852,7 @@ def add_arguments(parser: argparse.ArgumentParser) -> None:
                         help="comma-separated packages you may add, or one of none|existing|minimal|any")
     parser.add_argument("--limit", type=int, default=3, metavar="N", help="implementation patterns to return (default 3)")
     parser.add_argument("--project", metavar="DIR", help="project directory for .design-sensei.yaml and package.json (default: current directory)")
+    compact.add_detail_option(parser)
     parser.add_argument("--json", action="store_true")
     add_global_options(parser)
     parser.set_defaults(func=lambda a: run_with_layout(a, cmd_recommend))

@@ -11,8 +11,8 @@ from tests.helpers import make_pattern, make_source, run_cli
 
 COMMANDS = [
     [], ["setup"], ["sources"], ["sources", "list"], ["sources", "sync"], ["sources", "status"], ["sources", "show"], ["index"], ["index", "build"],
-    ["search"], ["recommend"], ["catalog"], ["catalog", "validate"], ["licenses"], ["licenses", "check"], ["licenses", "scan"], ["licenses", "report"],
-    ["doctor"], ["config"], ["config", "show"], ["config", "init"], ["eval"], ["package-skill"],
+    ["search"], ["recommend"], ["read"], ["catalog"], ["catalog", "validate"], ["licenses"], ["licenses", "check"], ["licenses", "scan"], ["licenses", "report"],
+    ["doctor"], ["tokens"], ["config"], ["config", "show"], ["config", "init"], ["eval"], ["package-skill"],
 ]
 
 

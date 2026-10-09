@@ -60,6 +60,15 @@ class ConfigTests(helpers.TempDirTest):
         self.assertEqual(validate(yamlite.load(self.layout.defaults_yaml), schema), [])
         self.assertEqual(template, yamlite.load(self.layout.defaults_yaml))  # the template documents the defaults
 
+    def test_output_detail_default_enum_and_show(self):
+        values, _, _ = ds_config.effective_config(self.layout, self.tmp)
+        self.assertEqual(values["output_detail"], "normal")
+        schema = load_json(self.layout.schemas_dir / "config.schema.json")
+        for ok in ("brief", "normal", "full"):
+            self.assertEqual(validate({"output_detail": ok}, schema), [])
+        self.assertTrue(validate({"output_detail": "verbose"}, schema))
+        self.assertIn("output_detail", ds_config.render(values, {k: "default" for k in values}))
+
     def test_render_marks_origins(self):
         values, origins, _ = ds_config.effective_config(self.layout, self.tmp)
         text = ds_config.render(values, origins)

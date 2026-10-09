@@ -45,3 +45,9 @@ reduced_motion: respect
 # full       expect the whole library to be present (design-sensei setup --full)
 # offline    never touch the network; use only what is already downloaded
 source_acquisition_mode: on_demand
+
+# Size of `recommend` / `search` text output (the --detail flag wins):
+# brief   ids and one line each, cheapest
+# normal  trimmed summaries, paths relative to one root (default)
+# full    verbose, absolute paths
+output_detail: normal

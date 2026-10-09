@@ -30,9 +30,11 @@ import build_portable_skill
 import check_licenses
 import design_eval
 import doctor
+import read_doc
 import recommend
 import search_patterns
 import sync_sources
+import token_report
 import validate_catalog
 from dslib import (EXIT_ENVIRONMENT, EXIT_FAILURE, EXIT_OK, EXIT_PARTIAL, EXIT_USAGE, __version__)
 from dslib import catalog, config as ds_config, gitops
@@ -143,6 +145,10 @@ def build_parser() -> argparse.ArgumentParser:
     search_patterns.add_arguments(sub.add_parser("search", help="search patterns, knowledge notes and source files", description=search_patterns.__doc__, formatter_class=argparse.RawDescriptionHelpFormatter))
 
     recommend.add_arguments(sub.add_parser("recommend", help="one-call recommendation: style, implementation patterns, licence gate, fallback, next steps", description=recommend.__doc__, formatter_class=argparse.RawDescriptionHelpFormatter))
+
+    read_doc.add_arguments(sub.add_parser("read", help="read only what you need of a note, reference, recipe or source file (card, toc, section, lines)", description=read_doc.__doc__, formatter_class=argparse.RawDescriptionHelpFormatter))
+
+    token_report.add_arguments(sub.add_parser("tokens", help="estimated token cost of SKILL.md, references, notes and command output (--budget-check enforces catalog/token-budgets.yaml)", description=token_report.__doc__, formatter_class=argparse.RawDescriptionHelpFormatter))
 
     cp = sub.add_parser("catalog", help="validate catalog files and knowledge notes", description="Catalog tools.")
     csub = cp.add_subparsers(dest="subcommand", metavar="COMMAND")

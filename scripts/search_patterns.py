@@ -29,7 +29,7 @@ if __package__ in (None, ""):
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from dslib import EXIT_FAILURE, EXIT_OK, EXIT_USAGE
-from dslib import catalog, knowledge
+from dslib import catalog, compact, knowledge
 from dslib.cli import add_global_options, fail, print_json, run_with_layout
 from dslib.paths import Layout
 from dslib.textutil import tokenize, truncate
@@ -253,7 +253,101 @@ def decorate(layout: Layout, sources: Mapping[str, Mapping[str, Any]], p: Dict[s
     return out
 
 
-def format_result(rank: int, r: Dict[str, Any]) -> str:
+def format_result(rank: int, r: Dict[str, Any], detail: str = "full", root: Optional[Path] = None, home: Optional[Path] = None) -> str:
+    """One result. ``full`` is the verbose legacy layout; ``normal``/``brief`` print paths relative to ``root`` (see `render_results`)."""
+    if detail != "full" and root is not None:
+        return _format_compact(rank, r, detail, root, None, home)
+    return _format_full(rank, r)
+
+
+def _deps_gpu_line(r: Dict[str, Any]) -> str:
+    perf = r.get("performance") or {}
+    acc = r.get("accessibility") or {}
+    reduced = acc.get("reduced_motion_alternative")
+    return "gpu %s | motion %s%s | deps %s | fw %s | %s" % (
+        perf.get("gpu_intensity", "?"), acc.get("motion", "?"), " +reduced-motion alt" if reduced else " (no reduced-motion alt)",
+        ", ".join(r.get("dependencies", [])) or "-", ", ".join(r.get("frameworks", [])) or "-", r.get("implementation_status"))
+
+
+def _format_compact(rank: int, r: Dict[str, Any], detail: str, root: Path, seen: Optional[Dict[str, int]] = None, home: Optional[Path] = None) -> str:
+    seen = {} if seen is None else seen
+    rel = lambda path: compact.rel_path(path, root, home)  # noqa: E731
+    brief = detail == "brief"
+    if r["type"] == "pattern":
+        head = "%d. %s [%s] %.1f - %s" % (rank, r["id"], r["category"], r["score"], r["title"])
+        perf = r.get("performance") or {}
+        if brief:
+            deps = ", ".join(r.get("dependencies", [])) or "-"
+            return "%s | reuse %s | gpu %s | deps %s" % (head, r["reuse"], perf.get("gpu_intensity", "?"), deps)
+        lines = [head, "   " + compact.clip(r.get("summary", ""))]
+        src = ", ".join("%s %s" % (s["id"], s["license"]) for s in r["sources"]) or "original"
+        status = "" if r.get("license_status") == "verified" else " | license %s" % r.get("license_status")
+        lines.append("   %s | reuse: %s%s | %s" % (src, r["reuse"], status, _deps_gpu_line(r)))
+        docs = []  # type: List[str]
+        for field, label in (("knowledge_doc_path", "doc"), ("recipe_path", "recipe")):
+            if r.get(field):
+                docs.append("%s: %s" % (label, "same as #%d" % seen[r[field]] if r[field] in seen else rel(r[field])))
+                seen.setdefault(r[field], rank)
+        files = r.get("files", [])
+        if files:
+            shown = files[: compact.MAX_FILES]
+            prefix, names = compact.split_common_dir([rel(f["path"] or f["ref"]) for f in shown])
+            missing = sum(1 for f in shown if not f["present"])
+            tag = " (not downloaded)" if missing == len(names) else (" (%d not downloaded)" % missing if missing else "")
+            docs.append("files%s in %s: %s%s" % (tag, prefix or "./", ", ".join(names), compact.more(len(files), compact.MAX_FILES)))
+        if docs:
+            lines.append("   " + " | ".join(docs))
+        return "\n".join(lines)
+    if r["type"] == "doc":
+        head = "%d. [note] %s (%s) %.1f - %s" % (rank, r["title"], r["kind"], r["score"], rel(r["path"]))
+        if brief:
+            return head
+        lines = [head, "   " + compact.clip(r.get("summary") or "")]
+        if r.get("pattern_ids"):
+            lines.append("   patterns: %s" % ", ".join(r["pattern_ids"][:8]))
+        return "\n".join(lines)
+    head = "%d. [file] %s (%s) %.1f" % (rank, r["id"], r["kind"], r["score"])
+    if brief:
+        return head
+    return "%s\n   %s | licence status %s | reuse %s" % (head, rel(r["path"]), r["license_status"], r["reuse"])
+
+
+def _next_hint(results: Sequence[Dict[str, Any]]) -> str:
+    styles = [r for r in results if r["type"] == "pattern" and r.get("category") == "design-style"]
+    others = [r for r in results if r["type"] == "pattern" and r.get("category") != "design-style"]
+    parts = []  # type: List[str]
+    if styles:
+        parts.append(compact.read_style(compact.style_slug_of(styles[0]["id"])))
+    if others or not parts:
+        parts.append(compact.read_pattern(others[0]["id"] if others else "<pattern-id>"))
+    return "NEXT: read cheaply: " + " | ".join(parts)
+
+
+def render_results(results: Sequence[Dict[str, Any]], notes: Sequence[str], detail: str, root: Path, home: Optional[Path] = None) -> str:
+    """Text output of a search at the given detail level (``full`` keeps the legacy blank-line separated layout)."""
+    out = []  # type: List[str]
+    if not results:
+        out.append("no matches. Try fewer filters, other words, or `design-sensei search --facets` to see the vocabulary.")
+    if detail == "full":
+        for i, r in enumerate(results, start=1):
+            out.append(_format_full(i, r))
+            out.append("")
+    else:
+        if results and detail == "normal":
+            out.append(compact.root_header(root, home))
+        seen = {}  # type: Dict[str, int]
+        for i, r in enumerate(results, start=1):
+            out.append(_format_compact(i, r, detail, root, seen, home))
+        missing = sorted({sid for r in results for sid in (r.get("missing_sources") or [])})
+        if missing and detail == "normal":
+            out.append("download: design-sensei sources sync %s" % " ".join(missing))
+        if results:
+            out.append(_next_hint(results))
+    out.extend("note: %s" % n for n in notes)
+    return "\n".join(out) + "\n"
+
+
+def _format_full(rank: int, r: Dict[str, Any]) -> str:
     lines = []
     if r["type"] == "pattern":
         lines.append("%d. %s  [%s]  score %.1f" % (rank, r["id"], r["category"], r["score"]))
@@ -400,13 +494,11 @@ def cmd_search(layout: Layout, args: argparse.Namespace) -> int:
     if args.json:
         print_json({"query": args.query, "count": len(results), "results": results, "notes": notes})
         return EXIT_OK
-    if not results:
-        print("no matches. Try fewer filters, other words, or `design-sensei search --facets` to see the vocabulary.")
-    for i, r in enumerate(results, start=1):
-        print(format_result(i, r))
-        print()
-    for n in notes:
-        print("note: %s" % n)
+    detail = compact.resolve_detail(args.detail, layout)
+    if detail == "full":
+        sys.stdout.write(render_results(results, notes, "full", layout.root, layout.home))
+    else:
+        sys.stdout.write(render_results(results, notes, detail, layout.root, layout.home))
     return EXIT_OK
 
 
@@ -434,6 +526,7 @@ def add_arguments(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--content", action="store_true", help="also grep downloaded source files for the query text (slower)")
     parser.add_argument("--facets", action="store_true", help="list available categories, tags, frameworks and sources")
     parser.add_argument("--limit", type=int, default=10, metavar="N")
+    compact.add_detail_option(parser)
     parser.add_argument("--json", action="store_true")
     add_global_options(parser)
     parser.set_defaults(func=lambda a: run_with_layout(a, cmd_search))
