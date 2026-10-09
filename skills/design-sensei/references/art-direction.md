@@ -101,7 +101,7 @@ changes. A page claiming `motion_intensity` 5 or more must visibly contain at le
 | Scroll-driven narrative | [[style-motion-led-storytelling]] | [[style-editorial]] |
 | Luxury, fashion, restraint | [[style-high-fashion-luxury]] | [[style-editorial]] |
 
-The full list of 28 styles with group, summary and pairings is [the style index](../../../knowledge/design-styles/README.md). Use it when
+The full list of 40 styles with group, summary and pairings is [the style index](../../../knowledge/design-styles/README.md). Use it when
 nothing in the table fits. If the brief names a design system (Material, shadcn, a company system), that is the style; one system per project.
 
 ## Brief to implementation

@@ -1,0 +1,102 @@
+# Additional design-style patterns (original guidance), batch A: flat design, Material-style layered surfaces, Bauhaus and Memphis.
+# Notes live in knowledge/design-styles/. None of these styles has a local implementation, so each pattern is reference_only
+# and its notes contain original CSS. Source references are listed only where a local, verified file is genuinely relevant.
+schema_version: 1
+patterns:
+  - id: style-flat-design
+    title: "Flat design"
+    category: design-style
+    summary: "Solid colour planes, simple geometric icons and type-led hierarchy with no simulated depth. The practical traps are weak signifiers, bright flat palettes that fail with white text and borderless inputs; state must come from colour, outline and shape."
+    provenance: mixed
+    tags: [flat, flat-design, semi-flat, solid-colour, icons, tonal-layers, borderless]
+    source_ids: [design-md]
+    frameworks: [css]
+    dependencies: []
+    implementation_status: reference_only
+    use_cases: ["marketing sites and content-first apps", "icon-led onboarding and mobile screens", "infographics and simple data summaries", "low-power or print-friendly interfaces"]
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: "Solid fills and CSS only; no shadows or filters to repaint."
+    accessibility:
+      motion: subtle
+      reduced_motion_alternative: true
+      notes: "Colour fades only; slide-ins are removed under reduced motion. Main cautions are missing signifiers, inputs without a 3:1 border, white text on bright fills and fills that lose their shape in forced-colors mode (use a transparent border)."
+    source_paths:
+      - design-md:docs/spec.md
+    knowledge_doc: knowledge/design-styles/flat-design.md
+    related: [style-minimalism]
+    notes: "No flat-design implementation exists in the local sources; the note contains original CSS. The design.md spec is cited only for its guidance that flat designs should state how hierarchy is conveyed (borders, colour contrast)."
+
+  - id: style-material-design
+    title: "Material design (layered surfaces and elevation)"
+    category: design-style
+    summary: "Opaque sheets at defined heights with paired contact and ambient shadows, tonal surfaces, state-layer overlays and motion that explains origin. Dark themes lighten surfaces instead of darkening shadows; outlines are needed because tone and shadow are weak edges."
+    provenance: mixed
+    tags: [material-design, material, elevation, layers, surfaces, state-layer, ripple, tonal-surface]
+    source_ids: [astryx]
+    frameworks: [css]
+    dependencies: []
+    implementation_status: reference_only
+    use_cases: ["productivity and utility apps", "dashboards with cards, drawers and dialogs", "forms and settings screens", "multi-platform web apps using familiar conventions"]
+    performance:
+      gpu_intensity: low
+      fallback_required: false
+      notes: "Animate transform and opacity (overlay layers); avoid animating box-shadow blur on long lists, and cap simultaneous ripples."
+    accessibility:
+      motion: subtle
+      reduced_motion_alternative: true
+      notes: "Ripples, container transforms and shared-element moves become an instant change or a short fade under reduced motion. Shadows and tonal edges fail 3:1 and vanish in forced-colors mode; add outlines and borders, and keep stacking, focus order and inert background in agreement."
+    source_paths:
+      - astryx:docs/design/elevation-hierarchy.md
+    knowledge_doc: knowledge/design-styles/material-design.md
+    related: [style-flat-design, style-neumorphism]
+    notes: "Material design is a Google design language; the note covers the general layered-surface idea with original CSS and does not reproduce its specification. The astryx elevation record is a draft design record, not policy."
+
+  - id: style-bauhaus
+    title: "Bauhaus"
+    category: design-style
+    summary: "Function-first geometry: red, yellow and blue with black and paper, circles, squares and triangles, diagonal asymmetry, geometric sans-serif type and heavy bars. Ink fails on red and blue; shapes are structure, never scattered clip-art."
+    provenance: original
+    tags: [bauhaus, geometric, primary-colours, asymmetry, modernist, diagonal, poster]
+    source_ids: []
+    frameworks: [css]
+    dependencies: []
+    implementation_status: reference_only
+    use_cases: ["design schools, museums and exhibitions", "architecture and furniture studios", "event and festival posters", "craft and utility-led product brands"]
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: "CSS shapes (border-radius, clip-path) and grid only."
+    accessibility:
+      motion: subtle
+      reduced_motion_alternative: true
+      notes: "Slide and rotate movements are removed under reduced motion, leaving colour swaps. Red beside blue vibrates and ink on red or blue fails; decorative shapes need aria-hidden and a border fallback in forced-colors mode."
+    source_paths: []
+    knowledge_doc: knowledge/design-styles/bauhaus.md
+    related: [style-swiss-international-typographic, style-minimalism, style-flat-design]
+    notes: "Fully original guidance; no local source files exist for this style."
+
+  - id: style-memphis
+    title: "Memphis"
+    category: design-style
+    summary: "Playful 1980s postmodern graphics: squiggles, zigzags, confetti, terrazzo speckle and bold primitives in bounded clashing colour. Decoration stays around calm text panels, never behind text; white on pink or turquoise fails contrast."
+    provenance: original
+    tags: [memphis, 80s, postmodern, squiggle, confetti, terrazzo, pattern, playful]
+    source_ids: []
+    frameworks: [css, svg]
+    dependencies: []
+    implementation_status: reference_only
+    use_cases: ["festivals, club nights and event posters", "youth, student and creative-agency brands", "retail campaigns and pop-up shops", "children's creative products"]
+    performance:
+      gpu_intensity: low
+      fallback_required: false
+      notes: "CSS gradient patterns and inline SVG; contain decorative layers and keep animated shapes few and transform-only."
+    accessibility:
+      motion: moderate
+      reduced_motion_alternative: true
+      notes: "Drift, wiggle and parallax are removed under reduced motion; keep loops slow and pausable. Patterns behind text and adjacent saturated brights are the main risks; hide the decorative layer in forced-colors mode and mark shapes aria-hidden."
+    source_paths: []
+    knowledge_doc: knowledge/design-styles/memphis.md
+    related: [style-maximalism, style-retro-vintage, style-neo-brutalism]
+    notes: "Fully original guidance; no local source files exist for this style."

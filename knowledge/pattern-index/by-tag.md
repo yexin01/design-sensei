@@ -3,8 +3,10 @@
 # Patterns by tag
 
 - **3d** (12): `r3f-adaptive-resolution-performance`, `r3f-canvas-setup`, `r3f-frame-loop-animation`, `r3f-gltf-loading-suspense`, `r3f-instancing-and-resource-reuse`, `r3f-lazy-canvas-webgl-fallback`, `r3f-on-demand-rendering`, `r3f-pointer-events-interaction`, `r3f-product-showcase-scene`, `react-bits-3d-image-galleries`, `react-bits-three-r3f-backgrounds`, `style-experimental-3d`
+- **3d-illustration** (1): `style-isometric-illustration`
 - **3d-transform** (1): `vengeance-ui-3d-image-carousels`
-- **80s** (1): `style-vaporwave`
+- **8-bit** (1): `style-pixel-art-8bit`
+- **80s** (2): `style-memphis`, `style-vaporwave`
 - **90s** (1): `style-vaporwave`
 - **a11y** (1): `react-bits-micro-spring-controls`
 - **accessibility** (2): `astryx-accessibility-spec-contracts`, `webgl-effect-fallback-and-reduced-motion`
@@ -25,6 +27,7 @@
 - **animation-clips** (1): `image-to-3d-procedural-rig-animation-gates`
 - **animation-gates** (1): `image-to-3d-procedural-rig-animation-gates`
 - **animmaster** (1): `reference-animmaster-lib`
+- **annotation** (1): `style-hand-drawn-doodle`
 - **anti-design** (1): `style-brutalism`
 - **anti-slop** (1): `taste-skill-anti-generic-ui-checklist`
 - **antialias** (1): `r3f-adaptive-resolution-performance`
@@ -32,6 +35,7 @@
 - **aria** (1): `astryx-accessibility-spec-contracts`
 - **art-deco** (1): `style-art-deco`
 - **art-direction** (3): `awesome-opus-videos-prompt-mining`, `taste-skill-image-to-code-workflow`, `taste-skill-three-dials`
+- **asymmetry** (2): `style-bauhaus`, `style-japanese-minimalism`
 - **async-action** (1): `astryx-button-family`
 - **attractor** (1): `fancy-matter-gravity`
 - **attribution** (1): `awesome-opus-videos-prompt-mining`
@@ -39,6 +43,7 @@
 - **aurora** (2): `style-aurora-gradient-mesh`, `vengeance-ui-aurora-hero-backgrounds`
 - **auto-fill** (1): `astryx-card-and-grid-collections`
 - **autoplay** (1): `skiper-ui-coverflow-card-carousel`
+- **axonometric** (1): `style-isometric-illustration`
 - **b2b** (1): `style-product-led-saas`
 - **backdrop-filter** (2): `liquid-glass-css-fallback`, `style-glassmorphism`
 - **background** (10): `fancy-animated-gradient-svg`, `fancy-pixel-trail`, `glsl-background-fundamentals`, `react-bits-canvas-grid-backgrounds`, `react-bits-ogl-shader-backgrounds`, `react-bits-self-pausing-shader-backgrounds`, `react-bits-three-r3f-backgrounds`, `react-bits-webgpu-backgrounds`, `style-aurora-gradient-mesh`, `vengeance-ui-aurora-hero-backgrounds`
@@ -48,9 +53,12 @@
 - **baseline** (1): `style-swiss-international-typographic`
 - **batch** (1): `gsap-stagger-reveal`
 - **battery** (1): `r3f-on-demand-rendering`
+- **bauhaus** (1): `style-bauhaus`
 - **bento** (3): `react-bits-bento-and-card-grids`, `style-bento-layouts`, `vengeance-ui-bento-grids`
+- **bitmap-font** (1): `style-pixel-art-8bit`
 - **blend-mode** (1): `vengeance-ui-aurora-hero-backgrounds`
 - **blur** (6): `fancy-animated-gradient-svg`, `fancy-svg-filters`, `react-bits-lightweight-text-effects`, `style-aurora-gradient-mesh`, `style-glassmorphism`, `vengeance-ui-gooey-text-reveal`
+- **borderless** (1): `style-flat-design`
 - **bottom-nav** (1): `vengeance-ui-floating-dock-navigation`
 - **breadcrumbs** (1): `astryx-app-shell-navigation`
 - **breathing** (1): `fancy-variable-font-text`
@@ -73,9 +81,11 @@
 - **character** (1): `image-to-3d-procedural-rig-animation-gates`
 - **charts** (1): `astryx-charts-config-model`
 - **checklist** (1): `taste-skill-anti-generic-ui-checklist`
+- **chromatic-aberration** (1): `style-glitch`
 - **chrome** (4): `liquid-metal-logo`, `style-liquid-materials`, `style-y2k`, `vengeance-ui-liquid-metal-button`
 - **chunky** (1): `style-neo-brutalism`
 - **cinematic** (1): `style-high-fashion-luxury`
+- **cjk** (1): `style-japanese-minimalism`
 - **clash** (1): `style-maximalism`
 - **claude-code** (1): `vengeance-ui-agent-skill-mcp-cli`
 - **claude-md** (1): `astryx-agent-ready-workflow`
@@ -87,7 +97,7 @@
 - **click** (1): `r3f-pointer-events-interaction`
 - **clickable-card** (1): `astryx-card-and-grid-collections`
 - **clip-path** (1): `skiper-ui-theme-toggle-view-transition`
-- **collage** (1): `style-maximalism`
+- **collage** (2): `style-collage-cutout`, `style-maximalism`
 - **collection** (1): `astryx-card-and-grid-collections`
 - **command-palette** (1): `style-dark-technical-developer-tools`
 - **comparison-sheet** (1): `image-to-3d-review-gates-and-correction-loop`
@@ -95,11 +105,13 @@
 - **component-library** (1): `astryx-design-system-react`
 - **components** (1): `reference-animmaster-lib`
 - **composable** (1): `lenis-vue-nuxt-module`
+- **confetti** (1): `style-memphis`
 - **configuration** (1): `shader-gradient-url-config`
 - **container** (1): `liquid-glass-container`
 - **container-padding** (1): `astryx-responsive-layout-primitives`
 - **context** (2): `gsap-match-media-reduced-motion`, `lenis-react-provider`
 - **context-loss** (1): `webgl-effect-fallback-and-reduced-motion`
+- **contour** (1): `style-line-art-outline`
 - **contracts** (1): `astryx-accessibility-spec-contracts`
 - **contrast** (1): `liquid-glass-css-fallback`
 - **copy-paste** (1): `vengeance-ui-registry-copy-paste-install`
@@ -120,6 +132,7 @@
 - **cursor** (7): `fancy-cursor-proximity-text`, `fancy-image-trail`, `fancy-pixel-trail`, `react-bits-target-cursor`, `react-bits-webgl-cursor-trails`, `vengeance-ui-agent-skill-mcp-cli`, `vengeance-ui-cursor-image-trails`
 - **curtain** (1): `page-transition-gsap`
 - **customizer** (1): `shader-gradient-url-config`
+- **cutout** (1): `style-collage-cutout`
 - **cyberpunk** (1): `style-cyberpunk`
 - **d3** (1): `astryx-charts-config-model`
 - **dark** (2): `style-dark-technical-developer-tools`, `style-futurism`
@@ -128,6 +141,7 @@
 - **dashboard** (3): `astryx-kpi-stat-row`, `style-bento-layouts`, `style-dark-technical-developer-tools`
 - **data-attributes** (1): `lenis-nested-scroll-and-modals`
 - **data-visualization** (1): `astryx-charts-config-model`
+- **datamosh** (1): `style-glitch`
 - **deco** (1): `style-art-deco`
 - **decrypt** (1): `react-bits-lightweight-text-effects`
 - **define-theme** (1): `astryx-theme-token-system`
@@ -146,34 +160,41 @@
 - **design-variance** (1): `taste-skill-three-dials`
 - **developer-tools** (1): `style-dark-technical-developer-tools`
 - **devtools** (1): `style-dark-technical-developer-tools`
+- **diagonal** (1): `style-bauhaus`
+- **diagram** (1): `style-isometric-illustration`
 - **dial** (1): `style-neumorphism`
 - **dials** (1): `taste-skill-three-dials`
 - **display-type** (2): `astryx-theme-presets`, `astryx-typography-scale`
 - **dispose** (1): `r3f-instancing-and-resource-reuse`
+- **distortion** (1): `style-glitch`
 - **distribution** (1): `vengeance-ui-registry-copy-paste-install`
-- **dither** (2): `style-generative-design`, `style-grain-and-texture`
+- **dither** (3): `style-generative-design`, `style-grain-and-texture`, `style-pixel-art-8bit`
 - **divine-eye** (1): `image-to-3d-review-gates-and-correction-loop`
 - **dock** (1): `vengeance-ui-floating-dock-navigation`
 - **documentation** (1): `astryx-agent-ready-workflow`
 - **dom-bodies** (1): `fancy-matter-gravity`
+- **doodle** (1): `style-hand-drawn-doodle`
 - **dots** (1): `react-bits-canvas-grid-backgrounds`
 - **dpr** (2): `glsl-background-fundamentals`, `r3f-adaptive-resolution-performance`
 - **draco** (1): `r3f-gltf-loading-suspense`
 - **drag** (5): `fancy-box-carousel`, `fancy-matter-gravity`, `fancy-simple-marquee`, `react-bits-3d-image-galleries`, `vengeance-ui-3d-image-carousels`
 - **draw-calls** (1): `r3f-instancing-and-resource-reuse`
+- **draw-on** (1): `style-line-art-outline`
 - **dtcg** (1): `design-md-lint-and-export`
+- **duotone** (1): `style-duotone-monochrome`
 - **duration** (1): `motion-principles`
 - **dystopian** (1): `style-cyberpunk`
 - **earthy** (1): `style-organic-tactile`
 - **easing** (2): `gsap-timeline-choreography`, `motion-principles`
 - **ecommerce** (1): `r3f-product-showcase-scene`
 - **editorial** (2): `style-editorial`, `style-high-fashion-luxury`
-- **elevation** (1): `astryx-button-family`
+- **elevation** (2): `astryx-button-family`, `style-material-design`
 - **environment-lighting** (1): `r3f-product-showcase-scene`
 - **error-boundary** (1): `r3f-lazy-canvas-webgl-fallback`
 - **evidence-layers** (1): `astryx-accessibility-spec-contracts`
 - **existing-project** (1): `taste-skill-redesign-audit-protocol`
 - **experimental** (1): `style-experimental-3d`
+- **explainer** (1): `style-isometric-illustration`
 - **extruded** (1): `style-neumorphism`
 - **fade** (1): `fancy-pixel-trail`
 - **fallback** (3): `liquid-glass-css-fallback`, `r3f-lazy-canvas-webgl-fallback`, `webgl-effect-fallback-and-reduced-motion`
@@ -183,7 +204,9 @@
 - **film-grain** (1): `style-grain-and-texture`
 - **filter-effect** (1): `fancy-svg-filters`
 - **filtering** (1): `gsap-flip-layout-transition`
-- **flat** (1): `style-neo-brutalism`
+- **flat** (2): `style-flat-design`, `style-neo-brutalism`
+- **flat-3d** (1): `style-isometric-illustration`
+- **flat-design** (1): `style-flat-design`
 - **flip** (2): `gsap-flip-layout-transition`, `vengeance-ui-kinetic-text-effects`
 - **floating-nav** (1): `vengeance-ui-floating-dock-navigation`
 - **flood-fill** (1): `image-background-removal-for-logos`
@@ -204,13 +227,14 @@
 - **gatsby** (1): `style-art-deco`
 - **generative** (1): `style-generative-design`
 - **generic-ui** (1): `taste-skill-anti-generic-ui-checklist`
-- **geometric** (1): `style-art-deco`
+- **geometric** (2): `style-art-deco`, `style-bauhaus`
 - **geometry-reuse** (1): `r3f-instancing-and-resource-reuse`
+- **ghost-button** (1): `style-line-art-outline`
 - **glass** (3): `react-bits-glass-surfaces`, `style-glassmorphism`, `vengeance-ui-landing-navbars`
 - **glass-button** (1): `liquid-glass-button`
 - **glassmorphism** (4): `liquid-glass-container`, `liquid-glass-css-fallback`, `style-glassmorphism`, `vengeance-ui-floating-dock-navigation`
 - **glb** (1): `r3f-gltf-loading-suspense`
-- **glitch** (3): `fancy-scramble-text`, `style-cyberpunk`, `style-vaporwave`
+- **glitch** (4): `fancy-scramble-text`, `style-cyberpunk`, `style-glitch`, `style-vaporwave`
 - **glossy** (1): `style-y2k`
 - **glow** (3): `react-bits-pointer-lit-cards`, `style-futurism`, `vengeance-ui-animated-cta-buttons`
 - **glsl** (4): `glsl-background-fundamentals`, `liquid-metal-logo`, `shader-gradient-background`, `vengeance-ui-three-js-scenes`
@@ -219,14 +243,18 @@
 - **goo** (1): `style-liquid-materials`
 - **gooey** (2): `fancy-svg-filters`, `vengeance-ui-gooey-text-reveal`
 - **gradient** (7): `fancy-animated-gradient-svg`, `react-bits-lightweight-text-effects`, `shader-gradient-background`, `shader-gradient-react`, `shader-gradient-vue`, `style-aurora-gradient-mesh`, `vengeance-ui-aurora-hero-backgrounds`
+- **gradient-map** (1): `style-duotone-monochrome`
 - **grain** (1): `style-grain-and-texture`
 - **gravity** (1): `fancy-matter-gravity`
 - **grid** (9): `astryx-card-and-grid-collections`, `astryx-responsive-layout-primitives`, `fancy-pixel-trail`, `react-bits-bento-and-card-grids`, `react-bits-canvas-grid-backgrounds`, `style-bento-layouts`, `style-brutalism`, `style-swiss-international-typographic`, `style-vaporwave`
 - **gsap** (7): `react-bits-animated-navigation-menus`, `react-bits-bento-and-card-grids`, `react-bits-gsap-text-reveals`, `react-bits-scroll-driven-components`, `react-bits-target-cursor`, `vengeance-ui-floating-dock-navigation`, `vengeance-ui-gooey-text-reveal`
 - **gsap-context** (1): `page-transition-gsap`
 - **gsap-ticker** (1): `lenis-gsap-scrolltrigger-sync`
-- **halftone** (2): `style-grain-and-texture`, `style-retro-vintage`
+- **hairline** (1): `style-line-art-outline`
+- **halftone** (3): `style-duotone-monochrome`, `style-grain-and-texture`, `style-retro-vintage`
+- **hand-drawn** (1): `style-hand-drawn-doodle`
 - **hand-made** (1): `style-organic-tactile`
+- **handwriting** (1): `style-hand-drawn-doodle`
 - **hard-shadow** (1): `style-neo-brutalism`
 - **hardware** (1): `style-skeuomorphism`
 - **harsh** (1): `style-brutalism`
@@ -244,8 +272,11 @@
 - **html2canvas** (1): `liquid-glass-container`
 - **hud** (2): `style-cyberpunk`, `style-futurism`
 - **icon-button** (1): `astryx-button-family`
+- **icons** (2): `style-flat-design`, `style-line-art-outline`
 - **idle** (1): `r3f-on-demand-rendering`
+- **illustration** (1): `style-isometric-illustration`
 - **image-preparation** (1): `image-background-removal-for-logos`
+- **image-rendering** (1): `style-pixel-art-8bit`
 - **image-to-3d** (3): `image-to-3d-img2threejs-pipeline`, `image-to-3d-procedural-rig-animation-gates`, `image-to-3d-review-gates-and-correction-loop`
 - **image-to-code** (1): `taste-skill-image-to-code-workflow`
 - **image-trail** (2): `fancy-image-trail`, `vengeance-ui-cursor-image-trails`
@@ -265,6 +296,8 @@
 - **intersection-observer** (2): `r3f-lazy-canvas-webgl-fallback`, `webgl-effect-fallback-and-reduced-motion`
 - **invalidate** (1): `r3f-on-demand-rendering`
 - **iridescent** (2): `style-liquid-materials`, `style-y2k`
+- **isometric** (1): `style-isometric-illustration`
+- **japanese** (1): `style-japanese-minimalism`
 - **jest** (1): `r3f-test-renderer-unit-tests`
 - **jsx** (1): `r3f-canvas-setup`
 - **keyboard** (1): `fancy-box-carousel`
@@ -275,6 +308,8 @@
 - **labels** (1): `gsap-timeline-choreography`
 - **landing-page** (1): `style-product-led-saas`
 - **landmarks** (1): `astryx-app-shell-navigation`
+- **layered** (1): `style-collage-cutout`
+- **layers** (1): `style-material-design`
 - **layout** (1): `astryx-responsive-layout-primitives`
 - **layout-animation** (1): `gsap-flip-layout-transition`
 - **lazy-loading** (1): `r3f-lazy-canvas-webgl-fallback`
@@ -283,6 +318,7 @@
 - **letter-swap** (1): `fancy-letter-swap-text`
 - **letterpress** (1): `style-retro-vintage`
 - **light-dark** (1): `astryx-theme-token-system`
+- **line-art** (1): `style-line-art-outline`
 - **lines** (1): `gsap-split-text-reveal`
 - **lint** (1): `design-md-lint-and-export`
 - **liquid** (1): `style-liquid-materials`
@@ -294,14 +330,16 @@
 - **logo** (2): `image-background-removal-for-logos`, `liquid-metal-logo`
 - **long-form** (1): `style-editorial`
 - **luxury** (1): `style-high-fashion-luxury`
+- **ma** (1): `style-japanese-minimalism`
 - **magazine** (1): `style-editorial`
-- **marker** (1): `fancy-text-highlighter`
+- **marker** (2): `fancy-text-highlighter`, `style-hand-drawn-doodle`
 - **marketing** (1): `style-product-led-saas`
 - **marquee** (2): `fancy-simple-marquee`, `style-kinetic-typography`
 - **mask** (3): `fancy-vertical-cut-reveal`, `gsap-split-text-reveal`, `skiper-ui-theme-toggle-view-transition`
 - **masonry** (1): `react-bits-bento-and-card-grids`
 - **matchmedia** (1): `gsap-match-media-reduced-motion`
-- **material** (1): `style-skeuomorphism`
+- **material** (2): `style-material-design`, `style-skeuomorphism`
+- **material-design** (1): `style-material-design`
 - **matter-js** (1): `fancy-matter-gravity`
 - **maximalism** (1): `style-maximalism`
 - **maximalist** (1): `style-maximalism`
@@ -309,6 +347,7 @@
 - **mediarecorder** (1): `logo-video-export`
 - **mega-menu** (1): `vengeance-ui-landing-navbars`
 - **memory** (1): `r3f-instancing-and-resource-reuse`
+- **memphis** (1): `style-memphis`
 - **menu** (1): `react-bits-animated-navigation-menus`
 - **mercury** (1): `style-liquid-materials`
 - **mesh-gradient** (2): `shader-gradient-background`, `style-aurora-gradient-mesh`
@@ -319,14 +358,16 @@
 - **millennium** (1): `style-y2k`
 - **minimal** (1): `style-minimalism`
 - **minimal-nav** (1): `style-high-fashion-luxury`
-- **minimalism** (1): `style-minimalism`
+- **minimalism** (2): `style-japanese-minimalism`, `style-minimalism`
+- **mixed-media** (1): `style-collage-cutout`
 - **mobile-menu** (1): `vengeance-ui-landing-navbars`
 - **mobile-nav** (1): `astryx-app-shell-navigation`
 - **mobile-typography** (1): `astryx-typography-scale`
 - **modal** (1): `lenis-nested-scroll-and-modals`
 - **model-loading** (1): `r3f-gltf-loading-suspense`
+- **modernist** (1): `style-bauhaus`
 - **modular** (2): `style-bento-layouts`, `style-swiss-international-typographic`
-- **monochrome** (1): `style-neumorphism`
+- **monochrome** (2): `style-duotone-monochrome`, `style-neumorphism`
 - **monospace** (3): `fancy-scramble-text`, `style-brutalism`, `style-dark-technical-developer-tools`
 - **morph** (1): `vengeance-ui-kinetic-text-effects`
 - **motion** (3): `react-bits-lightweight-text-effects`, `react-bits-micro-spring-controls`, `style-motion-led-storytelling`
@@ -349,6 +390,7 @@
 - **nextjs** (2): `lenis-react-provider`, `shader-gradient-react`
 - **noise** (3): `shader-gradient-background`, `style-generative-design`, `style-grain-and-texture`
 - **notch** (1): `vengeance-ui-landing-navbars`
+- **notebook** (1): `style-hand-drawn-doodle`
 - **nuxt** (2): `lenis-vue-nuxt-module`, `shader-gradient-vue`
 - **offset-path** (1): `fancy-simple-marquee`
 - **ogl** (2): `react-bits-ogl-shader-backgrounds`, `react-bits-webgl-cursor-trails`
@@ -356,18 +398,18 @@
 - **orbit-controls** (1): `r3f-product-showcase-scene`
 - **organic** (1): `style-organic-tactile`
 - **ornament** (2): `style-art-deco`, `style-maximalism`
-- **outline** (1): `style-neo-brutalism`
+- **outline** (2): `style-line-art-outline`, `style-neo-brutalism`
 - **overflow** (1): `lenis-nested-scroll-and-modals`
 - **overlay** (2): `react-bits-animated-navigation-menus`, `style-grain-and-texture`
 - **page-transition** (1): `page-transition-gsap`
 - **paid-library** (1): `reference-animmaster-lib`
 - **palette** (1): `astryx-theme-presets`
-- **paper** (1): `style-grain-and-texture`
+- **paper** (2): `style-collage-cutout`, `style-grain-and-texture`
 - **paper-shaders** (1): `vengeance-ui-liquid-metal-button`
 - **parallax** (1): `style-motion-led-storytelling`
 - **particles** (2): `style-generative-design`, `vengeance-ui-three-js-scenes`
 - **pastel** (3): `style-claymorphism`, `style-vaporwave`, `style-y2k`
-- **pattern** (1): `style-maximalism`
+- **pattern** (2): `style-maximalism`, `style-memphis`
 - **pause** (1): `react-bits-self-pausing-shader-backgrounds`
 - **per-letter** (1): `fancy-cursor-proximity-text`
 - **performance** (6): `glsl-background-fundamentals`, `r3f-adaptive-resolution-performance`, `r3f-frame-loop-animation`, `r3f-instancing-and-resource-reuse`, `r3f-on-demand-rendering`, `react-bits-self-pausing-shader-backgrounds`
@@ -376,10 +418,11 @@
 - **pill** (1): `liquid-glass-button`
 - **pin** (2): `gsap-scrolltrigger-pin-scrub`, `lenis-gsap-scrolltrigger-sync`
 - **pinning** (1): `style-motion-led-storytelling`
+- **pixel-art** (1): `style-pixel-art-8bit`
 - **pixel-ratio** (1): `r3f-adaptive-resolution-performance`
 - **pixel-trail** (1): `fancy-pixel-trail`
 - **pixelate** (1): `fancy-svg-filters`
-- **playful** (2): `style-claymorphism`, `style-neo-brutalism`
+- **playful** (3): `style-claymorphism`, `style-memphis`, `style-neo-brutalism`
 - **playwright** (1): `astryx-accessibility-spec-contracts`
 - **png-export** (1): `logo-video-export`
 - **pointer** (6): `fancy-cursor-proximity-text`, `fancy-image-trail`, `react-bits-pointer-lit-cards`, `react-bits-target-cursor`, `react-bits-webgl-cursor-trails`, `vengeance-ui-cursor-image-trails`
@@ -389,11 +432,13 @@
 - **portal** (1): `vengeance-ui-cursor-image-trails`
 - **position-parameter** (1): `gsap-timeline-choreography`
 - **post-processing** (1): `react-bits-webgpu-backgrounds`
-- **poster** (1): `r3f-lazy-canvas-webgl-fallback`
+- **poster** (2): `r3f-lazy-canvas-webgl-fallback`, `style-bauhaus`
+- **postmodern** (1): `style-memphis`
 - **postprocessing** (1): `react-bits-three-r3f-backgrounds`
 - **pre-flight** (1): `taste-skill-anti-generic-ui-checklist`
 - **premium** (1): `style-high-fashion-luxury`
 - **pricing** (1): `style-product-led-saas`
+- **primary-colours** (1): `style-bauhaus`
 - **primitive** (1): `r3f-gltf-loading-suspense`
 - **print** (1): `style-retro-vintage`
 - **procedural** (1): `style-generative-design`
@@ -434,20 +479,24 @@
 - **restrained** (1): `style-minimalism`
 - **retro** (1): `style-retro-vintage`
 - **retro-futurism** (1): `style-vaporwave`
+- **retro-games** (1): `style-pixel-art-8bit`
 - **reveal** (2): `react-bits-gsap-text-reveals`, `react-bits-scroll-driven-components`
 - **reveal-on-scroll** (1): `gsap-stagger-reveal`
 - **review-gates** (1): `image-to-3d-review-gates-and-correction-loop`
+- **rgb-split** (1): `style-glitch`
 - **rigging** (1): `image-to-3d-procedural-rig-animation-gates`
+- **ripple** (1): `style-material-design`
+- **riso** (1): `style-duotone-monochrome`
 - **risograph** (1): `style-retro-vintage`
 - **rotating-words** (1): `fancy-text-rotate`
 - **rounded** (1): `style-claymorphism`
 - **router** (1): `page-transition-gsap`
 - **saas** (1): `style-product-led-saas`
 - **scale** (1): `fancy-stacking-cards`
-- **scanlines** (1): `style-cyberpunk`
+- **scanlines** (2): `style-cyberpunk`, `style-glitch`
 - **scene-graph** (2): `r3f-canvas-setup`, `r3f-test-renderer-unit-tests`
 - **sci-fi** (1): `style-futurism`
-- **scramble** (2): `fancy-scramble-text`, `style-kinetic-typography`
+- **scramble** (3): `fancy-scramble-text`, `style-glitch`, `style-kinetic-typography`
 - **screenshots** (1): `skiper-ui-stepped-feature-card`
 - **scroll** (3): `react-bits-gsap-text-reveals`, `react-bits-scroll-driven-components`, `style-motion-led-storytelling`
 - **scroll-animations** (1): `reference-animmaster-lib`
@@ -466,6 +515,7 @@
 - **selectable-card** (1): `astryx-card-and-grid-collections`
 - **self-correction** (1): `image-to-3d-review-gates-and-correction-loop`
 - **semantic-text** (1): `astryx-typography-scale`
+- **semi-flat** (1): `style-flat-design`
 - **sequencing** (1): `gsap-timeline-choreography`
 - **serif** (2): `style-editorial`, `style-high-fashion-luxury`
 - **shadcn** (1): `vengeance-ui-theme-token-layer`
@@ -480,8 +530,10 @@
 - **shine** (2): `react-bits-lightweight-text-effects`, `vengeance-ui-animated-cta-buttons`
 - **showcase** (1): `vengeance-ui-3d-image-carousels`
 - **sidebar** (1): `astryx-app-shell-navigation`
+- **signal-error** (1): `style-glitch`
 - **signed-distance** (1): `liquid-glass-container`
 - **skeleton** (1): `image-to-3d-procedural-rig-animation-gates`
+- **sketch** (1): `style-hand-drawn-doodle`
 - **skeuomorphic** (2): `style-neumorphism`, `style-skeuomorphism`
 - **skeuomorphism** (1): `style-skeuomorphism`
 - **skinned-mesh** (1): `image-to-3d-procedural-rig-animation-gates`
@@ -494,6 +546,7 @@
 - **soft** (1): `style-organic-tactile`
 - **soft-3d** (1): `style-claymorphism`
 - **soft-ui** (1): `style-neumorphism`
+- **solid-colour** (1): `style-flat-design`
 - **spacing-scale** (1): `astryx-responsive-layout-primitives`
 - **sparkline** (1): `astryx-kpi-stat-row`
 - **spatial** (1): `style-futurism`
@@ -502,22 +555,30 @@
 - **splittext** (1): `vengeance-ui-gooey-text-reveal`
 - **spotlight** (2): `react-bits-pointer-lit-cards`, `vengeance-ui-landing-navbars`
 - **spring** (2): `react-bits-micro-spring-controls`, `style-organic-tactile`
+- **sprite** (1): `style-pixel-art-8bit`
+- **squiggle** (1): `style-memphis`
 - **ssr** (1): `shader-gradient-vue`
 - **stack** (1): `astryx-responsive-layout-primitives`
 - **stacking-cards** (1): `fancy-stacking-cards`
 - **stagger** (6): `fancy-letter-swap-text`, `fancy-text-rotate`, `fancy-vertical-cut-reveal`, `gsap-stagger-reveal`, `motion-principles`, `vengeance-ui-kinetic-text-effects`
 - **startup** (1): `style-product-led-saas`
 - **stat** (1): `astryx-kpi-stat-row`
+- **state-layer** (1): `style-material-design`
 - **step-cycler** (1): `skiper-ui-stepped-feature-card`
+- **steps** (1): `style-pixel-art-8bit`
+- **sticker** (1): `style-collage-cutout`
 - **sticky** (1): `fancy-stacking-cards`
+- **sticky-note** (1): `style-hand-drawn-doodle`
 - **stoppropagation** (1): `r3f-pointer-events-interaction`
 - **storytelling** (1): `style-motion-led-storytelling`
+- **stroke** (1): `style-line-art-outline`
 - **style-library** (1): `reference-refero-styles`
 - **stylex** (1): `astryx-design-system-react`
 - **sunburst** (1): `style-art-deco`
+- **surfaces** (1): `style-material-design`
 - **suspense** (1): `r3f-gltf-loading-suspense`
-- **svg** (2): `astryx-charts-config-model`, `fancy-animated-gradient-svg`
-- **svg-filter** (5): `fancy-svg-filters`, `react-bits-glass-surfaces`, `vengeance-ui-aurora-hero-backgrounds`, `vengeance-ui-gooey-text-reveal`, `vengeance-ui-kinetic-text-effects`
+- **svg** (4): `astryx-charts-config-model`, `fancy-animated-gradient-svg`, `style-isometric-illustration`, `style-line-art-outline`
+- **svg-filter** (6): `fancy-svg-filters`, `react-bits-glass-surfaces`, `style-duotone-monochrome`, `vengeance-ui-aurora-hero-backgrounds`, `vengeance-ui-gooey-text-reveal`, `vengeance-ui-kinetic-text-effects`
 - **svg-morph** (1): `vengeance-ui-floating-dock-navigation`
 - **swiper** (1): `skiper-ui-coverflow-card-carousel`
 - **swiss** (1): `style-swiss-international-typographic`
@@ -529,9 +590,11 @@
 - **tactile** (2): `style-organic-tactile`, `style-skeuomorphism`
 - **tailwind** (1): `design-md-lint-and-export`
 - **tailwind-v4** (1): `vengeance-ui-theme-token-layer`
+- **tape** (1): `style-collage-cutout`
 - **taxonomy** (1): `reference-uxplanet-design-styles`
 - **tech** (1): `style-futurism`
 - **terminal** (2): `style-cyberpunk`, `style-dark-technical-developer-tools`
+- **terrazzo** (1): `style-memphis`
 - **test-renderer** (1): `r3f-test-renderer-unit-tests`
 - **testing** (2): `astryx-accessibility-spec-contracts`, `r3f-test-renderer-unit-tests`
 - **text** (2): `react-bits-gsap-text-reveals`, `react-bits-lightweight-text-effects`
@@ -552,12 +615,16 @@
 - **tilt** (1): `react-bits-pointer-lit-cards`
 - **timeline** (2): `gsap-scrolltrigger-pin-scrub`, `gsap-timeline-choreography`
 - **toggle-button** (1): `astryx-button-family`
+- **tonal-layers** (1): `style-flat-design`
+- **tonal-ramp** (1): `style-duotone-monochrome`
+- **tonal-surface** (1): `style-material-design`
 - **top-nav** (1): `astryx-app-shell-navigation`
 - **trail** (1): `react-bits-webgl-cursor-trails`
 - **transient-updates** (1): `r3f-frame-loop-animation`
 - **translucent** (1): `style-glassmorphism`
 - **tresjs** (1): `shader-gradient-vue`
 - **turntable** (1): `r3f-product-showcase-scene`
+- **two-colour** (1): `style-duotone-monochrome`
 - **type-scale** (1): `astryx-typography-scale`
 - **typography** (3): `style-editorial`, `style-kinetic-typography`, `style-swiss-international-typographic`
 - **typography-tokens** (1): `astryx-typography-scale`
@@ -568,6 +635,7 @@
 - **uxplanet** (1): `reference-uxplanet-design-styles`
 - **vaporwave** (1): `style-vaporwave`
 - **variable-font** (3): `fancy-cursor-proximity-text`, `fancy-variable-font-text`, `style-kinetic-typography`
+- **vertical-text** (1): `style-japanese-minimalism`
 - **vgpu** (1): `react-bits-webgpu-backgrounds`
 - **video-export** (1): `logo-video-export`
 - **view-transitions** (1): `skiper-ui-theme-toggle-view-transition`
@@ -576,7 +644,9 @@
 - **visual-review** (1): `image-to-3d-review-gates-and-correction-loop`
 - **vocabulary** (1): `awesome-opus-videos-prompt-mining`
 - **vue** (2): `lenis-vue-nuxt-module`, `shader-gradient-vue`
+- **wabi-sabi** (1): `style-japanese-minimalism`
 - **warm** (1): `style-organic-tactile`
+- **washi** (1): `style-japanese-minimalism`
 - **wcag** (1): `astryx-accessibility-spec-contracts`
 - **webcodecs** (1): `logo-video-export`
 - **webgl** (17): `glsl-background-fundamentals`, `liquid-glass-button`, `liquid-glass-container`, `liquid-metal-logo`, `r3f-canvas-setup`, `react-bits-3d-image-galleries`, `react-bits-glass-surfaces`, `react-bits-ogl-shader-backgrounds`, `react-bits-self-pausing-shader-backgrounds`, `react-bits-three-r3f-backgrounds`, `react-bits-webgl-cursor-trails`, `shader-gradient-background`, `shader-gradient-react`, `style-experimental-3d`, `vengeance-ui-liquid-metal-button`, `vengeance-ui-three-js-scenes`, `webgl-effect-fallback-and-reduced-motion`
@@ -587,3 +657,5 @@
 - **whitespace** (1): `style-minimalism`
 - **workflow** (2): `taste-skill-image-to-code-workflow`, `taste-skill-redesign-audit-protocol`
 - **y2k** (1): `style-y2k`
+- **yohaku** (1): `style-japanese-minimalism`
+- **zine** (1): `style-collage-cutout`

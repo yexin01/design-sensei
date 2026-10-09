@@ -4,7 +4,7 @@ Design intelligence for [Claude Code](https://code.claude.com): a skill, a searc
 
 It exists to stop interfaces that look generated. The skill makes Claude **inspect the project, decide the art direction in writing, find real implementations, adapt them without adding a second system, and verify the result in a browser**, while respecting accessibility, performance and the license of every source it borrows from.
 
-* **137 patterns and 80 knowledge notes** (28 design styles, component libraries, shaders, animation, recipes) covering all 18 requested upstream sources, every file reference verified against pinned commits.
+* **149 patterns and 92 knowledge notes** (40 design styles, component libraries, shaders, animation, recipes) covering all 18 requested upstream sources, every file reference verified against pinned commits.
 * **Works offline and locally**: Python 3.9+ standard library only, no server, no API key, no embeddings.
 * **License-aware**: every search result shows the source's license status and a reuse class (`copy_with_attribution`, `license_review_required`, `reimplement_only`, `reference_only`, ...). Upstream code is never committed here.
 

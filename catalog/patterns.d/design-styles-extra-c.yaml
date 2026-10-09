@@ -1,0 +1,108 @@
+# Design-style patterns, batch C (original guidance): glitch, line art and outline, duotone and monochrome, Japanese minimalism.
+# Notes live in knowledge/design-styles/. Source paths are only listed where the local file really shows a relevant technique.
+schema_version: 1
+patterns:
+  - id: style-glitch
+    title: "Glitch"
+    category: design-style
+    summary: "Deliberate signal failure as an aesthetic: RGB channel splits, slice displacement, corrupted characters and scanlines. Used as short bursts over a clean text layer, with WCAG 2.3.1 flash limits, a reduced-motion state and a stable accessible string."
+    provenance: mixed
+    tags: [glitch, rgb-split, chromatic-aberration, scanlines, scramble, distortion, signal-error, datamosh]
+    source_ids: [fancy, react-bits, vengeance-ui]
+    frameworks: [css, react, webgl]
+    dependencies: []
+    implementation_status: reference_only
+    use_cases: ["music, club and game launches", "experimental portfolios and art projects", "404, loading and section-transition moments", "editorial about data and surveillance"]
+    performance:
+      gpu_intensity: low
+      fallback_required: true
+      notes: "CSS clip-path and transform bursts on two pseudo-elements are cheap; canvas or shader glitch needs a paused offscreen state and a static glitched still as fallback."
+    accessibility:
+      motion: intense
+      reduced_motion_alternative: true
+      notes: "Keep flashes to three per second or fewer and small in area (WCAG 2.3.1), remove bursts under reduced motion, hide offset layers from assistive technology and in forced-colors mode, and keep the true text reachable. Never glitch error, legal or primary-action text."
+    source_paths:
+      - fancy:src/fancy/components/text/scramble-hover.tsx
+      - vengeance-ui:src/components/ui/cyber-glitch-text.tsx
+      - vengeance-ui:src/components/ui/ascii-glitch-ripple.tsx
+      - react-bits:src/content/TextAnimations/GlitchText/GlitchText.css
+      - react-bits:src/content/TextAnimations/FuzzyText/FuzzyText.jsx
+      - react-bits:src/tools/texture-lab/shaders.js
+    knowledge_doc: knowledge/design-styles/glitch.md
+    related: [fancy-scramble-text, vengeance-ui-kinetic-text-effects, webgl-effect-fallback-and-reduced-motion]
+    notes: "The local components are references with gaps (live scrambled text, mouse-only triggers, infinite loops, no reduced-motion branch); the note contains an original state-triggered CSS recipe. react-bits is MIT with the Commons Clause, so its files are described, not copied."
+
+  - id: style-line-art-outline
+    title: "Line art and outline"
+    category: design-style
+    summary: "Interfaces drawn with strokes of one consistent weight: outlined icons, contour illustrations, hairline rules and outlined display type. Stroke discipline, 3:1 contrast for thin lines, stroke-dashoffset draw-on motion and forced-colors handling."
+    provenance: mixed
+    tags: [line-art, outline, stroke, svg, icons, hairline, contour, draw-on, ghost-button]
+    source_ids: [vengeance-ui]
+    frameworks: [css, svg]
+    dependencies: []
+    implementation_status: reference_only
+    use_cases: ["icon systems and onboarding illustration", "architecture, design and craft brands", "diagrams and documentation", "editorial and portfolio pages"]
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: "Static SVG is cheap; limit simultaneous animated long paths and animate only stroke-dashoffset, transform and opacity."
+    accessibility:
+      motion: subtle
+      reduced_motion_alternative: true
+      notes: "Draw-on is skipped under reduced motion and the finished drawing is the default state. Thin pale strokes must reach 3:1 (WCAG 1.4.11); outline-only buttons have weak affordance; use currentColor and set CanvasText in forced-colors mode."
+    source_paths:
+      - vengeance-ui:src/components/ui/line-hover-link.tsx
+    knowledge_doc: knowledge/design-styles/line-art-outline.md
+    notes: "The local reference is a link underline effect that uses the same pathLength and stroke-dashoffset technique, not a full line-art system; the note contains an original SVG and CSS recipe."
+
+  - id: style-duotone-monochrome
+    title: "Duotone and monochrome"
+    category: design-style
+    summary: "Two inks or one hue: photographs mapped onto a shadow-to-highlight gradient, flat fields in the same pair and single-hue tonal ramps for UI. Pairs chosen by luminance gap, the midtone text trap, an SVG gradient-map recipe and status without hue."
+    provenance: mixed
+    tags: [duotone, monochrome, gradient-map, halftone, riso, svg-filter, tonal-ramp, two-colour]
+    source_ids: [fancy, react-bits]
+    frameworks: [css, svg, webgl]
+    dependencies: []
+    implementation_status: reference_only
+    use_cases: ["music and event posters", "editorial features and campaigns with mixed photography", "single-brand dashboards and reports", "mood imagery on product pages"]
+    performance:
+      gpu_intensity: low
+      fallback_required: true
+      notes: "Prefer pre-rendered duotone assets for hero images; live SVG or CSS filters are for interactive or user-supplied images and should be cross-faded with opacity, not transitioned. Shader versions need a static image fallback."
+    accessibility:
+      motion: subtle
+      reduced_motion_alternative: true
+      notes: "Colourway swaps and dither drift are static under reduced motion and must not strobe between light and dark pairs. Keep text off image midtones (compute the worst region), give adjacent tone steps 3:1 where tone is the only cue, and carry status with icon and label."
+    source_paths:
+      - react-bits:src/tools/texture-lab/shaders.js
+      - react-bits:src/content/Animations/HalftoneReveal/HalftoneReveal.jsx
+      - react-bits:src/content/Animations/DitherVeil/DitherVeil.jsx
+      - fancy:src/fancy/components/filter/gooey-svg-filter.tsx
+    knowledge_doc: knowledge/design-styles/duotone-monochrome.md
+    related: [fancy-svg-filters, webgl-effect-fallback-and-reduced-motion]
+    notes: "The texture-lab duotone shader, the halftone and dither modes and the hidden-SVG-filter component pattern are references only; the note's SVG feComponentTransfer recipe is original. react-bits is MIT with the Commons Clause, so its files are described, not copied."
+
+  - id: style-japanese-minimalism
+    title: "Japanese minimalism (ma, wabi-sabi)"
+    category: design-style
+    summary: "Restraint in a Japanese key: ma as designed pauses, yohaku, wabi-sabi imperfection and asymmetry on warm paper grounds. Japanese and Latin type pairing, vertical writing, a washi and sumi palette with computed contrast, and slow motion."
+    provenance: original
+    tags: [japanese, minimalism, ma, wabi-sabi, yohaku, asymmetry, washi, vertical-text, cjk]
+    source_ids: []
+    frameworks: [css]
+    dependencies: []
+    implementation_status: reference_only
+    use_cases: ["ceramics, tea, stationery and craft brands", "ryokan, spa and hospitality", "architecture, interiors and cultural institutions", "photographers and essay sites"]
+    performance:
+      gpu_intensity: none
+      fallback_required: false
+      notes: "CSS only; Japanese web fonts are large, so subset them or use unicode-range and font-display swap."
+    accessibility:
+      motion: subtle
+      reduced_motion_alternative: true
+      notes: "Slow fades and a single ink-reveal are skipped under reduced motion. Main risks are faded low-contrast text, thin Mincho at small sizes, vertical text breaking reflow and sparse layouts hiding controls; set lang attributes."
+    source_paths: []
+    knowledge_doc: knowledge/design-styles/japanese-minimalism.md
+    notes: "Fully original guidance; no local source files exist for this style. It describes an aesthetic borrowed for craft and cultural brands, not the conventions of Japanese commercial web design, and warns against decorative pastiche."

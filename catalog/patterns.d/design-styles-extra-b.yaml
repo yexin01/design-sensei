@@ -1,0 +1,99 @@
+# Additional design-style patterns (batch b): isometric and 3D illustration, hand-drawn and doodle, collage and cutout, pixel art and 8-bit.
+# Original guidance; notes live in knowledge/design-styles/.
+schema_version: 1
+patterns:
+  - id: style-isometric-illustration
+    title: "Isometric and 3D illustration"
+    category: design-style
+    summary: "Objects on a shared 30-degree grid with no perspective, three tonal faces per solid and one light direction, plus a softer rendered 3D branch. Keep angle, light and scale consistent; give diagrams a text alternative."
+    provenance: mixed
+    tags: [isometric, illustration, 3d-illustration, svg, diagram, explainer, flat-3d, axonometric]
+    source_ids: [vengeance-ui]
+    frameworks: [css, svg]
+    dependencies: []
+    implementation_status: reference_only
+    use_cases: ["architecture and workflow explainers", "B2B, fintech and infrastructure heroes", "onboarding steps and feature sections", "maps, floor plans and infographics"]
+    performance:
+      gpu_intensity: low
+      fallback_required: false
+      notes: "Inline SVG with a reusable cube symbol is cheap; animate transform and opacity only and pause off-screen scenes. Rendered 3D variants ship as optimised images."
+    accessibility:
+      motion: subtle
+      reduced_motion_alternative: true
+      notes: "Loops and bob are removed under reduced motion; SMIL animation is not stopped by CSS media queries, so gate it in script. Meaningful scenes need role=img with title and desc plus a text equivalent; add stroke outlines in forced-colors mode."
+    source_paths:
+      - vengeance-ui:src/components/landing/ui/isometric-hero-box.tsx
+    knowledge_doc: knowledge/design-styles/isometric-illustration.md
+    notes: "The local reference shows isometric projection matrices and SMIL motion but has no reduced-motion handling; the note contains the original SVG and CSS recipe."
+
+  - id: style-hand-drawn-doodle
+    title: "Hand-drawn and doodle"
+    category: design-style
+    summary: "Wobbly outlines, marker underlines, arrows, sticky notes and handwriting accents on a precise layout. Handwriting fonts stay in short display strings, pencil grey fails as text, and line-boil motion has a static fallback."
+    provenance: original
+    tags: [hand-drawn, doodle, sketch, marker, handwriting, notebook, sticky-note, annotation]
+    source_ids: []
+    frameworks: [css, svg]
+    dependencies: []
+    implementation_status: reference_only
+    use_cases: ["education and children's products", "creative and whiteboarding tools", "indie products, blogs and portfolios", "onboarding, empty states and annotation layers"]
+    performance:
+      gpu_intensity: low
+      fallback_required: false
+      notes: "Irregular border radii and wavy underlines are free; SVG displacement filters are costly on large areas, so apply them to small decorative layers with a fixed seed."
+    accessibility:
+      motion: subtle
+      reduced_motion_alternative: true
+      notes: "Draw-on, wiggle and line boil are replaced by the final drawn state under reduced motion. Decoration is aria-hidden; handwriting is never used for forms or body copy; background-drawn highlights need a forced-colors fallback."
+    source_paths: []
+    knowledge_doc: knowledge/design-styles/hand-drawn-doodle.md
+    notes: "Fully original guidance; no local source files exist for this style."
+
+  - id: style-collage-cutout
+    title: "Collage and cutout"
+    category: design-style
+    summary: "Layered paper cutouts, torn edges, tape and stickers arranged like a zine page. Keep a hidden grid, tight paper-thickness shadows, solid panels under reading text, logical DOM order and a limit of five to seven pieces in view."
+    provenance: original
+    tags: [collage, cutout, zine, paper, mixed-media, sticker, tape, layered]
+    source_ids: []
+    frameworks: [css]
+    dependencies: []
+    implementation_status: reference_only
+    use_cases: ["music, art and fashion brands", "festivals, exhibitions and zines", "creative-agency portfolios and campaign microsites", "editorial features and hero sections"]
+    performance:
+      gpu_intensity: low
+      fallback_required: false
+      notes: "Cost is image weight and filter use: ship transparent WebP or AVIF at display size, lazy-load below the fold and put drop-shadow on a wrapper rather than many animating images."
+    accessibility:
+      motion: subtle
+      reduced_motion_alternative: true
+      notes: "Parallax, wiggle and slap-on are removed under reduced motion. Overlap uses grid placement so DOM order stays logical; text sits on solid panels; drag interactions need a keyboard route; tape and torn edges drop out in forced-colors mode."
+    source_paths: []
+    knowledge_doc: knowledge/design-styles/collage-cutout.md
+    notes: "Fully original guidance; no local source files exist for this style."
+
+  - id: style-pixel-art-8bit
+    title: "Pixel art and 8-bit"
+    category: design-style
+    summary: "Hard-edged sprites, small fixed palettes, stepped corners and bitmap type from early games. Scale by whole numbers with image-rendering pixelated, keep pixel fonts to display strings, animate in steps and freeze under reduced motion."
+    provenance: mixed
+    tags: [pixel-art, 8-bit, retro-games, sprite, bitmap-font, dither, image-rendering, steps]
+    source_ids: [fancy]
+    frameworks: [css, svg]
+    dependencies: []
+    implementation_status: reference_only
+    use_cases: ["games and game-adjacent products", "indie, maker and developer communities", "404, loading and achievement states", "festivals and playful event pages"]
+    performance:
+      gpu_intensity: low
+      fallback_required: false
+      notes: "Small sprite sheets and step-timed background-position are cheap. Avoid one DOM node per pixel; the local pixel-trail renders one div per cell, and the local pixelate filter is not supported in Safari per its docs."
+    accessibility:
+      motion: subtle
+      reduced_motion_alternative: true
+      notes: "Sprite loops, parallax and cursor trails stop under reduced motion with a single frame shown. Blink and hit-flash stay under three flashes per second; box-shadow borders need a real border in forced-colors mode; informative sprites need alt text."
+    source_paths:
+      - fancy:src/fancy/components/filter/pixelate-svg-filter.tsx
+      - fancy:src/fancy/components/background/pixel-trail.tsx
+    knowledge_doc: knowledge/design-styles/pixel-art-8bit.md
+    related: [fancy-pixel-trail, fancy-svg-filters]
+    notes: "The local pieces are a mosaic filter and a square-cell cursor trail, not authentic pixel art; the note contains the original sprite and button CSS."

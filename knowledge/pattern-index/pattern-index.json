@@ -3869,6 +3869,36 @@
    "category": "design-style",
    "dependencies": [],
    "frameworks": [
+    "css"
+   ],
+   "gpu_intensity": "none",
+   "id": "style-bauhaus",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/design-styles/bauhaus.md",
+   "license_status": "verified",
+   "motion": "subtle",
+   "recipe": null,
+   "redistribution_status": "original",
+   "reduced_motion_alternative": true,
+   "reuse": "original",
+   "source_ids": [],
+   "source_paths": [],
+   "summary": "Function-first geometry: red, yellow and blue with black and paper, circles, squares and triangles, diagonal asymmetry, geometric sans-serif type and heavy bars. Ink fails on red and blue; shapes are structure, never scattered clip-art.",
+   "tags": [
+    "bauhaus",
+    "geometric",
+    "primary-colours",
+    "asymmetry",
+    "modernist",
+    "diagonal",
+    "poster"
+   ],
+   "title": "Bauhaus"
+  },
+  {
+   "category": "design-style",
+   "dependencies": [],
+   "frameworks": [
     "css",
     "react",
     "tailwind"
@@ -3981,6 +4011,37 @@
    "category": "design-style",
    "dependencies": [],
    "frameworks": [
+    "css"
+   ],
+   "gpu_intensity": "low",
+   "id": "style-collage-cutout",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/design-styles/collage-cutout.md",
+   "license_status": "verified",
+   "motion": "subtle",
+   "recipe": null,
+   "redistribution_status": "original",
+   "reduced_motion_alternative": true,
+   "reuse": "original",
+   "source_ids": [],
+   "source_paths": [],
+   "summary": "Layered paper cutouts, torn edges, tape and stickers arranged like a zine page. Keep a hidden grid, tight paper-thickness shadows, solid panels under reading text, logical DOM order and a limit of five to seven pieces in view.",
+   "tags": [
+    "collage",
+    "cutout",
+    "zine",
+    "paper",
+    "mixed-media",
+    "sticker",
+    "tape",
+    "layered"
+   ],
+   "title": "Collage and cutout"
+  },
+  {
+   "category": "design-style",
+   "dependencies": [],
+   "frameworks": [
     "css",
     "react",
     "webgl"
@@ -4067,6 +4128,47 @@
    "dependencies": [],
    "frameworks": [
     "css",
+    "svg",
+    "webgl"
+   ],
+   "gpu_intensity": "low",
+   "id": "style-duotone-monochrome",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/design-styles/duotone-monochrome.md",
+   "license_status": "custom_terms",
+   "motion": "subtle",
+   "recipe": null,
+   "redistribution_status": "license_specific",
+   "reduced_motion_alternative": true,
+   "reuse": "license_review_required",
+   "source_ids": [
+    "fancy",
+    "react-bits"
+   ],
+   "source_paths": [
+    "react-bits:src/tools/texture-lab/shaders.js",
+    "react-bits:src/content/Animations/HalftoneReveal/HalftoneReveal.jsx",
+    "react-bits:src/content/Animations/DitherVeil/DitherVeil.jsx",
+    "fancy:src/fancy/components/filter/gooey-svg-filter.tsx"
+   ],
+   "summary": "Two inks or one hue: photographs mapped onto a shadow-to-highlight gradient, flat fields in the same pair and single-hue tonal ramps for UI. Pairs chosen by luminance gap, the midtone text trap, an SVG gradient-map recipe and status without hue.",
+   "tags": [
+    "duotone",
+    "monochrome",
+    "gradient-map",
+    "halftone",
+    "riso",
+    "svg-filter",
+    "tonal-ramp",
+    "two-colour"
+   ],
+   "title": "Duotone and monochrome"
+  },
+  {
+   "category": "design-style",
+   "dependencies": [],
+   "frameworks": [
+    "css",
     "react"
    ],
    "gpu_intensity": "none",
@@ -4144,6 +4246,40 @@
     "experimental"
    ],
    "title": "Experimental 3D"
+  },
+  {
+   "category": "design-style",
+   "dependencies": [],
+   "frameworks": [
+    "css"
+   ],
+   "gpu_intensity": "none",
+   "id": "style-flat-design",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/design-styles/flat-design.md",
+   "license_status": "verified",
+   "motion": "subtle",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "design-md"
+   ],
+   "source_paths": [
+    "design-md:docs/spec.md"
+   ],
+   "summary": "Solid colour planes, simple geometric icons and type-led hierarchy with no simulated depth. The practical traps are weak signifiers, bright flat palettes that fail with white text and borderless inputs; state must come from colour, outline and shape.",
+   "tags": [
+    "flat",
+    "flat-design",
+    "semi-flat",
+    "solid-colour",
+    "icons",
+    "tonal-layers",
+    "borderless"
+   ],
+   "title": "Flat design"
   },
   {
    "category": "design-style",
@@ -4288,6 +4424,50 @@
     "webgl"
    ],
    "gpu_intensity": "low",
+   "id": "style-glitch",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/design-styles/glitch.md",
+   "license_status": "custom_terms",
+   "motion": "intense",
+   "recipe": null,
+   "redistribution_status": "license_specific",
+   "reduced_motion_alternative": true,
+   "reuse": "license_review_required",
+   "source_ids": [
+    "fancy",
+    "react-bits",
+    "vengeance-ui"
+   ],
+   "source_paths": [
+    "fancy:src/fancy/components/text/scramble-hover.tsx",
+    "vengeance-ui:src/components/ui/cyber-glitch-text.tsx",
+    "vengeance-ui:src/components/ui/ascii-glitch-ripple.tsx",
+    "react-bits:src/content/TextAnimations/GlitchText/GlitchText.css",
+    "react-bits:src/content/TextAnimations/FuzzyText/FuzzyText.jsx",
+    "react-bits:src/tools/texture-lab/shaders.js"
+   ],
+   "summary": "Deliberate signal failure as an aesthetic: RGB channel splits, slice displacement, corrupted characters and scanlines. Used as short bursts over a clean text layer, with WCAG 2.3.1 flash limits, a reduced-motion state and a stable accessible string.",
+   "tags": [
+    "glitch",
+    "rgb-split",
+    "chromatic-aberration",
+    "scanlines",
+    "scramble",
+    "distortion",
+    "signal-error",
+    "datamosh"
+   ],
+   "title": "Glitch"
+  },
+  {
+   "category": "design-style",
+   "dependencies": [],
+   "frameworks": [
+    "css",
+    "react",
+    "webgl"
+   ],
+   "gpu_intensity": "low",
    "id": "style-grain-and-texture",
    "implementation_status": "reference_only",
    "knowledge_doc": "knowledge/design-styles/grain-and-texture.md",
@@ -4321,6 +4501,38 @@
     "overlay"
    ],
    "title": "Grain and texture"
+  },
+  {
+   "category": "design-style",
+   "dependencies": [],
+   "frameworks": [
+    "css",
+    "svg"
+   ],
+   "gpu_intensity": "low",
+   "id": "style-hand-drawn-doodle",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/design-styles/hand-drawn-doodle.md",
+   "license_status": "verified",
+   "motion": "subtle",
+   "recipe": null,
+   "redistribution_status": "original",
+   "reduced_motion_alternative": true,
+   "reuse": "original",
+   "source_ids": [],
+   "source_paths": [],
+   "summary": "Wobbly outlines, marker underlines, arrows, sticky notes and handwriting accents on a precise layout. Handwriting fonts stay in short display strings, pencil grey fails as text, and line-boil motion has a static fallback.",
+   "tags": [
+    "hand-drawn",
+    "doodle",
+    "sketch",
+    "marker",
+    "handwriting",
+    "notebook",
+    "sticky-note",
+    "annotation"
+   ],
+   "title": "Hand-drawn and doodle"
   },
   {
    "category": "design-style",
@@ -4364,6 +4576,74 @@
    "category": "design-style",
    "dependencies": [],
    "frameworks": [
+    "css",
+    "svg"
+   ],
+   "gpu_intensity": "low",
+   "id": "style-isometric-illustration",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/design-styles/isometric-illustration.md",
+   "license_status": "verified",
+   "motion": "subtle",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "vengeance-ui"
+   ],
+   "source_paths": [
+    "vengeance-ui:src/components/landing/ui/isometric-hero-box.tsx"
+   ],
+   "summary": "Objects on a shared 30-degree grid with no perspective, three tonal faces per solid and one light direction, plus a softer rendered 3D branch. Keep angle, light and scale consistent; give diagrams a text alternative.",
+   "tags": [
+    "isometric",
+    "illustration",
+    "3d-illustration",
+    "svg",
+    "diagram",
+    "explainer",
+    "flat-3d",
+    "axonometric"
+   ],
+   "title": "Isometric and 3D illustration"
+  },
+  {
+   "category": "design-style",
+   "dependencies": [],
+   "frameworks": [
+    "css"
+   ],
+   "gpu_intensity": "none",
+   "id": "style-japanese-minimalism",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/design-styles/japanese-minimalism.md",
+   "license_status": "verified",
+   "motion": "subtle",
+   "recipe": null,
+   "redistribution_status": "original",
+   "reduced_motion_alternative": true,
+   "reuse": "original",
+   "source_ids": [],
+   "source_paths": [],
+   "summary": "Restraint in a Japanese key: ma as designed pauses, yohaku, wabi-sabi imperfection and asymmetry on warm paper grounds. Japanese and Latin type pairing, vertical writing, a washi and sumi palette with computed contrast, and slow motion.",
+   "tags": [
+    "japanese",
+    "minimalism",
+    "ma",
+    "wabi-sabi",
+    "yohaku",
+    "asymmetry",
+    "washi",
+    "vertical-text",
+    "cjk"
+   ],
+   "title": "Japanese minimalism (ma, wabi-sabi)"
+  },
+  {
+   "category": "design-style",
+   "dependencies": [],
+   "frameworks": [
     "react",
     "motion",
     "css"
@@ -4400,6 +4680,43 @@
     "typography"
    ],
    "title": "Kinetic typography"
+  },
+  {
+   "category": "design-style",
+   "dependencies": [],
+   "frameworks": [
+    "css",
+    "svg"
+   ],
+   "gpu_intensity": "none",
+   "id": "style-line-art-outline",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/design-styles/line-art-outline.md",
+   "license_status": "verified",
+   "motion": "subtle",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "vengeance-ui"
+   ],
+   "source_paths": [
+    "vengeance-ui:src/components/ui/line-hover-link.tsx"
+   ],
+   "summary": "Interfaces drawn with strokes of one consistent weight: outlined icons, contour illustrations, hairline rules and outlined display type. Stroke discipline, 3:1 contrast for thin lines, stroke-dashoffset draw-on motion and forced-colors handling.",
+   "tags": [
+    "line-art",
+    "outline",
+    "stroke",
+    "svg",
+    "icons",
+    "hairline",
+    "contour",
+    "draw-on",
+    "ghost-button"
+   ],
+   "title": "Line art and outline"
   },
   {
    "category": "design-style",
@@ -4451,6 +4768,41 @@
    "category": "design-style",
    "dependencies": [],
    "frameworks": [
+    "css"
+   ],
+   "gpu_intensity": "low",
+   "id": "style-material-design",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/design-styles/material-design.md",
+   "license_status": "verified",
+   "motion": "subtle",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "astryx"
+   ],
+   "source_paths": [
+    "astryx:docs/design/elevation-hierarchy.md"
+   ],
+   "summary": "Opaque sheets at defined heights with paired contact and ambient shadows, tonal surfaces, state-layer overlays and motion that explains origin. Dark themes lighten surfaces instead of darkening shadows; outlines are needed because tone and shadow are weak edges.",
+   "tags": [
+    "material-design",
+    "material",
+    "elevation",
+    "layers",
+    "surfaces",
+    "state-layer",
+    "ripple",
+    "tonal-surface"
+   ],
+   "title": "Material design (layered surfaces and elevation)"
+  },
+  {
+   "category": "design-style",
+   "dependencies": [],
+   "frameworks": [
     "css",
     "react",
     "motion"
@@ -4484,6 +4836,38 @@
     "dense"
    ],
    "title": "Maximalism"
+  },
+  {
+   "category": "design-style",
+   "dependencies": [],
+   "frameworks": [
+    "css",
+    "svg"
+   ],
+   "gpu_intensity": "low",
+   "id": "style-memphis",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/design-styles/memphis.md",
+   "license_status": "verified",
+   "motion": "moderate",
+   "recipe": null,
+   "redistribution_status": "original",
+   "reduced_motion_alternative": true,
+   "reuse": "original",
+   "source_ids": [],
+   "source_paths": [],
+   "summary": "Playful 1980s postmodern graphics: squiggles, zigzags, confetti, terrazzo speckle and bold primitives in bounded clashing colour. Decoration stays around calm text panels, never behind text; white on pink or turquoise fails contrast.",
+   "tags": [
+    "memphis",
+    "80s",
+    "postmodern",
+    "squiggle",
+    "confetti",
+    "terrazzo",
+    "pattern",
+    "playful"
+   ],
+   "title": "Memphis"
   },
   {
    "category": "design-style",
@@ -4679,6 +5063,43 @@
     "warm"
    ],
    "title": "Organic and tactile"
+  },
+  {
+   "category": "design-style",
+   "dependencies": [],
+   "frameworks": [
+    "css",
+    "svg"
+   ],
+   "gpu_intensity": "low",
+   "id": "style-pixel-art-8bit",
+   "implementation_status": "reference_only",
+   "knowledge_doc": "knowledge/design-styles/pixel-art-8bit.md",
+   "license_status": "verified",
+   "motion": "subtle",
+   "recipe": null,
+   "redistribution_status": "redistributable_with_notice",
+   "reduced_motion_alternative": true,
+   "reuse": "copy_with_attribution",
+   "source_ids": [
+    "fancy"
+   ],
+   "source_paths": [
+    "fancy:src/fancy/components/filter/pixelate-svg-filter.tsx",
+    "fancy:src/fancy/components/background/pixel-trail.tsx"
+   ],
+   "summary": "Hard-edged sprites, small fixed palettes, stepped corners and bitmap type from early games. Scale by whole numbers with image-rendering pixelated, keep pixel fonts to display strings, animate in steps and freeze under reduced motion.",
+   "tags": [
+    "pixel-art",
+    "8-bit",
+    "retro-games",
+    "sprite",
+    "bitmap-font",
+    "dither",
+    "image-rendering",
+    "steps"
+   ],
+   "title": "Pixel art and 8-bit"
   },
   {
    "category": "design-style",

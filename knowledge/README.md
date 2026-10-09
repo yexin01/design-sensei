@@ -4,7 +4,7 @@ Project-authored notes about design styles, upstream libraries and implementatio
 
 | Folder | Contents |
 | --- | --- |
-| [design-styles/](design-styles/README.md) | 28 style notes: characteristics, fit, typography, color, motion, mistakes, how to build |
+| [design-styles/](design-styles/README.md) | 40 style notes: characteristics, fit, typography, color, motion, mistakes, how to build |
 | [design-intelligence/](design-intelligence/) | taste-skill, the DESIGN.md format, the Opus videos prompt collection |
 | [components/](components/) | component libraries and 3D tooling: what they are, how they are consumed, notable components, pitfalls |
 | [shaders/](shaders/) | liquid metal, liquid glass, shader gradients, GLSL fundamentals for UI |

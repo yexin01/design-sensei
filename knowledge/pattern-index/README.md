@@ -4,8 +4,8 @@
 
 Browsable views of `catalog/patterns.yaml` (and `catalog/patterns.d/`) plus the knowledge notes.
 
-- 137 patterns, 80 knowledge notes, 18 sources
-- Categories: animation 10, background-shader 5, button 5, card-grid 5, cursor 6, data-visualization 2, design-style 29, design-system 5, gradient 4, hero 1, image-to-3d 3, interactive-logo 1, liquid-glass 3, navigation 4, page-transition 2, product-showcase 5, responsive-layout 1, scroll 9, three-scene 9, typography 12, workflow 16
+- 149 patterns, 92 knowledge notes, 18 sources
+- Categories: animation 10, background-shader 5, button 5, card-grid 5, cursor 6, data-visualization 2, design-style 41, design-system 5, gradient 4, hero 1, image-to-3d 3, interactive-logo 1, liquid-glass 3, navigation 4, page-transition 2, product-showcase 5, responsive-layout 1, scroll 9, three-scene 9, typography 12, workflow 16
 
 | View | What it lists |
 | --- | --- |
